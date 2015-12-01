@@ -1,0 +1,94 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<div id="container">
+<H1>2. その他</H1>
+
+<H2 ID="2.1">2.1 ログ出力について</H2>
+<div class="topic">
+
+(1) ログ出力用定数の定義<br>
+<div class="topic">
+STKSOCKET_LOG_NAMESOLVEERR     = 1000 <br/>
+STKSOCKET_LOG_CONNERROR        = 1001 <br/>
+STKSOCKET_LOG_SUCCESSCSC       = 1002 <br/>
+STKSOCKET_LOG_SOCKCLOSE        = 1003 <br/>
+STKSOCKET_LOG_BINDLISTENERR    = 1004 <br/>
+STKSOCKET_LOG_SUCCESSCSBNLS    = 1005 <br/>
+STKSOCKET_LOG_CLOSEACCEPTSOCK  = 1006 <br/>
+STKSOCKET_LOG_CREATEACCEPTSOCK = 1007 <br/>
+STKSOCKET_LOG_ACPTRECV         = 1008 <br/>
+STKSOCKET_LOG_CNCTRECV         = 1009 <br/>
+STKSOCKET_LOG_RECVERROR        = 1010 <br/>
+STKSOCKET_LOG_SENDERROR        = 1011 <br/>
+STKSOCKET_LOG_ACPTSEND         = 1012 <br/>
+STKSOCKET_LOG_CNCTSEND         = 1013 <br/>
+STKSOCKET_LOG_CLOSEACCLISNSOCK = 1014 <br/>
+STKSOCKET_LOG_BINDERR          = 1015 <br/>
+STKSOCKET_LOG_SUCCESSCSBN      = 1016 <br/>
+STKSOCKET_LOG_UDPRECV          = 1017 <br/>
+STKSOCKET_LOG_UDPSEND          = 1018 <br/>
+STKSOCKET_LOG_SUCCESSCS        = 1019 <br/>
+STKSOCKET_LOG_UDPSOCKCLOSE     = 1020 <br/>
+</div><p>
+
+(2) ログ出力仕様-パラメータ<br>
+<div class="topic">
+<table class="tblstyle">
+<tr><th>パラメータ</th><th>ParamStr1</th><th>ParamStr2</th><th>ParamInt1</th><th>ParamInt1</th></tr>
+<tr><td>STKSOCKET_LOG_NAMESOLVEERR</td><td>空文字</td><td>空文字</td><td>0</td><td>ソケットエラーID</td></tr>
+<tr><td>STKSOCKET_LOG_CONNERROR</td><td>空文字</td><td>空文字</td><td>0</td><td>ソケットエラーID</td></tr>
+<tr><td>STKSOCKET_LOG_SUCCESSCSC</td><td>ホスト名/IPアドレス</td><td>空文字</td><td>ポート番号</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_SOCKCLOSE</td><td>ホスト名/IPアドレス</td><td>空文字</td><td>ポート番号</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_BINDLISTENERR</td><td>空文字</td><td>空文字</td><td>0</td><td>ソケットエラーID</td></tr>
+<tr><td>STKSOCKET_LOG_SUCCESSCSBNLS</td><td>ホスト名/IPアドレス<</td><td>空文字</td><td>ポート番号</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_CLOSEACCEPTSOCK</td><td>ホスト名/IPアドレス</td><td>空文字</td><td>ポート番号</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_CREATEACCEPTSOCK</td><td>ホスト名/IPアドレス</td><td>空文字</td><td>ポート番号</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_ACPTRECV</td><td>空文字</td><td>空文字</td><td>受信サイズ</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_CNCTRECV</td><td>空文字</td><td>空文字</td><td>受信サイズ</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_RECVERROR</td><td>空文字</td><td>空文字</td><td>0</td><td>ソケットエラーID</td></tr>
+<tr><td>STKSOCKET_LOG_SENDERROR</td><td>空文字</td><td>空文字</td><td>0</td><td>ソケットエラーID</td></tr>
+<tr><td>STKSOCKET_LOG_CNCTSEND</td><td>空文字</td><td>空文字</td><td>送信サイズ</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_CLOSEACCLISNSOCK</td><td>ホスト名/IPアドレス</td><td>空文字</td><td>ポート番号</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_BINDERR</td><td>空文字</td><td>空文字</td><td>0</td><td>ソケットエラーID</td></tr>
+<tr><td>STKSOCKET_LOG_SUCCESSCSBN</td><td>ホスト名/IPアドレス</td><td>空文字</td><td>ポート番号</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_UDPRECV</td><td>空文字</td><td>空文字</td><td>受信サイズ</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_UDPSEND</td><td>空文字</td><td>空文字</td><td>送信サイズ</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_SUCCESSCS</td><td>ホスト名/IPアドレス</td><td>空文字</td><td>ポート番号</td><td>0</td></tr>
+<tr><td>STKSOCKET_LOG_UDPSOCKCLOSE</td><td>ホスト名/IPアドレス</td><td>空文字</td><td>ポート番号</td><td>0</td></tr>
+</table></div><p>
+
+(3) ログ出力仕様-出力箇所<br>
+<div class="topic">
+<table class="tblstyle">
+<tr><th>パラメータ</th><th>出力箇所</th></tr>
+<tr><td>STKSOCKET_LOG_NAMESOLVEERR</td><td>ConnectSocket, OpenSocket</td></tr>
+<tr><td>STKSOCKET_LOG_CONNERROR</td><td>ConnectSocket</td></tr>
+<tr><td>STKSOCKET_LOG_SUCCESSCSC</td><td>ConnectSocket</td></tr>
+<tr><td>STKSOCKET_LOG_SOCKCLOSE</td><td>DisconnectSocket, CloseSocket</td></tr>
+<tr><td>STKSOCKET_LOG_BINDLISTENERR</td><td>OpenSocket</td></tr>
+<tr><td>STKSOCKET_LOG_SUCCESSCSBNLS</td><td>OpenSocket</td></tr>
+<tr><td>STKSOCKET_LOG_CLOSEACCEPTSOCK</td><td>CloseSocket, CloseAccept</td></tr>
+<tr><td>STKSOCKET_LOG_CREATEACCEPTSOCK</td><td>Accept</td></tr>
+<tr><td>STKSOCKET_LOG_ACPTRECV</td><td>Receive</td></tr>
+<tr><td>STKSOCKET_LOG_CNCTRECV</td><td>Receive</td></tr>
+<tr><td>STKSOCKET_LOG_RECVERROR</td><td>Receive</td></tr>
+<tr><td>STKSOCKET_LOG_SENDERROR</td><td>Send</td></tr>
+<tr><td>STKSOCKET_LOG_ACPTSEND</td><td>Send</td></tr>
+<tr><td>STKSOCKET_LOG_CNCTSEND</td><td>Send</td></tr>
+<tr><td>STKSOCKET_LOG_CLOSEACCLISNSOCK</td><td>CloseSocket</td></tr>
+<tr><td>STKSOCKET_LOG_BINDERR</td><td>OpenSocket</td></tr>
+<tr><td>STKSOCKET_LOG_SUCCESSCSBN</td><td>OpenSocket</td></tr>
+<tr><td>STKSOCKET_LOG_UDPRECV</td><td>ReceiveUdp</td></tr>
+<tr><td>STKSOCKET_LOG_UDPSEND</td><td>SendUdp</td></tr>
+<tr><td>STKSOCKET_LOG_SUCCESSCS</td><td>ConnectSocket</td></tr>
+<tr><td>STKSOCKET_LOG_UDPSOCKCLOSE</td><td>DisconnectSocket, CloseSocket</td></tr>
+</table></div><p>
+
+</div><p>
+</div>
+</BODY>

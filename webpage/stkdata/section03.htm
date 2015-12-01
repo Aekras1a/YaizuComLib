@@ -1,0 +1,78 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<div id="container">
+<H1>3. StkData詳細説明</H1>
+
+<H2>3.1 StkData概念図</H2>
+以下にStkDataの概念図を示します。<BR>
+<IMG SRC="stkdata1.gif"><BR>
+StkData利用プログラムは，StkDataが提供するインターフェース(API)を介して
+データにアクセスします。<BR>
+StkDataとStkData利用プログラム間のデータの受け渡しには
+RecordDataインスタンスが使用されます。<BR>
+StkData利用プログラムからStkDataへのテーブル定義要求には，TableDefインスタンスが
+使用されます。<BR>
+StkDataのデータは常にメモリ上に展開されているため，通常StkDataが動作するプロセス
+が終了したときに当該データは失われます。ただし，SktDataはファイル入出力用の
+APIを提供しており，必要に応じてメモリからファイルへの書込み，ファイルからメモリ
+への読込みを行うことができます。<BR>
+<P>
+
+<H2>3.2 StkDataが扱うデータ</H2>
+StkDataはデータを下図のようなテーブル(Table)と呼ばれる入れ物で管理します。
+テーブルは複数のカラム(Column)から構成され，カラムには整数型，文字列型のように"型"を定義する
+ことができます。StkData利用プログラムはテーブルにレコード(Record)を登録することにより
+データを保持します。レコードはStkData利用プログラムが使用するデータと同意と考えることができます。<BR>
+<IMG SRC="stkdata2.gif">
+<P>
+
+<H2>3.3 使用上の制限事項</H2>
+StkDataには下記に示す使用上の制限事項があります。<P>
+<TABLE BORDER="1">
+<TR><TD>登録可能なテーブル数</TD><TD>16</TD></TR>
+<TR><TD>登録可能なカラム数／１テーブル</TD><TD>32</TD></TR>
+<TR><TD>整数型カラムのバイト数</TD><TD>4</TD></TR>
+<tr><td>単精度浮動小数点数型カラムのバイト数</td><td>4</td></tr>
+<TR><TD>文字列型カラムに使用可能な文字コード</TD><TD>ASCII (0x20-0x7e)</TD></TR>
+<TR><TD>ワイド文字列型カラムに使用可能な文字コード</TD><TD>UTF-16</TD></TR>
+<TR><TD>文字列型カラムの最小文字数</TD><TD>2 (最終文字NULL文字を含む)</TD></TR>
+<TR><TD>文字列型カラムの最大文字数</TD><TD>256 (最終文字NULL文字を含む)</TD></TR>
+<TR><TD>ワイド文字列型カラムの最小文字数</TD><TD>2 (最終文字NULL文字を含む)</TD></TR>
+<TR><TD>ワイド文字列型カラムの最大文字数</TD><TD>256 (最終文字NULL文字を含む)</TD></TR>
+<TR><TD>バイナリ型カラムの最小バイト数</TD><TD>1</TD></TR>
+<TR><TD>バイナリ型カラムの最大バイト文字数</TD><TD>10000000</TD></TR>
+<TR><TD>最小レコード数／１テーブル</TD><TD>1</TD></TR>
+<TR><TD>最大レコード数／１テーブル</TD><TD>16383</TD></TR>
+<TR><TD>テーブル名バイト数</TD><TD>16 (最終文字NULLを含む)</TD></TR>
+<TR><TD>テーブル名に使用可能な文字コード</TD><TD>UTF-16</TD></TR>
+<TR><TD>カラム名バイト数</TD><TD>16 (最終文字NULLを含む)</TD></TR>
+<TR><TD>カラム名に使用可能な文字コード</TD><TD>UTF-16</TD></TR>
+</TABLE>
+<P>
+
+<H2>3.4 StkDataで使用する定数</H2>
+StkDataでは以下の定数を使用します。<P>
+<table border="1">
+<tr><td>MAX_TABLE_NUMBER</td><td>登録可能なテーブル数</td><td>16</td></tr>
+<tr><td>MAX_COLUMN_NUMBER</td><td>登録可能なカラム数</td><td>32</td></tr>
+<tr><td>MAX_RECORD</td><td>最大レコード数／１テーブル</td><td>16383</td></tr>
+<tr><td>LOCK_FREE</td><td>テーブルロック開放状態</td><td>0</td></tr>
+<tr><td>LOCK_SHARE</td><td>テーブル共有ロック状態</td><td>1</td></tr>
+<tr><td>LOCK_EXCLUSIVE</td><td>テーブル排他ロック状態</td><td>2</td></tr>
+<tr><td>COLUMN_TYPE_INT</td><td>整数型カラムを示す定数</td><td>0</td></tr>
+<tr><td>COLUMN_TYPE_STR</td><td>文字列型カラムを示す定数</td><td>1</td></tr>
+<tr><td>COLUMN_TYPE_WSTR</td><td>ワイド文字列型カラムを示す定数</td><td>2</td></tr>
+<tr><td>COLUMN_TYPE_BIN</td><td>バイナリ型カラムを示す定数</td><td>3</td></tr>
+<tr><td>COLUMN_TYPE_FLOAT</td><td>単精度浮動小数点数型</td><td>4</td></tr>
+<tr><td>TABLE_NAME_SIZE</td><td>テーブル名の最大長</td><td>16</td></tr>
+<tr><td>COLUMN_NAME_SIZE</td><td>カラム名の最大長</td><td>16</td></tr>
+</table>
+<P>
+
+</div>
+</BODY>

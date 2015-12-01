@@ -1,0 +1,72 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<style type="text/css">
+<!--
+.spc { margin-left: 2em; margin-right: 0em; }
+-->
+</style>
+
+<div id="container">
+
+<H2>4.2 ColumnDef</H2>
+カラムを定義するためのクラス（データモデル）です。<P>
+
+<H3>4.2.1 ColumnDefのメンバ変数</H3>
+
+protected<BR>
+<TABLE BORDER="1">
+<TR><TD>TCHAR</TD><TD>m_ColumnName[COLUMN_NAME_SIZE]</TD><TD>カラム名</TD></TR>
+<TR><TD>int</TD><TD>m_ColumnType</TD><TD>カラム種別</TD></TR>
+</TABLE><P>
+
+<H3>4.2.2 ColumnDefの関数</H3>
+(1) ColumnDef()<BR>
+<div class=spc>
+デフォルトコンストラクタ。
+</div><P>
+
+(2) virtual ~ColumnDef()<BR>
+<div class=spc>
+デストラクタ。
+</div><P>
+
+(3) void SetColumnName(TCHAR* ColumnName)<BR>
+<div class=spc>
+カラム名を指定します。ColumnNameが16文字(NULL含む)を超えた場合，17文字目以降の文字は切り取られます。
+<TABLE BORDER="1">
+<TR><TD>ColumnName</TD><TD>カラム名</TD></TR>
+</TABLE>
+</div><P>
+
+(4) TCHAR* GetColumnName()<BR>
+<div class=spc>
+カラム名を取得します。
+<TABLE BORDER="1">
+<TR><TD>戻り値</TD><TD>カラム名</TD></TR>
+</TABLE>
+</div><P>
+
+(5) void SetColumnType(int ColType)<BR>
+<div class=spc>
+カラムの種別を指定します。
+<TABLE BORDER="1">
+<TR><TD>ColType</TD><TD>COLUMN_TYPE_INT:整数型<BR>COLUMN_TYPE_STR:文字列型<BR>COLUMN_TYPE_WSTR:ワイド文字列型<BR>COLUMN_TYPE_BIN:バイナリ型<BR>COLUMN_TYPE_FLOAT:単精度浮動小数点数型</TD></TR>
+</TABLE>
+</div><P>
+
+(6) int GetColumnType()<BR>
+<div class=spc>
+カラムの種別を取得します。
+<TABLE BORDER="1">
+<TR><TD>戻り値</TD><TD>COLUMN_TYPE_INT:整数型<BR>COLUMN_TYPE_STR:文字列型<BR>COLUMN_TYPE_WSTR:ワイド文字列型<BR>COLUMN_TYPE_BIN:バイナリ型<BR>COLUMN_TYPE_FLOAT:単精度浮動小数点数型</TD></TR>
+</TABLE>
+</div><P>
+
+
+</div>
+</BODY>

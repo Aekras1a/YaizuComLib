@@ -1,0 +1,279 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<div id="container">
+<H1>3. StkThread.Libのユーザープログラム用API</H1>
+
+<H2 ID="3.1">3.1 ユーザープログラム用API概要</H2>
+<div class="topic">
+StkThreadのユーザープログラム用APIの一覧を以下に示します。<br>
+<table class="tblstyle">
+<tr><th>APIシグネチャ</th><th>概要</th></tr>
+<tr><td>int GetNumOfRunStkThread()</td><td>現在実行中のスレッドの数を返却します。</td></tr>
+<tr><td>int GetNumOfStkThread()</td><td>登録済の全てのスレッドの数を返却します。</td></tr>
+<tr><td>void AddStkThread(int Id, TCHAR Name[MAX_LENGTH_OF_STKTHREAD_NAME], TCHAR Description[MAX_LENGTH_OF_STKTHREAD_DESCRIPTION], void* Init, void* Final, void* Main, void* Start, void* Stop)</td><td>新たなスレッドを登録します。</td></tr>
+<tr><td>void DeleteStkThread(int Id)</td><td>登録されているスレッドを削除します。</td></tr>
+<tr><td>void SetProcBeforeFirstStkThreadStarts(void* Proc)</td><td>コールバックメソッドProcBeforeFirstStkThreadStartsのポインタを設定します。</td></tr>
+<tr><td>void SetProcAfterLastStkThreadStops(void* Proc)</td><td>コールバックメソッドProcAfterLastStkThreadStopsのポインタを設定します。</td></tr>
+<tr><td>int StartSpecifiedStkThreads(int Ids[MAX_NUM_OF_STKTHREADS], int NumOfIds)</td><td>指定されたIDのスレッドを開始します。</td></tr>
+<tr><td>int StopSpecifiedStkThreads(int Ids[MAX_NUM_OF_STKTHREADS], int NumOfIds)</td><td>指定されたIDのスレッドを停止します。</td></tr>
+<tr><td>void SetStkThreadInterval(int TargetId, int Millisec)</td><td>ElemStkThreadMainコールバックメソッドを定期的に呼び出す間隔をミリ秒単位で指定します。</td></tr>
+<tr><td>int GetStkThreadInterval(int TargetId)</td><td>ElemStkThreadMainコールバックメソッドを定期的に呼び出す間隔を取得します。</td></tr>
+<tr><td>int GetStkThreadIdByIndex(int Index)</td><td>指定した要素番号のIDを取得します。</td></tr>
+<tr><td>int GetStkThreadStatus(int TargetId)</td><td>指定したIDのスレッドの状態を取得します。</td></tr>
+<tr><td>int GetStkThreadStatusByIndex(int Index)</td><td>指定した要素番号のスレッドの状態を取得します。</td></tr>
+<tr><td>int GetStkThreadName(int TargetId, TCHAR Name[MAX_LENGTH_OF_STKTHREAD_NAME])</td><td>指定したIDのスレッドの名前を取得します。</td></tr>
+<tr><td>int GetStkThreadNameByIndex(int Index, TCHAR Name[MAX_LENGTH_OF_STKTHREAD_NAME])</td><td>指定した要素番号のスレッドの名前を取得します。</td></tr>
+<tr><td>int GetStkThreadDescription(int TargetId, TCHAR Description[MAX_LENGTH_OF_STKTHREAD_DESCRIPTION])</td><td>指定したIDのスレッドの詳細説明を取得します。</td></tr>
+<tr><td>int GetStkThreadDescriptionByIndex(int Index, TCHAR Description[MAX_LENGTH_OF_STKTHREAD_DESCRIPTION])</td><td>指定した要素番号のスレッドの詳細説明を取得します。</td></tr>
+</table><P>
+</div><p>
+
+
+<H2 ID="3.2">3.2 ユーザープログラム用API詳細</H2>
+
+<H3 ID="3.2.1">3.2.1 int GetNumOfRunStkThread()</H3>
+<div class="topic">
+現在実行中のスレッドの数を返却します。具体的にはElemStkThreadInitメソッドの開始直前から
+ElemStkThreadFinalメソッドの終了直後までをスレッド実行中と解釈し，その間の処理を実行している
+すべてのスレッドの数を返却します。<br>
+<table class="tblstyle">
+<tr><td>[入力]</td><td>なし</td></tr>
+<tr><td>[戻り値]</td><td>現在実行中のスレッドの数</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.2">3.2.2 int GetNumOfStkThread()</H3>
+<div class="topic">
+登録済の全てのスレッドの数を返却します。スレッドの登録および削除は
+AddStkThreadメソッドおよびDeleteStkThreadメソッドを用いて実施することができます。<br>
+<table class="tblstyle">
+<tr><td>[入力]</td><td>なし</td></tr>
+<tr><td>[戻り値]</td><td>全てのスレッドの数</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.3">3.2.3 void AddStkThread(int Id, TCHAR Name[MAX_LENGTH_OF_STKTHREAD_NAME], TCHAR Description[MAX_LENGTH_OF_STKTHREAD_DESCRIPTION], void* Init, void* Final, void* Main, void* Start, void* Stop)</H3>
+<div class="topic">
+新たなスレッドを登録します。<br>
+下記の何れかに該当する場合，本メソッドはスレッドを登録せず処理は呼び出し元に戻ります。
+<ul>
+<li>すでに最大数のスレッドが登録されている場合
+<li>指定されたNameおよびDescriptionの文字長が最大長を超えている場合
+<li>指定されたIdと同じIDをもつスレッドがすでに登録されている場合
+</ul>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>StkThread ID (StkThreadが内部的に管理するスレッドのIDであり一般的なスレッドIDではない)</td></tr>
+<tr><td>Name[入力]</td><td>スレッドの名前</td></tr>
+<tr><td>Description[入力]</td><td>スレッドの詳細説明</td></tr>
+<tr><td>Init[入力]</td><td>ElemStkThreadInit(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>Final[入力]</td><td>ElemStkThreadFinal(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>Main[入力]</td><td>ElemStkThreadMain(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>Start[入力]</td><td>ElemStkThreadStart(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>Stop[入力]</td><td>ElemStkThreadStop(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.4">3.2.4 void DeleteStkThread(int Id)</H3>
+<div class="topic">
+登録されているスレッドを削除します。<br>
+スレッドを削除するにあたり，本メソッドは内部的にStopSpecifiedStkThreadsメソッドを呼び出し，実行中のスレッドの停止処理を行います。<br>
+指定したIDのスレッドが存在しない場合，要求は無視され処理は呼び出し元に戻ります。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>StkThread ID (StkThreadが内部的に管理するスレッドのIDであり一般的なスレッドIDではない)</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.5">3.2.5 void SetProcBeforeFirstStkThreadStarts(void* Proc)</H3>
+<div class="topic">
+ProcBeforeFirstStkThreadStarts(コールバックメソッド)を設定します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>ProcBeforeFirstStkThreadStarts(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.6">3.2.6 void SetProcAfterLastStkThreadStops(void* Proc)</H3>
+<div class="topic">
+ProcAfterLastStkThreadStops(コールバックメソッド)を設定します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>ProcAfterLastStkThreadStops(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.7">3.2.7 int StartSpecifiedStkThreads(int Ids[MAX_NUM_OF_STKTHREADS], int NumOfIds)</H3>
+<div class="topic">
+指定されたID(StkThread ID)のスレッドを実行します。<br>
+このメソッドは最初に現在実行中のスレッドが存在するかどうかをチェックし，指定されたスレッドが最初の実行スレッドと判断した場合，ProcBeforeFirstStkThreadStartsをコールバックします。<br>
+その後ElemStkThreadStartおよびElemStkThreadInitのコールバックを経てElemStkThreadMainを定期的にコールバックします。<br>
+指定したIDのStkThreadが存在しない場合，要求は無視されます。<br>
+<table class="tblstyle">
+<tr><td>Ids[入力]</td><td>実行するスレッドのIDを含む配列。複数のIDを指定することができます。</td></tr>
+<tr><td>NumOfIds[入力]</td><td>Idsに含まれるID(要素)の数</td></tr>
+<tr><td>[戻り値]</td><td>本メソッドを呼び出す前に実行していたスレッドの数</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.8">3.2.8 int StopSpecifiedStkThreads(int Ids[MAX_NUM_OF_STKTHREADS], int NumOfIds)</H3>
+<div class="topic">
+指定されたID(StkThread ID)のスレッドの実行を停止します。<br>
+このメソッドはElemStkThreadStopおよびElemStkThreadFinalをコールバックしたあと，全てのスレッドが停止したかどうかをチェックし，全てのスレッドが停止したと判断した場合，ProcAfterLastStkThreadStopsをコールバックします。<br>
+指定したIDのStkThreadが存在しない場合，要求は無視されます。<br>
+<table class="tblstyle">
+<tr><td>Ids[入力]</td><td>停止するスレッドのIDを含む配列。複数のIDを指定することができます。</td></tr>
+<tr><td>NumOfIds[入力]</td><td>Idsに含まれるID(要素)の数</td></tr>
+<tr><td>[戻り値]</td><td>本メソッドを呼び出す前に実行していたスレッドの数</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.9">3.2.9 void SetStkThreadInterval(int TargetId, int Millisec)</H3>
+<div class="topic">
+StkThread.Libは，スレッド開始後定期的にElemStkThreadMainコールバックメソッドを呼び出します。<br>
+このメソッドはElemStkThreadMainコールバックメソッドを呼び出す間隔をミリ秒単位で指定します。<br>
+<table class="tblstyle">
+<tr><td>TargetId[入力]</td><td>間隔を指定するスレッドのID(StkThread ID)</td></tr>
+<tr><td>Millisec[入力]</td><td>ElemStkThreadMainコールバックメソッドを呼び出す間隔（ミリ秒）</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.10">3.2.10 int GetStkThreadInterval(int TargetId)</H3>
+<div class="topic">
+このメソッドはElemStkThreadMainコールバックメソッドを呼び出す間隔を取得します。<br>
+<table class="tblstyle">
+<tr><td>TargetId[入力]</td><td>間隔を取得する対象のスレッドのID(StkThread ID)</td></tr>
+<tr><td>[戻り値]</td><td>
+ElemStkThreadMainコールバックメソッドを呼び出す間隔（ミリ秒）<br>
+-1: 指定したIDのStkThreadが存在しない場合
+</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.11">3.2.11 int GetStkThreadIdByIndex(int Index)</H3>
+<div class="topic">
+StkThreadはStkThread.Libの内部で配列の要素として管理されています。
+このメソッドは，配列のIndex番目の要素であるStkThreadのIDを取得します。<br>
+<table class="tblstyle">
+<tr><td>Index[入力]</td><td>配列の要素番号(0からMAX_NUM_OF_STKTHREADS-1までの値)</td></tr>
+<tr><td>[戻り値]</td><td>
+指定されたStkThteadのID<br>
+-1: 指定したIDのStkThreadが存在しない場合
+</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.12">3.2.12 int GetStkThreadStatus(int TargetId)</H3>
+<div class="topic">
+指定したIDのスレッドの状態を取得します。<br>
+<table class="tblstyle">
+<tr><td>TargetId[入力]</td><td>StkThread ID (StkThreadが内部的に管理するスレッドのIDであり一般的なスレッドIDではない)</td></tr>
+<tr><td>[戻り値]</td><td>StkThreadの状態。以下の値の何れかです。<br>
+STKTHREAD_STATUS_READY<br>
+STKTHREAD_STATUS_STARTING<br>
+STKTHREAD_STATUS_RUNNING<br>
+STKTHREAD_STATUS_STOPPING<br>
+-1: 指定したIDのStkThreadが存在しない場合
+</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.13">3.2.13 int GetStkThreadStatusByIndex(int Index)</H3>
+<div class="topic">
+StkThreadはStkThread.Libの内部で配列の要素として管理されています。
+このメソッドは，配列のIndex番目の要素であるStkThreadの状態を取得します。<br>
+<table class="tblstyle">
+<tr><td>Index[入力]</td><td>配列の要素番号(0からMAX_NUM_OF_STKTHREADS-1までの値)</td></tr>
+<tr><td>[戻り値]</td><td>StkThreadの状態。以下の値の何れかです。<br>
+STKTHREAD_STATUS_READY<br>
+STKTHREAD_STATUS_STARTING<br>
+STKTHREAD_STATUS_RUNNING<br>
+STKTHREAD_STATUS_STOPPING<br>
+-1: 指定したIDのStkThreadが存在しない場合
+</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.14">3.2.14 int GetStkThreadName(int TargetId, TCHAR Name[MAX_LENGTH_OF_STKTHREAD_NAME])</H3>
+<div class="topic">
+指定したIDのスレッドの名前を取得します。<br>
+<table class="tblstyle">
+<tr><td>TargetId[入力]</td><td>StkThread ID (StkThreadが内部的に管理するスレッドのIDであり一般的なスレッドIDではない)</td></tr>
+<tr><td>Name[出力]</td><td>指定したStkThreadの名前</td></tr>
+<tr><td>[戻り値]</td><td>指定したIDのStkThreadが存在する場合0，そうでない場合-1が返ります。</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.15">3.2.15 int GetStkThreadNameByIndex(int Index, TCHAR Name[MAX_LENGTH_OF_STKTHREAD_NAME])</H3>
+<div class="topic">
+StkThreadはStkThread.Libの内部で配列の要素として管理されています。
+このメソッドは，配列のIndex番目の要素であるStkThreadの名前を取得します。<br>
+<table class="tblstyle">
+<tr><td>Index[入力]</td><td>配列の要素番号(0からMAX_NUM_OF_STKTHREADS-1までの値)</td></tr>
+<tr><td>Name[出力]</td><td>指定したStkThreadの名前</td></tr>
+<tr><td>[戻り値]</td><td>指定したIDのStkThreadが存在する場合0，そうでない場合-1が返ります。</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.16">3.2.16 int GetStkThreadDescription(int TargetId, TCHAR Description[MAX_LENGTH_OF_STKTHREAD_DESCRIPTION])</H3>
+<div class="topic">
+指定したIDのスレッドの詳細説明を取得します。<br>
+<table class="tblstyle">
+<tr><td>TargetId[入力]</td><td>StkThread ID (StkThreadが内部的に管理するスレッドのIDであり一般的なスレッドIDではない)</td></tr>
+<tr><td>Description[出力]</td><td>指定したStkThreadの詳細説明</td></tr>
+<tr><td>[戻り値]</td><td>指定したIDのStkThreadが存在する場合0，そうでない場合-1が返ります。</td></tr>
+</table>
+</div><p>
+
+
+<H3 ID="3.2.17">3.2.17 int GetStkThreadDescriptionByIndex(int Index, TCHAR Description[MAX_LENGTH_OF_STKTHREAD_DESCRIPTION])</H3>
+<div class="topic">
+StkThreadはStkThread.Libの内部で配列の要素として管理されています。
+このメソッドは，配列のIndex番目の要素であるStkThreadの詳細説明を取得します。<br>
+<table class="tblstyle">
+<tr><td>Index[入力]</td><td>配列の要素番号(0からMAX_NUM_OF_STKTHREADS-1までの値)</td></tr>
+<tr><td>Description[出力]</td><td>指定したStkThreadの詳細説明</td></tr>
+<tr><td>[戻り値]</td><td>指定したIDのStkThreadが存在する場合0，そうでない場合-1が返ります。</td></tr>
+</table>
+</div><p>
+
+
+<H2 ID="3.3">3.3 ユーザープログラム用定数値</H2>
+<div class="topic">
+ユーザープログラムでは，stkthread.hに定義された下記の定数値を使用することができます。
+<table class="tblstyle">
+<tr><th>定数</th><th>説明</th><th>定数値</th></tr>
+<tr><td>MAX_NUM_OF_STKTHREADS</td><td>登録可能なスレッドの最大数</td><td>1,000</td></tr>
+<tr><td>MAX_LENGTH_OF_STKTHREAD_NAME</td><td>スレッド名の最大文字数(TCHAR換算)</td><td>32</td></tr>
+<tr><td>MAX_LENGTH_OF_STKTHREAD_DESCRIPTION</td><td>スレッドの説明の最大文字数(TCHAR換算)</td><td>256</td></tr>
+<tr><td>STKTHREAD_STATUS_READY</td><td>スレッドの状態=待機中</td><td>100</td></tr>
+<tr><td>STKTHREAD_STATUS_STARTING</td><td>スレッドの状態=開始中</td><td>101</td></tr>
+<tr><td>STKTHREAD_STATUS_RUNNING</td><td>スレッドの状態=実行中</td><td>102</td></tr>
+<tr><td>STKTHREAD_STATUS_STOPPING</td><td>スレッドの状態=停止中</td><td>104</td></tr>
+</table>
+</div><p>
+
+
+</div>
+</BODY>

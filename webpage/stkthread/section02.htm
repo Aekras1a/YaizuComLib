@@ -1,0 +1,127 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<div id="container">
+<H1>2. ユーザープログラムで定義するコールバックメソッド</H1>
+
+<H2 ID="2.1">2.1 コールバックメソッド概要</H2>
+<div class="topic">
+StkThread.Libでは，各スレッド(StkThread)の振る舞いをコールバックメソッドで定義します。<br>
+StkThread.Libの利用プログラムは，あらかじめ実装したコールバックメソッドをStkThread.Libに登録します。<br>
+コールバックメソッドの種類を以下に示します。<br>
+<table class="tblstyle">
+<tr><th>コールバックメソッド(仮名)</th><th>コールバックメソッドを呼び出すタイミング</th></tr>
+<tr><td>ProcBeforeFirstStkThreadStarts</td><td>最初のスレッドが開始される直前</td></tr>
+<tr><td>ProcAfterLastStkThreadStops</td><td>最後のスレッドが終了した直後</td></tr>
+<tr><td>ElemStkThreadStart</td><td>スレッド開始要求受理時。各スレッド毎定義</td></tr>
+<tr><td>ElemStkThreadStop</td><td>スレッド終了要求受理時。各スレッド毎定義</td></tr>
+<tr><td>ElemStkThreadInit</td><td>スレッド開始直後。各スレッド毎定義</td></tr>
+<tr><td>ElemStkThreadMain</td><td>スレッド実行時。繰り返し呼び出される。各スレッド毎定義</td></tr>
+<tr><td>ElemStkThreadFinal</td><td>スレッド終了直前。各スレッド毎定義</td></tr>
+</table><br>
+時間が左側から右側に進むとして3つのStkThreadの各コールバックメソッドが呼び出されるタイミング（例）を以下に図示します。<br>
+<img src="stkthread-figure3.gif"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(a): ElemStkThreadStartのコールバック<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(b): ElemStkThreadInitのコールバック<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(c): ElemStkThreadMainのコールバック<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(d): ElemStkThreadStopのコールバック<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(e): ElemStkThreadFinalのコールバック<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(x): ProcBeforeFirstStkThreadStartsのコールバック<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(y): ProcAfterLastStkThreadStopsのコールバック<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(P): ユーザープログラムからのStartSpecifiedStkThreadsの呼び出し<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(Q): ユーザープログラムからのStopSpecifiedStkThreadsの呼び出し<br>
+<p>
+StkThread.Libは，StartSpecifiedStkThreadsメソッドが呼び出されたことを契機に
+ユーザープログラムで定義したElemStkThreadStartをコールバックしますが，これに先立ちProcBeforeFirstStkThreadStartsメソッドをコールバックします。<br>
+また，StkThread.Libは，StopSpecifiedStkThreadsメソッドが呼び出されたことを契機に
+ElemStkThreadStopをコールバックし，最後にProcAfterLastStkThreadStopsメソッドをコールバックします。
+</div><p>
+
+
+<H2 ID="2.2">2.2 コールバックメソッド詳細</H2>
+
+<H3 ID="2.2.1">2.2.1 int ElemStkThreadStart(int Id)</H3>
+<div class="topic">
+StkThread.Libは，スレッド開始要求受理時にユーザープログラムで定義した本コールバックメソッドを呼び出します。
+本コールバックメソッドはスレッド(StkThread)毎に定義することができます。<br>
+コールバックメソッドの名称はユーザーが自由に定義することができ，AddStkThreadメソッドでそのコールバックメソッドのポインタを指定します。<br>
+コールバックメソッドが呼び出される契機は，ユーザープログラムがStartSpecifiedStkThreadsを呼び出した直後（スレッド開始要求受理時）となります。<br>
+<table class="tblstyle">
+<tr><td>Id [入力]</td><td>スレッド開始対象となるStkThreadのID</td></tr>
+<tr><td>[戻り値]</td><td>ユーザープログラムのコールバックメソッドはint型の値を返さなければなりませんが，この値はコールバックメソッドの呼び出し元では評価しません。特に意図が無ければ0を返すようにしてください。</td></tr>
+</table>
+</div><p>
+
+<H3 ID="2.2.2">2.2.2 int ElemStkThreadStop(int Id)</H3>
+<div class="topic">
+StkThread.Libは，スレッド終了要求受理時にユーザープログラムで定義した本コールバックメソッドを呼び出します。
+本コールバックメソッドはスレッド(StkThread)毎に定義することができます。<br>
+コールバックメソッドの名称はユーザーが自由に定義することができ，AddStkThreadメソッドでそのコールバックメソッドのポインタを指定します。<br>
+コールバックメソッドが呼び出される契機は，ユーザープログラムがStopSpecifiedStkThreadsを呼び出した直後（スレッド終了要求受理時）となります。<br>
+<table class="tblstyle">
+<tr><td>Id [入力]</td><td>スレッド終了対象となるStkThreadのID</td></tr>
+<tr><td>[戻り値]</td><td>ユーザープログラムのコールバックメソッドはint型の値を返さなければなりませんが，この値はコールバックメソッドの呼び出し元では評価しません。特に意図が無ければ0を返すようにしてください。</td></tr>
+</table>
+</div><p>
+
+<H3 ID="2.2.3">2.2.3 int ElemStkThreadInit(int Id)</H3>
+<div class="topic">
+StkThread.Libは，スレッド開始直後にユーザープログラムで定義した本コールバックメソッドを呼び出します。
+本コールバックメソッドはスレッド(StkThread)毎に定義することができます。<br>
+コールバックメソッドの名称はユーザーが自由に定義することができ，AddStkThreadメソッドでそのコールバックメソッドのポインタを指定します。<br>
+コールバックメソッドが呼び出される契機は，ユーザープログラムがStartSpecifiedStkThreadsを呼び出し，実際のスレッドが開始したとき（スレッド開始直後）となります。<br>
+<table class="tblstyle">
+<tr><td>Id [入力]</td><td>スレッド開始対象となるStkThreadのID</td></tr>
+<tr><td>[戻り値]</td><td>ユーザープログラムのコールバックメソッドはint型の値を返さなければなりませんが，この値はコールバックメソッドの呼び出し元では評価しません。特に意図が無ければ0を返すようにしてください。</td></tr>
+</table>
+</div><p>
+
+<H3 ID="2.2.4">2.2.4 int ElemStkThreadMain(int Id)</H3>
+<div class="topic">
+StkThread.Libは，スレッド実行時にユーザープログラムで定義した本コールバックメソッドを定期的に呼び出します。
+本コールバックメソッドはスレッド(StkThread)毎に定義することができます。<br>
+コールバックメソッドの名称はユーザーが自由に定義することができ，AddStkThreadメソッドでそのコールバックメソッドのポインタを指定します。<br>
+コールバックメソッドが呼び出される契機は，ユーザープログラムがStartSpecifiedStkThreadsを呼び出し，実際のスレッドが開始した後（スレッド実行後）となります。
+また，コールバックメソッドはGetStkThreadIntervalで取得した間隔で定期的に呼び出されます。<br>
+本コールバックメソッドが呼び出される間隔はSetStkThreadIntervalメソッドで変更することができます。
+<table class="tblstyle">
+<tr><td>Id [入力]</td><td>StkThreadのID</td></tr>
+<tr><td>[戻り値]</td><td>ユーザープログラムのコールバックメソッドはint型の値を返さなければなりませんが，この値はコールバックメソッドの呼び出し元では評価しません。特に意図が無ければ0を返すようにしてください。</td></tr>
+</table>
+</div><p>
+
+<H3 ID="2.2.5">2.2.5 int ElemStkThreadFinal(int Id)</H3>
+<div class="topic">
+StkThread.Libは，スレッド終了直前にユーザープログラムで定義した本コールバックメソッドを呼び出します。
+本コールバックメソッドはスレッド(StkThread)毎に定義することができます。<br>
+コールバックメソッドの名称はユーザーが自由に定義することができ，AddStkThreadメソッドでそのコールバックメソッドのポインタを指定します。<br>
+コールバックメソッドが呼び出される契機は，ユーザープログラムがStopSpecifiedStkThreadsを呼び出し，実際のスレッドが終了したとき（スレッド終了直前）となります。<br>
+<table class="tblstyle">
+<tr><td>Id [入力]</td><td>スレッド終了対象となるStkThreadのID</td></tr>
+<tr><td>[戻り値]</td><td>ユーザープログラムのコールバックメソッドはint型の値を返さなければなりませんが，この値はコールバックメソッドの呼び出し元では評価しません。特に意図が無ければ0を返すようにしてください。</td></tr>
+</table>
+</div><p>
+
+<H3 ID="2.2.6">2.2.6 void ProcBeforeFirstStkThreadStarts(void)</H3>
+<div class="topic">
+StkThread.Libは，最初のスレッドが開始する直前にユーザープログラムで定義した本コールバックメソッドを呼び出します。<br>
+コールバックメソッドの名称はユーザーが自由に定義することができ，SetProcBeforeFirstStkThreadStarts
+メソッドでそのコールバックメソッドのポインタを指定します。<br>
+コールバックメソッドが呼び出される契機は，ユーザープログラムがStartSpecifiedStkThreadsを呼び出し，最初のスレッドが開始する直前となります。<br>
+</div><p>
+
+<H3 ID="2.2.7">2.2.7 void ProcAfterLastStkThreadStops(void)</H3>
+<div class="topic">
+StkThread.Libは，最後のスレッドが終了した直後にユーザープログラムで定義した本コールバックメソッドを呼び出します。<br>
+コールバックメソッドの名称はユーザーが自由に定義することができ，SetProcAfterLastStkThreadStops
+メソッドでそのコールバックメソッドのポインタを指定します。<br>
+コールバックメソッドが呼び出される契機は，ユーザープログラムがStopSpecifiedStkThreadsを呼び出し，最後のスレッドが終了した直後となります。<br>
+</div><p>
+
+
+</div>
+</BODY>

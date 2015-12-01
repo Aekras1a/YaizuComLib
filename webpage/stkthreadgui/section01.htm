@@ -1,0 +1,181 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<div id="container">
+<H1>1. StkThreadGuiについて</H1>
+
+<H2 ID="1.1">1.1 StkThreadGui概要</H2>
+<div class="topic">
+StkThreadGuiはスレッド(StkThread)管理用GUIを提供する静的ライブラリで，C言語用APIを提供します。<br>
+StkThreadGuiは内部的にStkThread.Libの機能を呼び出します。
+また，StkThreadGuiの機能は，場合によりStkThread.Libの機能の事前設定を前提とするため，StkThreadGui利用プログラム側では，StkThreadGuiの機能だけでなく，StkThread.Libの機能を呼び出す必要があります。<p>
+StkThreadGuiは以下のファイルから構成されます。<br>
+<table class="tblstyle">
+<tr><td>stkthreadgui.lib</td><td>StkThreadGuiの静的ライブラリです。</td></tr>
+<tr><td>stkthreadgui.h</td><td>StkThreadGui利用プログラムのためのヘッダファイルです。</td></tr>
+</table>
+</div><p>
+
+
+<H2 ID="1.2">1.2 システム要件</H2>
+<div class="topic">
+StkThreadGuiは以下の環境で動作します。<BR>
+オペレーティングシステム：<br>
+<div class="topic">
+・Windows Vista Business/Ultimate SP2<br>
+・Windows 7 Professional/Ultimate SP1<br>
+・Windows 8 Pro<br>
+・Windows 8.1 Pro<br>
+・Windows Server 2008 Standard SP2<br>
+・Windows Server 2008 R2 Standard SP1<br>
+・Windows Server 2012 Standard<br>
+・Windows Server 2012 R2 Standard<br>
+</div><br>
+前提となるソフトウェア：<br>
+<div class="topic">
+・Microsoft Visual Studio 2008 (Visual C++)<br>
+</div><br>
+</div><p>
+
+
+<H2 ID="1.3">1.3 GUIの構成</H2>
+<div class="topic">
+GUIの画面例を以下に示します。<br>
+<img src="stkthreadgui-figure1.jpg"><p>
+GUIはStkThreadGuiのShowStkThreadControllerメソッドを呼び出すことにより起動します。<br>
+GUIで表示している情報は以下の2種類となります。<br>
+<ul>
+<li>ログ情報。StkThreadGuiのユーザープログラムで任意のログを出力することができます。<br>
+<li>スレッド一覧。StkThreadGuiのAddStkThreadForGuiメソッドを呼び出して追加したスレッドの一覧が表示されます。<br>
+</ul><br>
+スレッド一覧から操作したいスレッドを選択し，スレッドの開始／停止操作を行うことができます。<br>
+</div><p>
+
+
+<H2 ID="1.4">1.4 API詳細</H2>
+
+<h3 ID="1.4.1">1.4.1 int ShowStkThreadController(HWND hWnd, int ParentIconId)</h3>
+<div class="topic">
+スレッド管理用GUIを表示します。<br>
+<table class="tblstyle">
+<tr><td>hWnd [入力]</td><td>親ウィンドウのハンドル</td></tr>
+<tr><td>ParentIconId [入力]</td><td>親ウィンドウのアイコンID</td></tr>
+<tr><td>戻り値</td><td>常に0を返す</td></tr>
+</table>
+</div><p>
+
+<h3 ID="1.4.2">1.4.2 void AddStkThreadForGui(int Id, TCHAR* Name, TCHAR* Description, void* Init, void* Final, void* Main, void* Start, void* Stop)</h3>
+<div class="topic">
+StkThreadをStkThreadGuiの管理リソースとして追加します。<br>
+スレッド管理用GUIを使用してスレッド(StkThread)を管理する場合，StkThread.LibのAddStkThreadではなく，本メソッドを使用する必要があります。<br>
+AddStkThreadForGuiメソッドは内部的にStkThread.LibのAddStkThreadメソッドを呼び出します。詳細はStkThread.LibのAPI仕様を参照してください。<br>
+<table class="tblstyle">
+<tr><td>Id [入力]</td><td>StkThread ID (StkThreadが内部的に管理するスレッドのIDであり一般的なスレッドIDではない)</td></tr>
+<tr><td>Name [入力]</td><td>スレッドの名前</td></tr>
+<tr><td>Description [入力]</td><td>スレッドの詳細説明</td></tr>
+<tr><td>Init [入力]</td><td>ElemStkThreadInit(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>Final [入力]</td><td>ElemStkThreadFinal(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>Main [入力]</td><td>ElemStkThreadMain(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>Start [入力]</td><td>ElemStkThreadStart(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+<tr><td>Stop [入力]</td><td>ElemStkThreadStop(コールバックメソッド)へのポインタ。NULLを指定した場合コールバックは無効。</td></tr>
+</table>
+</div><p>
+
+<h3 ID="1.4.3">1.4.3 void DeleteStkThreadForGui(int Id)</h3>
+<div class="topic">
+StkThreadをStkThreadGuiの管理リソースから削除します。<br>
+スレッド管理用GUIを使用してスレッド(StkThread)を管理する場合，StkThread.LibのDeleteStkThreadではなく，本メソッドを使用する必要があります。<br>
+DeleteStkThreadForGuiメソッドは内部的にStkThread.LibのDeleteStkThreadメソッドを呼び出します。詳細はStkThread.LibのAPI仕様を参照してください。<br>
+<table class="tblstyle">
+<tr><td>Id [入力]</td><td>削除対象のStkThread ID (StkThreadが内部的に管理するスレッドのIDであり一般的なスレッドIDではない)</td></tr>
+</table>
+</div><p>
+
+<h3 ID="1.4.4">1.4.4 void StartAllStkThreads()</h3>
+<div class="topic">
+AddStkThreadForGuiで登録されたすべてのスレッドを実行します。<br>
+StartAllStkThreadsメソッドは内部的にStkThread.LibのStartSpecifiedStkThreadsメソッドを呼び出します。<br>
+</div><p>
+
+<h3 ID="1.4.5">1.4.5 void StopAllStkThreads()</h3>
+<div class="topic">
+AddStkThreadForGuiで登録されたすべてのスレッドを停止します。<br>
+StopAllStkThreadsメソッドは内部的にStkThread.LibのStopSpecifiedStkThreadsメソッドを呼び出します。<br>
+</div><p>
+
+<h3 ID="1.4.6">1.4.6 void ClearStkThreadLog()</h3>
+<div class="topic">
+ログ出力をクリアします。<br>
+</div><p>
+
+<h3 ID="1.4.7">1.4.7 void AddStkThreadLog(TCHAR* Msg)</h3>
+<div class="topic">
+指定された文字列をログとして出力します。<br>
+<table class="tblstyle">
+<tr><td>Msg [入力]</td><td>ログとして出力する文字列。</td></tr>
+</table>
+</div><p>
+
+<h3 ID="1.4.8">1.4.8 void AddStkThreadLogWithThreadInfo(TCHAR* Name, TCHAR* Msg)</h3>
+<div class="topic">
+指定された文字列をログとして出力します。<br>
+出力される形式は，"時:分:秒 [Name] Msg"となります。<br>
+<table class="tblstyle">
+<tr><td>Name [入力]</td><td>ログ出力元の名称。通常スレッド名を指定します。</td></tr>
+<tr><td>Msg [入力]</td><td>ログとして出力する文字列。</td></tr>
+</table>
+</div><p>
+
+<h3 ID="1.4.9">1.4.9 void GetStkThreadLog(TCHAR* Out, int Length)</h3>
+<div class="topic">
+現在出力されているログを取得します。<br>
+<table class="tblstyle">
+<tr><td>Out [出力]</td><td>取得した文字列が格納される領域。</td></tr>
+<tr><td>Length [入力]</td><td>取得した文字列が格納される領域のサイズ(WORD数;TCHARの要素数)。</td></tr>
+</table>
+</div><p>
+
+<h3 ID="1.4.10">1.4.10 int GetStkThreadLogUpdateVersion()</h3>
+<div class="topic">
+ログ出力の更新バージョンを取得します。<br>
+ログ出力の更新バージョンは，AddStkThreadLogメソッドおよびAddStkThreadLogWithThreadInfoメソッドを呼び出す度に増加します。
+また，ClearStkThreadLogメソッドを呼び出すと0にクリアされます。<br>
+<table class="tblstyle">
+<tr><td>戻り値</td><td>ログ出力の更新バージョン</td></tr>
+</table>
+</div><p>
+
+<h3 ID="1.4.11">1.4.11 int GetStkThreadLogMaxSize()</h3>
+<div class="topic">
+ログ出力領域の最大サイズ(WORD数;TCHARの要素数)を取得します。<br>
+<table class="tblstyle">
+<tr><td>戻り値</td><td>ログ出力領域の最大サイズ(WORD数;TCHARの要素数)</td></tr>
+</table>
+</div><p>
+
+<h3 ID="1.4.12">1.4.12 int GetStkThreadLogSize()</h3>
+<div class="topic">
+ログ出力領域に現在格納されている文字列のサイズ(WORD数;TCHARの要素数)を取得します。<br>
+<table class="tblstyle">
+<tr><td>戻り値</td><td>ログ出力領域に現在格納されている文字列のサイズ(WORD数;TCHARの要素数)</td></tr>
+</table>
+</div><p>
+
+<h3 ID="1.4.13">1.4.13 void ChangeStkThreadLogSize(int Size)</h3>
+<div class="topic">
+ログ出力領域のサイズ(WORD数;TCHARの要素数)を変更します。<br>
+デフォルトは10,000文字です。<br>
+<table class="tblstyle">
+<tr><td>Size [入力]</td><td>ログ出力領域のサイズ(WORD数;TCHARの要素数)</td></tr>
+</table>
+</div><p>
+
+<p>
+
+
+</div>
+</BODY>

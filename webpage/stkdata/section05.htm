@@ -1,0 +1,549 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+
+<style type="text/css">
+<!--
+.spc { margin-left: 2em; margin-right: 0em; }
+-->
+</style>
+
+<div id="container">
+<H1>5. インターフェース</H1>
+
+<H2>5.1 インターフェース一覧</H2>
+
+■リポジトリ情報取得用<BR>
+<div class=spc>
+(1) GetTableCount<BR>
+(2) GetTableName<BR>
+(3) GetTableSize<BR>
+(4) GetTableVersion<BR>
+(5) GetColumnCount<BR>
+(6) GetColumnName<br>
+(7) GetColumnSize<BR>
+(8) GetColumnType<BR>
+(9) GetNumOfRecords<BR>
+(10) GetMaxNumOfRecords<BR>
+</div><P>
+■テーブル定義用<BR>
+<div class=spc>
+(11) CreateTable<BR>
+(12) DeleteTable<BR>
+</div><P>
+■テーブルロック用<BR>
+<div class=spc>
+(13) LockTable<BR>
+(14) LockAllTable<BR>
+(15) UnlockTable<BR>
+(16) UnlockAllTable<BR>
+</div><P>
+■データアクセス用<BR>
+<div class=spc>
+(17) InsertRecord<BR>
+(18) UpdateRecord<BR>
+(19) DeleteRecord（全レコード削除）<BR>
+(20) DeleteRecord（検索条件付削除）<BR>
+(21) GetRecord（全レコード取得）<BR>
+(22) GetRecord（検索条件付取得）<BR>
+(23) ClearRecordData<BR>
+</div><P>
+■レコードソート用<BR>
+<div class=spc>
+(24) AzSortRecord<BR>
+(25) ZaSortRecord<BR>
+</div><P>
+■ファイルアクセス用<BR>
+<div class=spc>
+(26) SaveData<BR>
+(27) LoadData<BR>
+(28) AutoSave<BR>
+</div><P>
+
+
+<H2>5.2 インターフェース詳細</H2>
+(1) int GetTableCount()<BR>
+<div class=spc>
+この関数は存在するテーブルの数を返却します。
+<table border="1">
+<tr><td>戻り値</td><td>存在するテーブルの数<br>
+</table>
+</div><P>
+
+(2)  int GetTableName(TCHAR TableNames[MAX_TABLE_NUMBER][TABLE_NAME_SIZE])<br>
+<div class=spc>
+この関数は存在するの全てのテーブルの名称を返却します。
+<table border="1">
+<tr><td>TableNames</td><td>テーブルの名称(最大16個)を返却する配列</td></tr>
+<tr><td>戻り値</td><td>テーブルの数<br>
+</table>
+</div><P>
+
+(3) int GetTableSize(TCHAR* TableName)<BR>
+<div class=spc>
+この関数は指定したテーブルのサイズ（バイト数）を返却します。
+<table border="1">
+<tr><td>TableName</td><td>サイズを取得する対象のテーブルの名称</td></tr>
+<tr><td>戻り値</td><td>テーブルのサイズ（バイト数）</td></tr>
+</table>
+</div><P>
+
+(4) int GetTableVersion(TCHAR* TableName)<BR>
+<div class=spc>
+この関数は指定したテーブルのバージョンを返却します。<br>
+テーブルのバージョンとは，対象のテーブルが何回更新されたかを示す数値で，InsertRecord, UpdateRecord, DeleteRecord
+でテーブル内のレコードを変更する度に1加算されます。StkData利用プログラムで，対象のテーブルの変更有無を調べる場合，この関数を呼び出します。
+バージョンの初期値は0で，CreateTableおよびLoadDataを呼び出した後，バージョンには初期値が設定されます。
+バージョンの取り得る範囲は0から2147483647の間で，バージョンが2147483647時点でテーブルが変更された場合，
+バージョンは0に戻り，その後変更の度に1加算されます。
+これは，テーブルの変更有無を調べたい場合，テーブルが前回から変更されていないのか2147483648回変更
+されたのかを判別することができないことを意味します。<br>
+<table border="1">
+<tr><td>TableName</td><td>バージョン取得先のテーブルの名称</td></tr>
+<tr><td>戻り値</td><td>-1 : 指定したテーブルは存在しない<br>0～2147483647 : 指定したテーブルのバージョン</td></tr>
+</table>
+</div><P>
+
+(5) int GetColumnCount(TCHAR* TableName)<BR>
+<div class=spc>
+この関数は指定したテーブルに存在するカラムの数を返却します。
+<table border="1">
+<tr><td>TableName</td><td>対象となるテーブルの名称</td></tr>
+<tr><td>戻り値</td><td>-1 : 失敗<br>-1以外 : カラムの数<br>
+</table>
+</div><P>
+
+(6) int GetColumnName(TCHAR* TableName, TCHAR ColumnNames[MAX_COLUMN_NUMBER][COLUMN_NAME_SIZE])<br>
+<div class=spc>
+この関数は指定したカラムの名称を返却します。
+<table border="1">
+<tr><td>TableName</td><td>テーブルの名称</td></tr>
+<tr><td>ColumnNames</td><td>TableNameで指定したテーブルに存在するカラムの名称(最大32個)を返却する配列</td></tr>
+<tr><td>戻り値</td><td>-1 : 失敗<br>-1以外 : 返却されるカラム名の数</td></tr>
+</table>
+</div><P>
+
+(7) int GetColumnSize(TCHAR* TableName, TCHAR* ColumnName)<BR>
+<div class=spc>
+この関数は指定したカラムのサイズ（バイト数）を返却します。
+<table border="1">
+<tr><td>TableName</td><td>テーブルの名称</td></tr>
+<tr><td>ColumnName</td><td>TableNameで指定したテーブルに存在するカラムの名称</td></tr>
+<tr><td>戻り値</td><td>-1 : 失敗<br>-1以外 : 指定したカラムのサイズ（バイト数）</td></tr>
+</table>
+</div><P>
+
+(8) int GetColumnType(TCHAR* TableName, TCHAR* ColumnName)<BR>
+この関数は指定したカラムの種別を返却します。
+<div class=spc>
+<table border="1">
+<tr><td>TableName</td><td>テーブルの名称</td></tr>
+<tr><td>ColumnName</td><td>TableNameで指定したテーブルに存在するカラムの名称</td></tr>
+<tr><td>戻り値</td><td>-1 : 失敗<br>
+COLUMN_TYPE_INT:整数型<BR>
+COLUMN_TYPE_FLOAT:単精度浮動小数点数型<br>
+COLUMN_TYPE_STR:文字列型<BR>
+COLUMN_TYPE_WSTR:ワイド文字列型<BR>
+COLUMN_TYPE_BIN:バイナリ型<br>
+</td></tr>
+</table>
+</div><P>
+
+(9) int GetNumOfRecords(TCHAR* TableName)<BR>
+<div class=spc>
+この関数は，指定されたテーブルに登録されているレコードの件数を返却します。
+<TABLE BORDER="1">
+<TR><TD>TableName</TD><TD>レコード件数取得対象テーブルの名称</TD></TR>
+<TR><TD>戻り値</TD><TD>
+-1 : 失敗<br>-1以外 : 指定されたテーブルに登録されているレコードの件数
+</TD></TR>
+</TABLE>
+</div><P>
+
+(10) int GetMaxNumOfRecords(TCHAR* TableName)<BR>
+<div class=spc>
+この関数は，指定されたテーブルに登録できる最大のレコード件数を返却します。
+<TABLE BORDER="1">
+<TR><TD>TableName</TD><TD>レコード件数取得対象テーブルの名称</TD></TR>
+<TR><TD>戻り値</TD><TD>
+-1 : 失敗<br>-1以外 : 指定されたテーブルに登録可能な最大のレコード件数
+</TD></TR>
+</TABLE>
+</div><P>
+
+(11) int CreateTable(TableDef* TabDef)<BR>
+<div class=spc>
+この関数はテーブル生成します。内部処理として，仮想メモリを割当てそれを初期化します。
+<TABLE BORDER="1">
+<TR><TD>TabDef</TD><TD>TableDefインスタンス</TD></TR>
+<TR><TD>戻り値</TD><TD>0  : 成功<BR>-1 : メモリ割当エラー<BR>-2 : パラメータエラー<BR>(カラムが存在しない; 
+最大レコード数が不正; テーブル名が不正)<BR>-3 : コミットエラー<BR>-4 : 登録可能最大テーブル数を超えた</TD></TR>
+</TABLE>
+</div><P>
+
+(12) int DeleteTable(TCHAR* TableName)<BR>
+<div class=spc>
+この関数は既存のテーブルを削除します。内部処理として，仮想メモリの開放を行います。
+<TABLE BORDER="1">
+<TR><TD>TableName</TD><TD>削除するテーブルの名称</TD></TR>
+<TR><TD>戻り値</TD><TD>0  : 成功<BR>-1 : メモリ開放エラー<BR>-2 : パラメータエラー<BR>-3 : デコミットエラー</TD></TR>
+</TABLE>
+</div><P>
+
+(13) int LockTable(TCHAR* TableName, int LockType)<BR>
+<div class=spc>
+データアクセス用関数(InsertRecord, DeleteRecord, UpdateRecord, AzSortRecord, ZaSortRecord または GetRecord)は
+マルチスレッド呼び出しをサポートしています。
+異なるスレッドからの同一テーブルへの同時アクセスを防ぐため，StkDataはロッキングメカニズムを採用しています。<BR>
+2つのスレッド（スレッドAとスレッドB）が存在しており，スレッドAがロック中の場合，スレッドBはスレッドAがアンロック
+するまでロックを掛けることができません。この場合，スレッドAがアンロックするまでスレッドBはロック待ちとなります。
+StkData利用プログラムは，データアクセス用関数（InsertRecord, DeleteRecord, UpdateRecord, GetRecord, AzSortRecord,
+ZaSortRecord, LoadData, SaveData）を
+呼び出す前にLockTable()を呼び出す必要があります。また，StkData利用プログラムはデータアクセス用関数を使用し
+終わったあと，UnlockTable()を呼び出す必要があります。<BR>
+StkData利用プログラムは2つのタイプのロックを掛けることができます。1つは共有ロック，もう1つは排他ロックです。<BR>
+共有ロックはGetRecord()などの情報取得系関数のみを使用する場合に掛けられます。共有ロックでは異なる2つのスレッドが
+同時に同じテーブルに情報取得用アクセスを行うことを認めます。<BR>
+排他ロックはInsertRecord()，UpdateRecord()，DeleteRecord()などの情報更新系関数を使用するときに掛けられます。
+排他ロックでは異なる2つのスレッドが同時に同じテーブルにアクセスを行うことを認めません。<BR>
+StkData利用プログラムは下記の共有ロックと排他ロックの振る舞いについて考慮する必要があります。<P>
+<div class=spc>
+1-共有ロック, 2-共有ロック<BR>
+ → 成功<BR>
+1-共有ロック, 2-排他ロック<BR>
+ → #2 は #1のアンロックを待ち続ける<BR>
+1-排他ロック, 2-共有ロック<BR>
+ → #2 は #1のアンロックを待ち続ける<BR>
+1-排他ロック, 2-排他ロック<BR>
+ → #2 は #1のアンロックを待ち続ける<BR>
+</div><P>
+デッドロックを防ぐために，StkData利用プログラムはロックを掛ける順番を考慮する必要がある。<BR>
+例: 下記のスレッドを同時に実行するとデッドロックが発生するおそれがあります。<P>
+<div class=spc>
+Thread (A) : [Table-1 排他ロック] ---> [Table-2 排他ロック]<BR>
+Thread (B) : [Table-2 排他ロック] ---> [Table-1 排他ロック]<BR>
+</div><P>
+<TABLE BORDER="1">
+<TR><TD>TableName</TD><TD>ロックを掛けるテーブルの名称</TD></TR>
+<TR><TD>LockType</TD><TD>ロック種別<BR>LOCK_SHARE : 共有ロック<BR>LOCK_EXCLUSIVE : 排他ロック</TD></TR>
+<TR><TD>戻り値</TD><TD>0  : 成功<BR>-1 : ロックエラー
+（指定されたテーブルは存在しない, 指定されたロック種別が不正）</TD></TR>
+</TABLE>
+</div><P>
+
+(14) int LockAllTable(int LockType)<BR>
+<div class=spc>
+この関数は全てのテーブルにロックを掛けます。
+<TABLE BORDER="1">
+<TR><TD>LockType</TD><TD>ロック種別<BR>LOCK_SHARE : 共有ロック<BR>LOCK_EXCLUSIVE : 排他ロック</TD></TR>
+<TR><TD>戻り値</TD><TD>常に0</TD></TR>
+</TABLE>
+</div><P>
+
+(15) int UnlockTable(TCHAR* TableName)<BR>
+<div class=spc>
+この関数は指定されたテーブルをアンロックします。
+<TABLE BORDER="1">
+<TR><TD>TableName</TD><TD>アンロックするテーブルの名称</TD></TR>
+<TR><TD>戻り値</TD><TD>0 : 成功, -1 : アンロックエラー</TD></TR>
+</TABLE>
+</div><P>
+
+(16) int UnlockAllTable()<BR>
+<div class=spc>
+この関数は全てのテーブルをアンロックします。
+<TABLE BORDER="1">
+<TR><TD>戻り値</TD><TD>常に0</TD></TR>
+</TABLE>
+</div><P>
+
+(17) int InsertRecord(RecordData* RecDat)<BR>
+<div class=spc>
+この関数は指定したテーブルにレコードを追加します。複数のレコードを追加するには
+連結されたRecordDataインスタンスを引数に指定します。
+<TABLE BORDER="1">
+<TR><TD>RecDat</TD><TD>
+1. 連結されたRecordDataについて<BR>
+<div class=spc>
+複数のレコードを指定するときは，RecordDataのSetNextRecord関数で連結したRecordData
+インスタンスの先頭インスタンスを指定します。InsertRecord関数はそれぞれ別のテーブル
+を操作対象とする複数の連結されたRecordDataインスタンスが指定されることを許します。<BR>
+</div>
+2. RecordData内ColumnDataStrインスタンスについて<BR>
+<div class=spc>
+- ColumnDataStrのデータの取り得る範囲は0x00および0x20-0x7e<BR>
+- 上記範囲外の文字が与えられた場合，空白文字' 'に置き換えられる<BR>
+- 空文字を指定することができる<BR>
+- NULLは指定することができない<BR>
+- ColumnDataStrで指定する文字列の長さはカラムの最大文字列長-1以下でなければならない。
+カラムの最大文字列長以上の長さの文字列が与えられた場合，最大文字列長-1を超える文字は切り取られる。<BR>
+</div>
+3. RecordData内ColumnDataWStrインスタンスについて<BR>
+<div class=spc>
+- 空文字を指定することができる<BR>
+- NULLは指定することができない<BR>
+- ColumnDataWStrで指定する文字列の長さはカラムの最大文字列長-1以下でなければならない。
+カラムの最大文字列長以上の長さの文字列が与えられた場合，最大文字列長-1を超える文字は切り取られる。<BR>
+</div>
+4. RecordData内ColumnDataBinインスタンスについて<BR>
+<div class=spc>
+- NULLは指定することができない<BR>
+- ColumnDataBinで指定するデータのサイズは操作対象のカラムのサイズと一致させなければならない。
+サイズが不一致のデータを指定した場合，データは不正に処理される。<BR>
+</div>
+5. RecordData内ColumnDataIntインスタンスについて<BR>
+<div class=spc>
+- NULLは指定することができない<BR>
+- ColumnDataIntのデータの取り得る範囲は -2147483648 < 2147483647<BR>
+</div>
+6. RecordData内ColumnDataFloatインスタンスについて<BR>
+<div class=spc>
+- NULLは指定することができない<BR>
+- ColumnDataFloatのデータの取り得る範囲は32bitの単精度浮動小数点数の範囲<BR>
+</div>
+7. ColumnDataについて<BR>
+<div class=spc>
+- ColumnDataIntインスタンス，ColumnDataFloatインスタンス，ColumnDataStrインスタンス，ColumnDataWStr，ColumnDataBin
+インスタンスとしてNULLを指定することはできない<BR>
+</div>
+8. 指定するカラムについて<BR>
+<div class=spc>
+- RecordDataインスタンスには，操作対象であるテーブルに含まれる全てのカラムの
+データを設定しなければならない。一部でも不足した場合，処理は失敗する。<BR>
+</div>
+</TD></TR>
+<TR><TD>戻り値</TD><TD>0 : 成功<BR>-1 : 失敗</TD></TR>
+</TABLE>
+</div><P>
+
+(18) int UpdateRecord(RecordData* SchRec, RecordData* UpdRec)<BR>
+<div class=spc>
+この関数は1つ目のRecordDataで検索された既存のレコードを2つ目のRecordDataに
+置き換えます。<BR>
+<TABLE BORDER="1">
+<TR><TD>SchRec</TD><TD>検索用レコードを指定します。<BR>
+複数のレコードを検索するために，SetNextRecord()関数を用いて連結したRecordDataインスタンス
+を指定することができます。UpdateRecord関数は，連結された複数のRecordDataインスタンスの
+操作対象テーブルが異なることを許していません。
+</TD></TR>
+<TR><TD>UpdRec</TD><TD>更新用レコードを指定します。<BR>
+1. レコードの更新について<BR>
+<div class=spc>
+SchRecで検索されたレコードをUpdRecで置き換えます。
+UpdRecは連結されていない単独のRecordDataインスタンスである必要があります。
+UpdRecで指定したRecordDataインスタンスが
+複数の連結されたRecordDataインスタンスの場合，1番最初のインスタンスのデータで置き換え
+ます。2番目以降のインスタンスは無視されます。<BR>
+UpdRecで指定するRecordDataインスタンスには更新するカラムのみ指定します。指定されない
+カラムについては更新されません。
+</div>
+2. RecordData内ColumnDataStrインスタンスについて<BR>
+<div class=spc>
+- ColumnDataStrのデータの取り得る範囲は0x00および0x20-0x7e<BR>
+- 上記範囲外の文字が与えられた場合，空白文字' 'に置き換えられる<BR>
+- 空文字を指定することができる<BR>
+- NULLは指定することができない<BR>
+- ColumnDataStrで指定する文字列の長さはカラムの最大文字列長-1以下でなければならない。
+カラムの最大文字列長以上の長さの文字列が与えられた場合，最大文字列長-1を超える文字は切り取られる。<BR>
+</div>
+3. RecordData内ColumnDataWStrインスタンスについて<BR>
+<div class=spc>
+- 空文字を指定することができる<BR>
+- NULLは指定することができない<BR>
+- ColumnDataWStrで指定する文字列の長さはカラムの最大文字列長-1以下でなければならない。
+カラムの最大文字列長以上の長さの文字列が与えられた場合，最大文字列長-1を超える文字は切り取られる。<BR>
+</div>
+4. RecordData内ColumnDataBinインスタンスについて<BR>
+<div class=spc>
+- NULLは指定することができない<BR>
+- ColumnDataBinで指定するデータのサイズは操作対象のカラムのサイズと一致させなければならない。
+サイズが不一致のデータを指定した場合，データは不正に処理される。<BR>
+</div>
+5. RecordData内ColumnDataIntインスタンスについて<BR>
+<div class=spc>
+- NULLは指定することができない<BR>
+- ColumnDataIntのデータの取り得る範囲は -2147483648 < 2147483647<BR>
+</div>
+6. RecordData内ColumnDataFloatインスタンスについて<BR>
+<div class=spc>
+- NULLは指定することができない<BR>
+- ColumnDataFloatのデータの取り得る範囲は32bitの単精度浮動小数点数の範囲<BR>
+</div>
+7. ColumnDataについて<BR>
+<div class=spc>
+- ColumnDataIntインスタンス，ColumnDataFloatインスタンス，ColumnDataStrインスタンス，ColumnDataWStrインスタンス，
+ColumnDataBinインスタンスとしてNULLを指定することはできない<BR>
+</div>
+</TD></TR>
+<TR><TD>戻り値</TD><TD>0 : 成功<BR>-1 : 失敗</TD></TR>
+</TABLE>
+</div><P>
+
+(19) int DeleteRecord(TCHAR* TableName)<BR>
+<div class=spc>
+この関数は，指定されたテーブルに登録されている全てのレコードを削除します。
+<TABLE BORDER="1">
+<TR><TD>TableName</TD><TD>全レコードを削除する対象となるテーブルの名称</TD></TR>
+<TR><TD>戻り値</TD><TD>0 : 成功<BR>-1 : 失敗</TD></TR>
+</TD></TR>
+</TABLE>
+</div><P>
+
+(20) int DeleteRecord(RecordData* DelRec)<BR>
+<div class=spc>
+この関数は指定したRecordDataインスタンスで検索されたレコードを削除します。<BR>
+レコードを削除した場所には，対象テーブルの最後のレコードが移動します。
+この結果DeleteRecord実行前と実行後でテーブル内のレコードの並び順序が異なる場合があります。
+（レコード削除性能を向上するためにこのような仕様となっています。）
+<TABLE BORDER="1">
+<TR><TD>DelRec</TD><TD>検索用レコードを指定します。<BR>
+DelRecで検索されたレコードは削除されます。DelRecのRecordDataインスタンスに
+レコードの全てのカラムを指定する必要はありません。何もカラムを指定しない場合，
+指定したテーブルのすべてのレコードが削除されます。
+DeleteRecord関数は，DelRecに連結された複数のRecordDataインスタンスが指定されることを許します。
+また，上記複数のインスタンスがそれぞれ異なるテーブルを操作対象とすることを許します。
+</TD></TR>
+<TR><TD>戻り値</TD><TD>0 : 成功<BR>-1 : 失敗</TD></TR>
+</TABLE>
+</div><P>
+
+(21) RecordData* GetRecord(TCHAR* TableName)<BR>
+<div class=spc>
+この関数は，指定されたテーブルに登録されている全てのレコードを返却します。
+<TABLE BORDER="1">
+<TR><TD>TableName</TD><TD>レコード取得対象テーブルの名称</TD></TR>
+<TR><TD>戻り値</TD><TD>
+指定されたテーブルが複数のレコードを登録している場合，連結された複数のRecordData
+インスタンスが返却されます。指定したテーブルが存在しない場合，または
+指定したテーブルに何もレコードが存在しない場合，NULLが返却されます。
+</TD></TR>
+</TABLE>
+</div><P>
+
+(22) RecordData* GetRecord(RecordData* SchRec)<BR>
+<div class=spc>
+この関数はSchRecで検索されたレコードを返却します。
+<TABLE BORDER="1">
+<TR><TD>SchRec</TD><TD>
+取得するレコードの検索条件を指定します。連結された複数のRecordDataインスタンス
+を指定することができます。連結された複数のRecordDataインスタンスが指定する場合，
+GetRecord関数は，各々のインスタンスが異なるテーブルを対象とすることを許します。
+</TD></TR>
+<TR><TD>戻り値</TD><TD>
+連結された複数のRecordDataインスタンスが返却されます。
+指定したテーブルが存在しない場合，または
+指定したテーブルに何もレコードが存在しない場合，NULLが返却されます。<BR>
+複数のRecordDataインスタンスが連結してSchRecに指定される場合で，その複数のRecordDataの検索条件に
+重複して該当するレコードが存在する場合，同じデータを持つ複数のレコードが重複して返却されます。
+</TD></TR>
+</TABLE>
+</div><P>
+
+(23) void ClearRecordData(RecordData* RecDat)<BR>
+<div class=spc>
+GetRecord関数はRecordDataインスタンスを生成し，それを呼び出し元に返します。
+RecordDataインスタンスはColumnDataインスタンスを含んでおり，また，RecordDataインスタンス
+自身も他のRecordDataインスタンスと連結している場合があります。
+GetRecord関数で取得したRecordDataインスタンスの数が膨大になる場合，使い終わった
+RecordDataインスタンスは削除してメモリを開放する必要があります。<BR>
+ClearResponseData関数は，指定されたRecordDataインスタンスおよびそれに連結するインスタンス
+について，中に梱包されているColumnDataインスタンスを含めて削除します。
+ClearRecordDataはGetRecord関数を用いて取得したインスタンスを削除するだけでなく，
+InsertRecord関数やUpdateRecord関数用にユーザーが作成したRecordDataインスタンスを削除
+することができます（InsertRecord関数等でユーザーが作成／指定したRecordDataインスタンスは，
+通常関数呼び出し後，別の用途で使用される機会は少ない）。
+<TABLE BORDER="1">
+<TR><TD>RecDat</TD><TD>削除したいRecordDataインスタンス。
+RecordDataインスタンスが連結して複数のデータを構成している場合は，先頭の
+RecordDataインスタンスを指定します。
+</TD></TR>
+</TABLE>
+</div><P>
+
+(24) int AzSortRecord(TCHAR* TableName, TCHAR* ColumnName)
+<div class=spc>
+指定したテーブル内の全レコードを，指定したカラムで昇順となるように並び替えます。<br>
+カラム種別がCOLUMN_TYPE_INT : 数値の小さい順に並び替えます。<br>
+カラム種別がCOLUMN_TYPE_FLOAT : 数値の小さい順に並び替えます。<br>
+カラム種別がCOLUMN_TYPE_STR : 文字コードの小さい順に並び替えます。<br>
+カラム種別がCOLUMN_TYPE_WSTR : 文字コードの小さい順に並び替えます。<br>
+カラム種別がCOLUMN_TYPE_BIN : コードの小さい順に並び替えます。<br>
+AzSortRecord関数を呼び出す前に対象のテーブルに排他ロックを掛ける必要があります。<br>
+<table border="1">
+<tr><td>TableName</td><td>ソート対象のテーブルの名称</td></tr>
+<tr><td>ColumnName</td><td>ソート対象のカラムの名称</td></tr>
+<tr><td>戻り値</td><TD>0 : 成功<BR>-1 : 失敗</TD></TR>
+</table>
+</div><P>
+
+(25) int ZaSortRecord(TCHAR* TableName, TCHAR* ColumnName)
+<div class=spc>
+指定したテーブル内の全レコードを，指定したカラムで降順となるように並び替えます。<br>
+カラム種別がCOLUMN_TYPE_INT : 数値の大きい順に並び替えます。<br>
+カラム種別がCOLUMN_TYPE_FLOAT : 数値の大きい順に並び替えます。<br>
+カラム種別がCOLUMN_TYPE_STR : 文字コードの大きい順に並び替えます。<br>
+カラム種別がCOLUMN_TYPE_WSTR : 文字コードの大きい順に並び替えます。<br>
+カラム種別がCOLUMN_TYPE_BIN : コードの大きい順に並び替えます。<br>
+ZaSortRecord関数を呼び出す前に対象のテーブルに排他ロックを掛ける必要があります。<br>
+<table border="1">
+<tr><td>TableName</td><td>ソート対象のテーブルの名称</td></tr>
+<tr><td>ColumnName</td><td>ソート対象のカラムの名称</td></tr>
+<tr><td>戻り値</td><TD>0 : 成功<BR>-1 : 失敗</TD></TR>
+</table>
+</div><P>
+
+(26) int SaveData(TCHAR* FileName)<BR>
+<div class=spc>
+StkDataにより操作された情報は全て仮想メモリ中に格納されます。したがって，
+仮想メモリ中のデータをファイルにセーブすることなくStkData利用プログラムを
+終了した場合，全てのデータが失われることになります。<BR>
+SaveData関数は仮想メモリ中に存在する全てのテーブル，レコードを
+指定したファイルに書き出します。
+SaveData関数を呼び出す前に全てのテーブルに共有ロックを掛ける必要があります。
+<TABLE BORDER="1">
+<TR><TD>FileName</TD><TD>ファイル名（ファイルパス）</TD></TR>
+<TR><TD>戻り値</TD><TD>0 : 成功<BR>-1 : 失敗</TD></TR>
+</TABLE>
+</div><P>
+
+(27) int LoadData(TCHAR* FileName)<BR>
+<div class=spc>
+LoadData関数は指定したファイルからテーブルおよびレコードをロードし，仮想メモリに格納します。
+LoadData関数は既存の全テーブルを削除後，読込んだファイル内に定義されている
+情報をもとに新たにテーブルを作成します。
+このため，LoadData関数は処理のはじめに既存の全テーブルに排他ロックが掛かって
+いるかチェックを行い，１つでも排他ロックが掛かっていないテーブルがあった場合，
+処理を中断し，-1を返却します。ただし，LoadData関数の呼び出し時点でテーブルが１つも
+存在しない場合，ロックの有無に関係なしにLoadData関数を実行することができます。
+<TABLE BORDER="1">
+<TR><TD>FileName</TD><TD>ファイル名（ファイルパス）</TD></TR>
+<TR><TD>戻り値</TD><TD>0 : 成功<BR>-1 : 失敗</TD></TR>
+</TABLE>
+</div><P>
+
+(28) int AutoSave(TCHAR* FileName, int Sec, BOOL Flag)<br>
+<div class=spc>
+この関数は仮想メモリ中に存在する全てのテーブル，レコードを指定したファイルに自動的に書き出すかどうか
+を制御します。AutoSaveは指定された間隔で無条件にファイルに書き出すのではなく，内部的にGetTableVersionを呼び
+出し，前回ファイル書き出し時から少なくとも1つのテーブルに変更が加えられていればファイルに書き出しします。
+AutoSaveは，CreateTable, DeleteTableによりテーブル数が変化したときも，それを検知し自動的にファイルに書き出します。
+前回からどのテーブルにも変更が無い場合，指定された間隔が過ぎてもファイルに書き出ししません。
+<TABLE BORDER="1">
+<TR><TD>FileName</TD><TD>ファイル名（ファイルパス）</TD></TR>
+<TR><TD>Sec</TD><TD>自動的にファイルに書き出す間隔（秒数）を指定します。ここで指定した間隔（秒数）で
+はあくまでも目安であり，正確にこの間隔でファイルに書き出すことを保証するものではありません。<br>
+30～86400秒（30秒～24時間）の間で値を指定できます。</TD></TR>
+<TR><TD>Flag</TD><TD>TRUE : 自動的なファイル書き出しを許可する<br>FALSE : 自動的なファイル書き出しを禁止する<br>
+既にTRUEを指定して自動的なファイル書き出しを実行しているときにさらにTRUEを指定した場合，または既にFALSE
+を指定して自動的なファイル書き出しを停止しているときにさらにFALSEを指定した場合，AutoSaveは-1を返します。</TD></TR>
+<TR><TD>戻り値</TD><TD>0 : 成功<BR>-1 : 失敗</TD></TR>
+</TABLE>
+</div><P>
+
+</div>
+
+</BODY>

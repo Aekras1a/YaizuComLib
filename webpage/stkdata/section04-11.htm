@@ -1,0 +1,51 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<style type="text/css">
+<!--
+.spc { margin-left: 2em; margin-right: 0em; }
+-->
+</style>
+
+<div id="container">
+
+<H2>4.11 ColumnDataStr</H2>
+StkDataのレコード内文字列型カラムにアクセスするためのクラス（データモデル）です。
+ColumnDataクラスの派生クラスとして定義されます。
+
+<H3>4.11.1 ColumnDataStrのメンバ変数</H3>
+private<BR>
+<TABLE BORDER="1">
+<TR><TD>char</TD><TD>m_Value[256]</TD><TD>文字列型カラムのデータ</TD></TR>
+</TABLE><P>
+
+<H3>4.11.2 ColumnDataStrの関数</H3>
+(1) ColumnDataStr(TCHAR* ColumnName, char* Val)<BR>
+<div class=spc>
+コンストラクタ。Valの値256文字分をm_Valueにコピーする。
+<TABLE BORDER="1">
+<TR><TD>ColumnName</TD><TD>カラム名</TD></TR>
+<TR><TD>Val</TD><TD>文字列型カラムデータへのポインタ</TD></TR>
+</TABLE>
+</div><P>
+
+(2) virtual ~ColumnDataStr()<BR>
+<div class=spc>
+デストラクタ。
+</div><P>
+
+(3) char* GetValue()<BR>
+<div class=spc>
+文字列型カラムのデータを取得する。
+<TABLE BORDER="1">
+<TR><TD>戻り値</TD><TD>文字列型カラムデータへのポインタ</TD></TR>
+</TABLE>
+</div><P>
+
+
+</div>
+</BODY>

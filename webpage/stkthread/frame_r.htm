@@ -1,0 +1,69 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#ffffff" TEXT="#000000" LINK="#800000" ALINK="#800000" VLINK="#800000">
+
+
+<H1>StkThread.Lib</H1>
+<div class="topic">
+<A HREF="section01.htm" target ="showframe">1. StkThread.Libについて</A><BR>
+<div class="topic">
+<A HREF="section01.htm#1.1" target ="showframe">1.1 StkThread.Lib概要</A><BR>
+<A HREF="section01.htm#1.2" target ="showframe">1.2 システム要件</A><BR>
+<A HREF="section01.htm#1.3" target ="showframe">1.3 システム構成</A><BR>
+</div><p>
+
+<A HREF="section02.htm" target ="showframe">2. ユーザープログラムで定義するコールバックメソッド</A><BR>
+<div class="topic">
+<A HREF="section02.htm#2.1" target ="showframe">2.1 コールバックメソッド概要</A><BR>
+<A HREF="section02.htm#2.2" target ="showframe">2.2 コールバックメソッド詳細</A><BR>
+<div class="topic">
+<A HREF="section02.htm#2.2.1" target ="showframe">2.2.1 int ElemStkThreadStart(int Id)</A><BR>
+<A HREF="section02.htm#2.2.2" target ="showframe">2.2.2 int ElemStkThreadStop(int Id)</A><BR>
+<A HREF="section02.htm#2.2.3" target ="showframe">2.2.3 int ElemStkThreadInit(int Id)</A><BR>
+<A HREF="section02.htm#2.2.4" target ="showframe">2.2.4 int ElemStkThreadMain(int Id)</A><BR>
+<A HREF="section02.htm#2.2.5" target ="showframe">2.2.5 int ElemStkThreadFinal(int Id)</A><BR>
+<A HREF="section02.htm#2.2.6" target ="showframe">2.2.6 void ProcBeforeFirstStkThreadStarts(void)</A><BR>
+<A HREF="section02.htm#2.2.7" target ="showframe">2.2.7 void ProcAfterLastStkThreadStops(void)</A><BR>
+</div>
+</div><p>
+
+<A HREF="section03.htm" target ="showframe">3. StkThread.Libのユーザープログラム用API</A><BR>
+<div class="topic">
+<A HREF="section03.htm#3.1" target ="showframe">3.1 ユーザープログラム用API概要</A><BR>
+<A HREF="section03.htm#3.2" target ="showframe">3.2 ユーザープログラム用API詳細</A><BR>
+<div class="topic">
+<A HREF="section03.htm#3.2.1" target ="showframe">3.2.1 int GetNumOfRunStkThread()</A><BR>
+<A HREF="section03.htm#3.2.2" target ="showframe">3.2.2 int GetNumOfStkThread()</A><BR>
+<A HREF="section03.htm#3.2.3" target ="showframe">3.2.3 void AddStkThread(int Id, TCHAR Name[MAX_LENGTH_OF_STKTHREAD_NAME], TCHAR Description[MAX_LENGTH_OF_STKTHREAD_DESCRIPTION], void* Init, void* Final, void* Main, void* Start, void* Stop)</A><BR>
+<A HREF="section03.htm#3.2.4" target ="showframe">3.2.4 void DeleteStkThread(int Id)</A><BR>
+<A HREF="section03.htm#3.2.5" target ="showframe">3.2.5 void SetProcBeforeFirstStkThreadStarts(void* Proc)</A><BR>
+<A HREF="section03.htm#3.2.6" target ="showframe">3.2.6 void SetProcAfterLastStkThreadStops(void* Proc)</A><BR>
+<A HREF="section03.htm#3.2.7" target ="showframe">3.2.7 int StartSpecifiedStkThreads(int Ids[MAX_NUM_OF_STKTHREADS], int NumOfIds)</A><BR>
+<A HREF="section03.htm#3.2.8" target ="showframe">3.2.8 int StopSpecifiedStkThreads(int Ids[MAX_NUM_OF_STKTHREADS], int NumOfIds)</A><BR>
+<A HREF="section03.htm#3.2.9" target ="showframe">3.2.9 void SetStkThreadInterval(int TargetId, int Millisec)</A><BR>
+<A HREF="section03.htm#3.2.10" target ="showframe">3.2.10 int GetStkThreadInterval(int TargetId)</A><BR>
+<A HREF="section03.htm#3.2.11" target ="showframe">3.2.11 int GetStkThreadIdByIndex(int Index)</A><BR>
+<A HREF="section03.htm#3.2.12" target ="showframe">3.2.12 int GetStkThreadStatus(int TargetId)</A><BR>
+<A HREF="section03.htm#3.2.13" target ="showframe">3.2.13 int GetStkThreadStatusByIndex(int Index)</A><BR>
+<A HREF="section03.htm#3.2.14" target ="showframe">3.2.14 int GetStkThreadName(int TargetId, TCHAR Name[MAX_LENGTH_OF_STKTHREAD_NAME])</A><BR>
+<A HREF="section03.htm#3.2.15" target ="showframe">3.2.15 int GetStkThreadNameByIndex(int Index, TCHAR Name[MAX_LENGTH_OF_STKTHREAD_NAME])</A><BR>
+<A HREF="section03.htm#3.2.16" target ="showframe">3.2.16 int GetStkThreadDescription(int TargetId, TCHAR Description[MAX_LENGTH_OF_STKTHREAD_DESCRIPTION])</A><BR>
+<A HREF="section03.htm#3.2.17" target ="showframe">3.2.17 int GetStkThreadDescriptionByIndex(int Index, TCHAR Description[MAX_LENGTH_OF_STKTHREAD_DESCRIPTION])</A><BR>
+</div>
+<A HREF="section03.htm#3.3" target ="showframe">3.3 ユーザープログラム用定数値</A><BR>
+</div><p>
+
+<A HREF="section05.htm" target ="showframe">5. その他</A><BR>
+<div class="topic">
+<A HREF="section05.htm#5.1" target ="showframe">5.1 各管理リソースの上限値について</A><BR>
+<div class="topic">
+
+
+</div><p>
+
+
+</BODY>

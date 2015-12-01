@@ -1,0 +1,35 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<div id="container">
+<H1>6. データおよびファイル</H1>
+
+<H2>6.1 ファイル仕様</H2>
+SaveData関数およびAutoSave関数により，StkDataはメモリ内のデータをファイルに出力します。<br>
+出力されるファイルは以下のような構造になっています。<p>
+
+<table border="1">
+<tr><td>情報のサイズ</td><td>保存される情報</td></tr>
+<tr><td>16バイト</td><td>文字列"StkData_0100"。そのあとに続く4バイトは不定値</td></tr>
+<tr><td>4バイト</td><td>テーブルの数(N)</td></tr>
+<tr><td>32バイト</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルのテーブル名</td></tr>
+<tr><td>4バイト</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルの最大レコード数</td></tr>
+<tr><td>4バイト</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルのカラム数(M)</td></tr>
+<tr><td>32バイト</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルのm番目(m=0, 1, 2, ... , M)のカラムの名称</td></tr>
+<tr><td>4バイト</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルのm番目(m=0, 1, 2, ... , M)のカラムの種別</td></tr>
+<tr><td>4バイト</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルのm番目(m=0, 1, 2, ... , M)のカラムが
+COLUMN_TYPE_STR, COLUMN_TYPE_WSTR, COLUMN_TYPE_BINの場合，カラムのサイズ（バイト数）。
+COLUMN_TYPE_INT，COLUMN_TYPE_FLOATの場合この領域は存在しません。</td></tr>
+<tr><td>4バイト</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルのサイズ（バイト数）</td></tr>
+<tr><td>4バイト</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルの1レコード分のサイズ（バイト数）</td></tr>
+<tr><td>4バイト</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルのレコード数</td></tr>
+<tr><td>レコード数×1レコード分のサイズ</td><td>n(n=0, 1, 2, ... , 15)番目のテーブルの全レコードのデータ</td></tr>
+</table><p>
+
+
+</div>
+</BODY>

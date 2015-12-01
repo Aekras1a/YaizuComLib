@@ -1,0 +1,51 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<style type="text/css">
+<!--
+.spc { margin-left: 2em; margin-right: 0em; }
+-->
+</style>
+
+<div id="container">
+
+<H2>4.10 ColumnDataInt</H2>
+StkDataのレコード内整数型カラムにアクセスするためのクラス（データモデル）です。
+ColumnDataクラスの派生クラスとして定義されます。
+
+<H3>4.10.1 ColumnDataIntのメンバ変数</H3>
+private<BR>
+<TABLE BORDER="1">
+<TR><TD>int</TD><TD>m_Value</TD><TD>整数型カラムの値</TD></TR>
+</TABLE><P>
+
+<H3>4.10.2 ColumnDataIntの関数</H3>
+(1) ColumnDataInt(TCHAR* ColumnName, int Val)<BR>
+<div class=spc>
+コンストラクタ。
+<TABLE BORDER="1">
+<TR><TD>ColumnName</TD><TD>カラム名</TD></TR>
+<TR><TD>Val</TD><TD>整数型カラムの値</TD></TR>
+</TABLE>
+</div><P>
+
+(2) virtual ~ColumnDataInt()<BR>
+<div class=spc>
+デストラクタ。
+</div><P>
+
+(3) int GetValue()<BR>
+<div class=spc>
+整数型カラムのデータを取得する。
+<TABLE BORDER="1">
+<TR><TD>戻り値</TD><TD>整数型カラムの値</TD></TR>
+</TABLE>
+</div><P>
+
+
+</div>
+</BODY>
