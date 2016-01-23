@@ -33,12 +33,22 @@ private<BR>
 </TABLE>
 </div><P>
 
-(2) virtual ~ColumnDataInt()<BR>
+(2) ColumnDataInt(TCHAR* ColumnName, int Val, int CompOpe)<BR>
+<div class=spc>
+コンストラクタ。
+<TABLE BORDER="1">
+<TR><TD>ColumnName</TD><TD>カラム名</TD></TR>
+<TR><TD>Val</TD><TD>整数型カラムの値</TD></TR>
+<TR><TD>CompOpe</TD><TD>比較種別</TD></TR>
+</TABLE>
+</div><P>
+
+(3) virtual ~ColumnDataInt()<BR>
 <div class=spc>
 デストラクタ。
 </div><P>
 
-(3) int GetValue()<BR>
+(4) int GetValue()<BR>
 <div class=spc>
 整数型カラムのデータを取得する。
 <TABLE BORDER="1">

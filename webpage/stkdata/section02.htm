@@ -12,24 +12,27 @@
 StkDataを構成するファイルは以下のとおりです。<BR>
 <TABLE BORDER="1">
 <TR><TD>ファイル名</TD><TD>説明</TD><TD>ビルド時</TD><TD>実行時</TD></TR>
-<TR><TD>stkdata.h</TD><TD>StkDataのクラス，関数の定義を記述したヘッダファイルです。
+
+<TR><TD>stkdata.h</TD><TD>StkDataのデータアクセス用データクラスおよびテーブル定義用データクラスを記述したヘッダファイルです。
 StkData利用プログラムのソースコードから#include文で読込んでください。</TD><TD>要</TD><TD>不要</TD></TR>
-<TR><TD>stkdata.lib</TD>
-<TD>
-StkDataの機能を提供する静的ライブラリ（StkData本体）です。
-本ファイルはStkData利用プログラムのビルド時に，StkData利用プログラムに取り込まれます。
-</TD><TD>要</TD><TD>不要</TD></TR>
+
+<TR><TD>stkdataapi.lib</TD><TD>StkDataのリポジトリ管理用APIを定義したヘッダファイルです。
+StkData利用プログラムのソースコードから#include文で読込んでください。</TD><TD>要</TD><TD>不要</TD></TR>
+
+<TR><TD>stkdata.lib</TD><TD>StkDataの機能を提供する静的ライブラリ（StkData本体）です。
+stkdata.hおよびstkdataapi.hで定義したクラスおよびAPIを実装しています。
+本ファイルはStkData利用プログラムのビルド時に，StkData利用プログラムに取り込まれます。</TD><TD>要</TD><TD>不要</TD></TR>
+
 </TABLE>
 <P>
 
 <H2>2.2 ビルド方法</H2>
-StkData利用プログラムのソースコードからstkdata.hをインクルードしてください。また，
+StkData利用プログラムのソースコードからstkdata.hおよびstkdataapi.hをインクルードしてください。また，
 StkData利用プログラムのビルド時にstkdata.libを静的リンクするようプロジェクトの設定を変更してください。<P>
 StkData利用プログラムはWin32用アプリケーションとしてビルドされる必要があります。<BR>
 StkDataは，StkData利用プログラムがMicrosoftのVisual C++で記載されることを想定しています。<BR>
 推奨バージョンは以下のとおりです。<BR>
 <UL>
-<LI>Microsoft Visual Studio 2005 (Visual C++)
 <LI>Microsoft Visual Studio 2008 (Visual C++)
 </UL>
 上記以外でも，MicrosoftのWindowsオペレーティングシステム用のプログラムを生成可能なC++言語であれば

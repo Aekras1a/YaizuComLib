@@ -33,12 +33,22 @@ private<BR>
 </TABLE>
 </div><P>
 
-(2) virtual ~ColumnDataFloat()<BR>
+(2) ColumnDataFloat(TCHAR* ColumnName, float Val, int CompOpe)<BR>
+<div class=spc>
+コンストラクタ。
+<TABLE BORDER="1">
+<TR><TD>ColumnName</TD><TD>カラム名</TD></TR>
+<TR><TD>Val</TD><TD>単精度浮動小数点数型カラムの値</TD></TR>
+<TR><TD>CompOpe</TD><TD>比較種別</TD></TR>
+</TABLE>
+</div><P>
+
+(3) virtual ~ColumnDataFloat()<BR>
 <div class=spc>
 デストラクタ。
 </div><P>
 
-(3) float GetValue()<BR>
+(4) float GetValue()<BR>
 <div class=spc>
 単精度浮動小数点数型カラムのデータを取得する。
 <TABLE BORDER="1">

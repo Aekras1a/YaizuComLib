@@ -34,12 +34,23 @@ private<BR>
 </TABLE>
 </div><P>
 
-(2) virtual ~ColumnDataBin()<BR>
+(2) ColumnDataBin(TCHAR* ColumnName, BYTE* Val, int Length, int CompOpe)<BR>
+<div class=spc>
+コンストラクタ。Lengthバイトのサイズをもつバイナリ型データm_Valueを生成し，Valの値をコピーする。
+<TABLE BORDER="1">
+<TR><TD>ColumnName</TD><TD>カラム名</TD></TR>
+<TR><TD>Val</TD><TD>バイナリ型カラムデータへのポインタ</TD></TR>
+<TR><TD>Length</TD><TD>コピーするValのデータのサイズ（バイト数）。実存するカラムのサイズと一致させる必要がある。</TD></TR>
+<TR><TD>CompOpe</TD><TD>比較種別</TD></TR>
+</TABLE>
+</div><P>
+
+(3) virtual ~ColumnDataBin()<BR>
 <div class=spc>
 デストラクタ。m_Valueの領域を開放する。
 </div><P>
 
-(3) BYTE* GetValue()<BR>
+(4) BYTE* GetValue()<BR>
 <div class=spc>
 バイナリ型カラムのデータを取得する。
 <TABLE BORDER="1">

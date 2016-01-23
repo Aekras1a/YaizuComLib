@@ -33,12 +33,22 @@ private<BR>
 </TABLE>
 </div><P>
 
-(2) virtual ~ColumnDataStr()<BR>
+(2) ColumnDataStr(TCHAR* ColumnName, char* Val, int CompOpe)<BR>
+<div class=spc>
+コンストラクタ。Valの値256文字分をm_Valueにコピーする。
+<TABLE BORDER="1">
+<TR><TD>ColumnName</TD><TD>カラム名</TD></TR>
+<TR><TD>Val</TD><TD>文字列型カラムデータへのポインタ</TD></TR>
+<TR><TD>CompOpe</TD><TD>比較種別</TD></TR>
+</TABLE>
+</div><P>
+
+(3) virtual ~ColumnDataStr()<BR>
 <div class=spc>
 デストラクタ。
 </div><P>
 
-(3) char* GetValue()<BR>
+(4) char* GetValue()<BR>
 <div class=spc>
 文字列型カラムのデータを取得する。
 <TABLE BORDER="1">

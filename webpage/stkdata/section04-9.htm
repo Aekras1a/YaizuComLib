@@ -22,6 +22,7 @@ protected<BR>
 <TABLE BORDER="1">
 <TR><TD>TCHAR</TD><TD>m_ColumnName[COLUMN_NAME_SIZE]</TD><TD>カラム名</TD></TR>
 <TR><TD>int</TD><TD>m_ColumnType</TD><TD>カラム種別</TD></TR>
+<tr><td>int</td><td>m_ComparisonOperator</TD><TD>比較種別</TD></TR>
 </TABLE><P>
 
 <H3>4.9.2 ColumnDataの関数</H3>
@@ -59,6 +60,40 @@ protected<BR>
 </TABLE>
 </div><P>
 
+
+(6) void SetComparisonOperator(int CompOpe)<br>
+<div class=spc>
+比較種別を指定します。<br>
+<TABLE BORDER="1">
+<TR><TD>CompOpe</TD><TD>比較種別。指定可能な値は以下のとおりです。<br>
+COMP_EQUAL "Equal to" 0 <br>
+COMP_NOT_"Not equal to" 1 <br>
+COMP_GE "Greater than or equal to" 2 <br>
+COMP_GT "Greater than" 3 <br>
+COMP_LE "Less than or qeual to" 4 <br>
+COMP_LT "Less than" 5 <br>
+COMP_CONTAIN "Contain" 11 <br>
+COMP_NOT_CONTAIN "Not contain" 12 <br>
+</TD></TR>
+</TABLE>
+</div><P>
+
+(7) int GetComparisonOperator()<BR>
+<div class=spc>
+比較種別を取得します。<br>
+<TABLE BORDER="1">
+<TR><TD>戻り値</TD><TD>比較種別。取得可能な値は以下のとおりです。<br>
+COMP_EQUAL "Equal to" 0 <br>
+COMP_NOT_"Not equal to" 1 <br>
+COMP_GE "Greater than or equal to" 2 <br>
+COMP_GT "Greater than" 3 <br>
+COMP_LE "Less than or qeual to" 4 <br>
+COMP_LT "Less than" 5 <br>
+COMP_CONTAIN "Contain" 11 <br>
+COMP_NOT_CONTAIN "Not contain" 12 <br>
+</TD></TR>
+</TABLE>
+</div><P>
 
 </div>
 </BODY>

@@ -1,0 +1,141 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<div id="container">
+<H1>1. StkGeneric</H1>
+
+This class provides generic functions of stklib.<BR>
+<P>
+
+<TABLE BORDER="1">
+<TR>
+<TD>Function</TD>
+<TD>static StkGeneric* GetInstance()</TD>
+</TR>
+<TR>
+<TD>Description</TD>
+<TD>
+This function returns the pointer to StkGeneric instance.<BR>
+StkGeneric is developed based on the singleton model.<BR>
+Hence, You need to call this function before you call other functions of StkGeneric.<BR>
+</TD>
+</TR>
+<TR>
+<TD>In</TD>
+<TD></TD>
+</TR>
+<TR>
+<TD>Out</TD>
+<TD>StkFont*: Pointer to StkFont instance</TD>
+</TR>
+</TABLE>
+<P>
+
+
+<TABLE BORDER="1">
+<TR>
+<TD>Function</TD>
+<TD>BOOL IsDuplicateAppExisting(HWND)</TD>
+</TR>
+<TR>
+<TD>Description</TD>
+<TD>
+This function checks the duplicated program (which has same window handler) has already been running or not.
+</TD>
+</TR>
+<TR>
+<TD>In</TD>
+<TD>
+HWND: Window handler of the program which calls this function.
+</TD>
+</TR>
+<TR>
+<TD>Out</TD>
+<TD>BOOL: <BR>
+TRUE - Duplicated program has already been running.<BR>
+FALSE - No duplicated program is running.
+</TD>
+</TR>
+</TABLE>
+<P>
+
+
+<TABLE BORDER="1">
+<TR>
+<TD>Function</TD>
+<TD>int GetOSVersion(TCHAR*)</TD>
+</TR>
+<TR>
+<TD>Description</TD>
+<TD>
+This function returns the version of OS.<BR>
+This function applies following OS versions.<BR>
+- Windows 2000<BR>
+- Windows XP<BR>
+- Windows Vista
+</TD>
+</TR>
+<TR>
+<TD>In</TD>
+<TD>
+TCHAR*: Pointer to the buffer of acquired OS version. This parameter is used for output.
+</TD>
+</TR>
+<TR>
+<TD>Out</TD>
+<TD>int: <BR>
+0 - Unknown<BR>
+50 - Windows 2000<BR>
+51 - Windows XP<BR>
+60 - Windows Vista
+</TD>
+</TR>
+</TABLE>
+<P>
+
+
+
+<H2 ID="1.1">1.1 int GetFileSize(TCHAR* FileName)</H2>
+<div class="topic">
+指定したファイルのファイルサイズ(バイト)を返します。<br>
+FileNameにはファイルパスではなく，ファイル名を指定する必要があります。GetFileSizeは，現在のモジュールが存在するフォルダ内で
+指定されたファイルを探索し，対象のファイルのサイズを返します。<br>
+ファイルのサイズがint(signed int)の範囲を超えた場合，GetFileSizeが返す値は不定となります。<br>
+<table class="tblstyle">
+<tr><td>FileName[入力]</td><td>サイズをもとめるファイルの名称</td></tr>
+<tr><td>[戻り値]</td><td>0以上:ファイルサイズ, -1:エラーが発生した</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="1.5">1.5 int GetFullPathFromFileName(TCHAR* FileName, TCHAR FullPath[MAX_PATH])</H2>
+<div class="topic">
+このAPIを呼び出すモジュールと同一のディレクトリに存在するファイルのフルパスを返却します。<br>
+<table class="tblstyle">
+<tr><td>FileName[入力]</td><td>ファイル名(このAPIを呼び出すモジュールと同一のディレクトリに存在することを前提としています)。パスを含まないこと。</td></tr>
+<tr><td>FullPath[出力]</td><td>指定したファイルへのフルパス</td></tr>
+<tr><td>[戻り値]</td><td>0:成功, -1:エラーが発生した</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="1.6">1.6 int GetFullPathWithoutFileName(TCHAR* FileName, TCHAR FullPath[MAX_PATH])</H2>
+<div class="topic">
+指定したファイル名を含むフルパスから，ファイル名を除外したフルパスを取得します。<br>
+<table class="tblstyle">
+<tr><td>FileName[入力]</td><td>フルパスを含むファイル名</td></tr>
+<tr><td>FullPath[出力]</td><td>ファイル名を除外したフルパス</td></tr>
+<tr><td>[戻り値]</td><td>0:成功, -1:エラーが発生した</td></tr>
+</table>
+</div><p>
+
+
+
+</div>
+</BODY>

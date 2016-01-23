@@ -48,9 +48,9 @@ StkDataには下記に示す使用上の制限事項があります。<P>
 <TR><TD>バイナリ型カラムの最大バイト文字数</TD><TD>10000000</TD></TR>
 <TR><TD>最小レコード数／１テーブル</TD><TD>1</TD></TR>
 <TR><TD>最大レコード数／１テーブル</TD><TD>16383</TD></TR>
-<TR><TD>テーブル名バイト数</TD><TD>16 (最終文字NULLを含む)</TD></TR>
+<TR><TD>テーブル名文字数</TD><TD>16 (最終文字NULLを含む)</TD></TR>
 <TR><TD>テーブル名に使用可能な文字コード</TD><TD>UTF-16</TD></TR>
-<TR><TD>カラム名バイト数</TD><TD>16 (最終文字NULLを含む)</TD></TR>
+<TR><TD>カラム名文字数</TD><TD>16 (最終文字NULLを含む)</TD></TR>
 <TR><TD>カラム名に使用可能な文字コード</TD><TD>UTF-16</TD></TR>
 </TABLE>
 <P>
@@ -71,6 +71,16 @@ StkDataでは以下の定数を使用します。<P>
 <tr><td>COLUMN_TYPE_FLOAT</td><td>単精度浮動小数点数型</td><td>4</td></tr>
 <tr><td>TABLE_NAME_SIZE</td><td>テーブル名の最大長</td><td>16</td></tr>
 <tr><td>COLUMN_NAME_SIZE</td><td>カラム名の最大長</td><td>16</td></tr>
+<tr><td>COMP_EQUAL</td><td>比較用:Equal to</td><td>0</td></tr>
+<tr><td>COMP_NOT_EQUAL</td><td>比較用:Not equal to</td><td>1</td></tr>
+<tr><td>COMP_GE</td><td>比較用:Greater than or equal to</td><td>2</td></tr>
+<tr><td>COMP_GT</td><td>比較用:Greater than</td><td>3</td></tr>
+<tr><td>COMP_LE</td><td>比較用:Less than or qeual to</td><td>4</td></tr>
+<tr><td>COMP_LT</td><td>比較用:Less than</td><td>5</td></tr>
+<tr><td>COMP_CONTAIN</td><td>比較用:Contain</td><td>11</td></tr>
+<tr><td>COMP_NOT_CONTAIN</td><td>比較用:Not contain</td><td>12</td></tr>
+
+
 </table>
 <P>
 

@@ -43,7 +43,19 @@ private<BR>
 
 (3) virtual ~RecordData()<BR>
 <div class=spc>
-デストラクタ。
+デストラクタ。<br>
+デストラクタではRecordDataインスタンスと関連するすべてのインスタンス（m_ColumnDataおよびm_NextRecordで関連するすべてのインスタンス）をdeleteします。<br>
+GetRecord関数はRecordDataインスタンスを生成し，それを呼び出し元に返します。
+RecordDataインスタンスはColumnDataインスタンスを含んでおり，また，RecordDataインスタンス
+自身も他のRecordDataインスタンスと連結している場合があります。
+GetRecord関数で取得したRecordDataインスタンスの数が膨大になる場合，使い終わった
+RecordDataインスタンスは削除してメモリを開放する必要があります。<BR>
+GetRecord関数で取得したRecordDataインスタンスをdeleteすることにより，指定されたRecordDataインスタンスだけでなく，
+それに連結するインスタンスについて，中に梱包されているColumnDataインスタンスを含めて削除します。
+GetRecord関数を用いて取得したインスタンスを削除するだけでなく，
+InsertRecord関数やUpdateRecord関数用にユーザーが作成したRecordDataインスタンスを削除
+することができます（InsertRecord関数等でユーザーが作成／指定したRecordDataインスタンスは，
+通常関数呼び出し後，別の用途で使用される機会は少ない）。
 </div><P>
 
 (4) void AddColumn(ColumnData* ColDat)<BR>

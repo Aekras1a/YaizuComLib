@@ -1,0 +1,234 @@
+﻿<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<div id="container">
+<H1>2. MessageProc</H1>
+
+
+
+<H2 ID="2.1">2.1 MessageProc概要</H2>
+<div class="topic">
+MessageProcは，クライアントプログラムのメッセージリソースおよびラベルリソースの管理を支援するクラスです。<br>
+MessageProcは，主に以下の機能をクライアントプログラムに提供します。<br>
+<ul>
+<li>メッセージリソースおよびラベルリソースの保持（最大10,000件）
+<li>ロケールに応じたメッセージリソースおよびラベルリソースの取得（英語ロケール，日本語ロケールに対応）
+<li>指定したエンコード種別に応じたメッセージリソースおよびラベルリソースの取得（UTF-16, UTF-8, S-JISに対応）
+</ul>
+</div><p>
+
+
+
+<H2 ID="2.2">2.2 MessageProcの使用方法</H2>
+<div class="topic">
+MessageProcの機能を利用するために，クライアントプログラムは，以下の.hファイル，.libファイルを事前に参照可能な状態にしておく必要があります。<p>
+<table class="tblstyle">
+<tr><td>.hファイル</td><td>msgproc.h</td></tr>
+<tr><td>.libファイル</td><td>commonfunc.lib</td></tr>
+</table><p>
+MessageProcのすべてのAPIはstatic宣言されており，クライアントプログラムから下記のように呼び出すことができます。<p>
+ex.) MessageProc::GetMsg(100);<br>
+</div><p>
+
+
+
+<H2 ID="2.3">2.3 API一覧</H2>
+<div class="topic">
+MessageProcクラスが提供するAPI一覧を以下に示します。<p>
+<table class="tblstyle">
+<tr><td>static void SetLocaleMode(int)</td><td>GetMsg, GetMsgSjis, GetMsgUft8 APIが返すメッセージおよびラベルのロケールを決定するモードを指定します。</td></tr>
+<tr><td>static TCHAR* GetMsg(int)</td><td>UTF-16エンコーディングしたメッセージまたはラベルを返却します。</td></tr>
+<tr><td>static TCHAR* GetMsgEng(int)</td><td>UTF-16エンコーディングした英語メッセージまたは英語ラベルを返却します。</td></tr>
+<tr><td>static TCHAR* GetMsgJpn(int)</td><td>UTF-16エンコーディングした日本語メッセージまたは日本語ラベルを返却します。</td></tr>
+<tr><td>static BYTE* GetMsgSjis(int)</td><td>SJISエンコーディングしたメッセージまたはラベルを返却します。</td></tr>
+<tr><td>static BYTE* GetMsgSjisEng(int)</td><td>SJISエンコーディングした英語メッセージまたは英語ラベルを返却します。</td></tr>
+<tr><td>static BYTE* GetMsgSjisJpn(int)</td><td>SJISエンコーディングした日本語メッセージまたは日本語ラベルを返却します。</td></tr>
+<tr><td>static BYTE* GetMsgUtf8(int)</td><td>UTF-8エンコーディングしたメッセージまたはラベルを返却します。</td></tr>
+<tr><td>static BYTE* GetMsgUtf8Eng(int)</td><td>UTF-8エンコーディングした英語メッセージまたは英語ラベルを返却します。</td></tr>
+<tr><td>static BYTE* GetMsgUtf8Jpn(int)</td><td>UTF-8エンコーディングした日本語メッセージまたは日本語ラベルを返却します。</td></tr>
+<tr><td>static void AddEng(int, TCHAR*)</td><td>指定した英語メッセージまたは英語ラベルを追加します。</td></tr>
+<tr><td>static void AddJpn(int, TCHAR*)</td><td>指定した日本語メッセージまたは日本語ラベルを追加します。</td></tr>
+<tr><td>static void DelEng(int)</td><td>指定した英語メッセージまたは英語ラベルを削除します。</td></tr>
+<tr><td>static void DelJpn(int)</td><td>指定した日本語メッセージまたは日本語ラベルを削除します。</td></tr>
+<tr><td>static void ClearAllMsg()</td><td>すべてのメッセージを削除します。</td></tr>
+</table><p>
+</div><p>
+
+
+
+<H2 ID="2.4">2.4 void SetLocaleMode(int SpecifiedMode)</H2>
+<div class="topic">
+GetMsg, GetMsgSjis, GetMsgUft8 APIが返すメッセージおよびラベルのロケールを決定するモードを指定します。<br>
+<table class="tblstyle">
+<tr><td>SpecifiedMode[入力]</td>
+<td>
+ロケールを決定するモード<br>
+LOCALE_MODE_WIN32(0) : OSのロケールの設定で決定<br>
+LOCALE_MODE_WEB(1) : Webクライアントから受理したロケールで決定<br>
+LOCALE_MODE_ENGLISH(10) : 英語ロケールを設定<br>
+int LOCALE_MODE_JAPANESE(11) : 日本語ロケールを設定<br>
+</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.5">2.5 TCHAR* GetMsg(int Id)</H2>
+<div class="topic">
+UTF-16エンコーディングしたメッセージまたはラベルを返却します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>取得するメッセージまたはラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>メッセージまたはラベル</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.6">2.6 TCHAR* GetMsgEng(int Id)</H2>
+<div class="topic">
+UTF-16エンコーディングした英語メッセージまたは英語ラベルを返却します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>取得する英語メッセージまたは英語ラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>英語メッセージまたは英語ラベル</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.7">2.7 TCHAR* GetMsgJpn(int Id)</H2>
+<div class="topic">
+UTF-16エンコーディングした日本語メッセージまたは日本語ラベルを返却します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>取得する日本語メッセージまたは日本語ラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>日本語メッセージまたは日本語ラベル</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.8">2.8 BYTE* GetMsgSjis(int Id)</H2>
+<div class="topic">
+SJISエンコーディングしたメッセージまたはラベルを返却します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>取得するメッセージまたはラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>メッセージまたはラベル</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.9">2.9 BYTE* GetMsgSjisEng(int Id)</H2>
+<div class="topic">
+SJISエンコーディングした英語メッセージまたは英語ラベルを返却します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>取得する英語メッセージまたは英語ラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>英語メッセージまたは英語ラベル</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.10">2.10 BYTE* GetMsgSjisJpn(int Id)</H2>
+<div class="topic">
+SJISエンコーディングした日本語メッセージまたは日本語ラベルを返却します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>取得する日本語メッセージまたは日本語ラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>日本語メッセージまたは日本語ラベル</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.11">2.11 BYTE* GetMsgUtf8(int Id)</H2>
+<div class="topic">
+UTF-8エンコーディングしたメッセージまたはラベルを返却します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>取得するメッセージまたはラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>メッセージまたはラベル</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.12">2.12 BYTE* GetMsgUtf8Eng(int Id)</H2>
+<div class="topic">
+UTF-8エンコーディングした英語メッセージまたは英語ラベルを返却します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>取得する英語メッセージまたは英語ラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>英語メッセージまたは英語ラベル</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.13">2.13 BYTE* GetMsgUtf8Jpn(int Id)</H2>
+<div class="topic">
+UTF-8エンコーディングした日本語メッセージまたは日本語ラベルを返却します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>取得する日本語メッセージまたは日本語ラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>日本語メッセージまたは日本語ラベル</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.14">2.14 void AddEng(int Id, TCHAR* Msg)</H2>
+<div class="topic">
+指定した英語メッセージまたは英語ラベルを追加します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>追加する英語メッセージまたは英語ラベルのリソースID</td></tr>
+<tr><td>Msg[入力]</td><td>追加する英語メッセージまたは英語ラベル</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.15">2.15 void AddJpn(int Id, TCHAR* Msg)</H2>
+<div class="topic">
+指定した日本語メッセージまたは日本語ラベルを追加します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>追加する日本語メッセージまたは日本語ラベルのリソースID</td></tr>
+<tr><td>Msg[入力]</td><td>追加する日本語メッセージまたは日本語ラベル</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.16">2.16 void DelEng(int Id)</H2>
+<div class="topic">
+指定した英語メッセージまたは英語ラベルを削除します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>削除する英語メッセージまたは英語ラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.17">2.17 void DelJpn(int Id)</H2>
+<div class="topic">
+指定した日本語メッセージまたは日本語ラベルを削除します。<br>
+<table class="tblstyle">
+<tr><td>Id[入力]</td><td>削除する日本語メッセージまたは日本語ラベルのリソースID</td></tr>
+<tr><td>[戻り値]</td><td>なし</td></tr>
+</table>
+</div><p>
+
+
+
+<H2 ID="2.18">2.18 void ClearAllMsg()</H2>
+<div class="topic">
+すべてのメッセージを削除します。<br>
+</div><p>
+
+
+
+</div>
+</BODY>
