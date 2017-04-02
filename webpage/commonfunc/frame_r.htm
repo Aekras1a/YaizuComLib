@@ -1,10 +1,13 @@
-﻿<HEAD>
+﻿<!DOCTYPE html>
+
+<html lang="ja">
+<HEAD>
+<title>CommonFunc</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="content-style-type" content="text/css">
 <link rel="stylesheet" href="./style.css" type="text/css">
 </HEAD>
 
-<BODY BGCOLOR="#ffffff" TEXT="#000000" LINK="#800000" ALINK="#800000" VLINK="#800000">
+<BODY>
 
 
 <H1>CommonFunc</H1>
@@ -45,4 +48,58 @@
 <A HREF="section03.htm#3.5" target ="showframe">3.5 int GetPropertyStr(char* PropName, char Value[256])</A><br>
 <p>
 
+<A HREF="section04.htm" target ="showframe">4. StkObject</A><BR>
+<A HREF="section04.htm#4.1" target ="showframe">4.1 StkObject概要</A><br>
+<A HREF="section04.htm#4.2" target ="showframe">4.2 StkObjectの使用方法</A><br>
+<A HREF="section04.htm#4.3" target ="showframe">4.3 API一覧</A><br>
+<A HREF="section04.htm#4.4" target ="showframe">4.4 StkObject(TCHAR* Name)</A><br>
+<A HREF="section04.htm#4.5" target ="showframe">4.5 StkObject(TCHAR* Name, int IntValue)</A><br>
+<A HREF="section04.htm#4.6" target ="showframe">4.6 StkObject(TCHAR* Name, float FloatValue)</A><br>
+<A HREF="section04.htm#4.7" target ="showframe">4.7 StkObject(TCHAR* Name, TCHAR* StringValue)</A><br>
+<A HREF="section04.htm#4.8" target ="showframe">4.8 ~StkObject()</A><br>
+<A HREF="section04.htm#4.9" target ="showframe">4.9 StkObject* Clone()</A><br>
+<A HREF="section04.htm#4.10" target ="showframe">4.10 BOOL Equals(StkObject* StkObj)</A><br>
+<A HREF="section04.htm#4.11" target ="showframe">4.11 StkObject* Contains(StkObject* StkObj)</A><br>
+<A HREF="section04.htm#4.12" target ="showframe">4.12 int GetArrayLength()</A><br>
+<A HREF="section04.htm#4.13" target ="showframe">4.13 int GetChildElementCount()</A><br>
+<A HREF="section04.htm#4.14" target ="showframe">4.14 int GetAttributeCount()</A><br>
+<A HREF="section04.htm#4.15" target ="showframe">4.15 TCHAR* GetName()</A><br>
+<A HREF="section04.htm#4.16" target ="showframe">4.16 int GetType()</A><br>
+<A HREF="section04.htm#4.17" target ="showframe">4.17 int GetIntValue()</A><br>
+<A HREF="section04.htm#4.18" target ="showframe">4.18 float GetFloatValue()</A><br>
+<A HREF="section04.htm#4.19" target ="showframe">4.19 TCHAR* GetStringValue()</A><br>
+<A HREF="section04.htm#4.20" target ="showframe">4.20 void SetIntValue(int IntValue)</A><br>
+<A HREF="section04.htm#4.21" target ="showframe">4.21 void SetFloatValue(float)</A><br>
+<A HREF="section04.htm#4.22" target ="showframe">4.22 void SetStringValue(TCHAR* StringValue)</A><br>
+<A HREF="section04.htm#4.23" target ="showframe">4.23 StkObject* GetFirstChildElement()</A><br>
+<A HREF="section04.htm#4.24" target ="showframe">4.24 StkObject* GetLastChildElement()</A><br>
+<A HREF="section04.htm#4.25" target ="showframe">4.25 StkObject* GetFirstAttribute()</A><br>
+<A HREF="section04.htm#4.26" target ="showframe">4.26 StkObject* GetLastAttribute()</A><br>
+<A HREF="section04.htm#4.27" target ="showframe">4.27 StkObject* GetNext()</A><br>
+<A HREF="section04.htm#4.28" target ="showframe">4.28 void AppendChildElement(StkObject* ChildObj)</A><br>
+<A HREF="section04.htm#4.29" target ="showframe">4.29 void AppendAttribute(StkObject* AttrObj)</A><br>
+<A HREF="section04.htm#4.30" target ="showframe">4.30 void ToXml(TCHAR* StrXml, int Size)</A><br>
+<A HREF="section04.htm#4.31" target ="showframe">4.31 void void ToJson(TCHAR* StrJson, int Size)</A><br>
+<A HREF="section04.htm#4.32" target ="showframe">4.32 StkObject* CreateObjectFromXml(TCHAR* StrXml, int* ErrorCode)</A><br>
+<A HREF="section04.htm#4.33" target ="showframe">4.33 StkObject* CreateObjectFromJson(TCHAR* StrJson, int* ErrorCode)</A><br>
+<A HREF="section04.htm#4.34" target ="showframe">4.34 static int Analyze(TCHAR*)</A><br>
+<p>
+
+<A HREF="section05.htm" target ="showframe">5. StkStringParser</A><BR>
+<A HREF="section05.htm#5.1" target ="showframe">5.1 StkStringParser概要</A><br>
+<A HREF="section05.htm#5.2" target ="showframe">5.2 StkStringParserの使用方法</A><br>
+<A HREF="section05.htm#5.3" target ="showframe">5.3 API一覧</A><br>
+<A HREF="section05.htm#5.4" target ="showframe">5.4 int ParseInto1Param(TCHAR* OriginStr, TCHAR* Format, TCHAR Target, TCHAR* OutStr1)</A><br>
+<A HREF="section05.htm#5.5" target ="showframe">5.5 int ParseInto2Params(TCHAR* OriginStr, TCHAR* Format, TCHAR Target, TCHAR* OutStr1, TCHAR* OutStr2)</A><br>
+<A HREF="section05.htm#5.6" target ="showframe">5.6 int ParseInto3Params(TCHAR* OriginStr, TCHAR* Format, TCHAR Target, TCHAR* OutStr1, TCHAR* OutStr2, TCHAR* OutStr3)</A><br>
+<A HREF="section05.htm#5.7" target ="showframe">5.7 int ParseInto4Params(TCHAR* OriginStr, TCHAR* Format, TCHAR Target, TCHAR* OutStr1, TCHAR* OutStr2, TCHAR* OutStr3, TCHAR* OutStr4)</A><br>
+<A HREF="section05.htm#5.8" target ="showframe">5.8 int ParseInto1Param(TCHAR* OriginStr, TCHAR* Format, TCHAR Target, TCHAR* OutStr1, int OutStr1Len)</A><br>
+<A HREF="section05.htm#5.9" target ="showframe">5.9 int ParseInto2Params(TCHAR* OriginStr, TCHAR* Format, TCHAR Target, TCHAR* OutStr1, int OutStr1Len, TCHAR* OutStr2, int OutStr2Len)</A><br>
+<A HREF="section05.htm#5.10" target ="showframe">5.10 int ParseInto3Params(TCHAR* OriginStr, TCHAR* Format, TCHAR Target, TCHAR* OutStr1, int OutStr1Len, TCHAR* OutStr2, int OutStr2Len, TCHAR* OutStr3, int OutStr3Len)</A><br>
+<A HREF="section05.htm#5.11" target ="showframe">5.11 int ParseInto4Params(TCHAR* OriginStr, TCHAR* Format, TCHAR Target, TCHAR* OutStr1, int OutStr1Len, TCHAR* OutStr2, int OutStr2Len, TCHAR* OutStr3, int OutStr3Len, TCHAR* OutStr4, int OutStr4Len)</A><br>
+<p>
+
+</div>
 </BODY>
+</html>
+

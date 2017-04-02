@@ -403,9 +403,12 @@ int StkSocket_Receive(int Id, int LogId, BYTE* Buffer, int BufferSize, int Finis
 <tr><td>FinishCondition</td><td>入力</td><td>メソッドアウトする条件。以下の何れかを指定する。<br>
 <ul>
 <li>0 : データ受信後無条件にメソッドアウト<br>
-<li>1～180000 : データ受信後一定時間(ミリ秒）更なるデータ受信が無い場合メソッドアウト<br>
-<li>9999999 : 送信側ソケットがクローズされたときだけメソッドアウト<br>
-<li>10000001～19999999 : 指定したバイト数以上のデータを受信した場合メソッドアウト(設定値=N: N - 10000000)<br>
+<li>1～180000 : データ受信後一定時間(ミリ秒）更なるデータ受信が無い場合メソッドアウト。<br>
+<li>200001～380000 : HTTPのContent-Lengthで指定したバイト数以上のデータを受信した場合メソッドアウト。
+HTTPヘッダにContent-Lengthが指定されていない場合，または受信したデータがContent-Lengthで指定したサイズに満たない場合，
+FinishCondition - 200000で求まる時間(ミリ秒)分待機し，さらにデータを受信しない場合メソッドアウトする。
+<li>9999999 : 送信側ソケットがクローズされたときだけメソッドアウト。<br>
+<li>10000001～19999999 : FinishCondition - 10,000,000で求まるバイト数以上のデータを受信した場合メソッドアウト。<br>
 <li>マイナス値 : 指定した文字列で終わるデータを受信した場合メソッドアウト。
 </ul></td></tr>
 <tr><td>VarDat</td><td>入力</td><td>メソッドアウトの条件となるバイト列。FinishConditionがマイナス値の場合，この引数が評価される。</td></tr>
@@ -415,8 +418,9 @@ int StkSocket_Receive(int Id, int LogId, BYTE* Buffer, int BufferSize, int Finis
 </div><p>
 <u>戻り値</u>
 <div class="topic">
--1: データの受信に失敗<br>
--1以外: 受信したデータのサイズ(バイト数)
+-1: データの受信に失敗<br/>
+-2: データの受信に失敗(タイムアウトを検知したとき)<br/>
+-1および-2以外: 受信したデータのサイズ(バイト数)
 </div><p>
 </div><p>
 
@@ -471,8 +475,9 @@ int StkSocket_ReceiveUdp(int Id, int LogId, BYTE* Buffer, int BufferSize)
 </div><p>
 <u>戻り値</u>
 <div class="topic">
--1: データの受信に失敗<br>
--1以外: 受信したデータのサイズ(バイト数)
+-1: データの受信に失敗<br/>
+-2: データの受信に失敗(タイムアウトを検知したとき)<br/>
+-1および-2以外: 受信したデータのサイズ(バイト数)
 </div><p>
 </div><p>
 

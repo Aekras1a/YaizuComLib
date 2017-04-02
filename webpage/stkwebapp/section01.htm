@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+
+<html lang="ja">
+<HEAD>
+<title>StkWebAppCmd</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<div id="container">
+<H1>1. StkWebAppCmd</H1>
+<P>
+
+
+
+<H2 ID="1.1">1.1 StkWebAppCmd概要</H2>
+<div class="topic">
+StkWebAppCmdは，nginxおよびStkWebAppライブラリを利用するユーザープログラムを前提とした，
+Webアプリケーションの登録／削除／起動／停止を行うCLIです。主に以下の機能を提供します。<br/>
+<ul>
+<li>REST APIの動作のために，nginxおよびユーザープログラムのConfigファイルを書き換える。</li>
+<li>nginxおよびユーザープログラムのConfigファイル，ユーザープログラムのリポジトリファイルのアクセス権限を緩和する。</li>
+<li>nginxをファイアウォールの例外として登録する。</li>
+<li>StkWebAppCmdをサービスとして登録する。</li>
+<li>StkWebAppCmdがサービスとして起動したときに，nginxおよびユーザープログラムのプロセスを起動する。</li>
+<li>StkWebAppCmdがサービスとして停止したときに，nginxおよびユーザープログラムのプロセスを停止する。</li>
+<li>StkWebAppCmdのサービスを削除する。</li>
+<li>nginxをファイアウォールの例外から削除する。</li>
+</ul>
+</div><p>
+
+
+
+<H2 ID="1.2">1.2 StkWebAppCmdの要件</H2>
+<div class="topic">
+StkWebAppCmdは，下記のフォルダおよびファイル構成を前提としています。<br/>
+<img src="stkwebappcmd.gif" alt="file tree"><br/>
+/appnameフォルダは，StkWebAppに基づいたWebアプリケーションを構成するフォルダおよびファイルを格納する最上位フォルダであり，
+任意のフォルダ名が設定されることを許します。<br/>
+/appnameフォルダ直下には，nginxの実行ファイル(nginx.exe)，nginxの関連フォルダ，および以下のファイルが存在する必要があります。<br/>
+<ul>
+<li>stkwebappcmd.exe</li>
+<li>stkwebapp.exe</li>
+<li>stkwebapp.conf</li>
+<li>stkwebapp.dat</li>
+</ul>
+また，/appname/confには，nginxのConfigファイル(nginx.conf)が存在する必要があります。<br/>
+
+</div><p>
+
+
+
+<H2 ID="1.3">1.3 StkWebAppCmdの使用方法</H2>
+<div class="topic">
+<pre><code>
+StkWebAppCmdの使用方法を以下に示します。<br/>
+StkWebAppCmd (Service command for StkWebApp)
+Command usage : stkwebappcmd &lt;command&gt; &lt;option 1&gt; &lt;option 2&gt; ...
+
+Commands
+  help      : Display help.
+  modperm   : Modify permission of configuration and data
+              files.
+  modconfig : Modify configuration files.
+              ProductName, SrvHost, SrvPort, WebHost and
+              WebPort options are required.
+  fwadd     : Add exception to the firewall. ProductName
+              option is required.
+  fwdel     : Delete exception from the firewall.
+              ProductName option is required.
+  srvadd    : Add service to the system. ProductName
+              option is required.
+  srvdel    : Delete service from the system. ProductName
+              option is required.
+  start     : Start the service. ProductName option is
+              required.
+  stop      : Stop the service. ProductName option is
+              required.
+  inst      : Execute modperm, modconfig, fwadd, srvadd
+              and start sequencially.
+
+  uninst    : Execute fwdel, srvdel and stop sequencially.
+
+Options
+  ProductName : Product name
+  SrvHost : Host name or IP address of REST API service
+  SrvPort : Port number of REST API service
+  WebHost : Host name or IP address of WEB service
+  WebPort : Port number of WEB service
+</code></pre>
+</div><p>
+
+
+
+</div>
+</BODY>
+</html>

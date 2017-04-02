@@ -1,0 +1,134 @@
+﻿<HEAD>
+<TITLE>データアクセスGUI</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="./style.css" type="text/css">
+</HEAD>
+
+<BODY>
+<style type="text/css">
+<!--
+.spc { margin-left: 2em; margin-right: 0em; }
+-->
+</style>
+
+<div id="container">
+<H1>1. データアクセスGUI</H1>
+
+<h2>1.1 概要</h2>
+データアクセスGUIは，StkData利用プログラムの１つで，StkDataが管理するデータに対する操作をGUIで提供します。
+<P>
+
+<h2>1.2 要件</h2>
+データアクセスGUIは以下の環境で動作します。<BR>
+<ul>
+<LI>動作に必要なCPU:<BR>
+1GHz以上のクロック周波数で動作するCPU<BR>
+<P>
+<LI>動作に必要なメモリ容量:<BR>
+512MBytes以上<BR>
+<P>
+<LI>導入に必要な空きディスク容量:<BR>
+10MBytes以上<BR>
+<P>
+<LI>サポートするオペレーティングシステム:<BR>
+Windows:<BR>
+<div class=spc>
+Windows 2000 Professional SP4<BR>
+Windows XP Professional SP2/SP3<BR>
+Windows XP Professional x64 SP2<BR>
+Windows Vista Business/Ultimate SPなし/SP1/SP2<BR>
+Windows 7 Professional/Ultimate SPなし<BR>
+Windows Server 2003 Standard SPなし/SP1/SP2<BR>
+Windows Server 2008 Standard SPなし/SP2<BR>
+</div><p>
+</ul>
+
+<h2>1.3 画面仕様</h2>
+<IMG SRC="stkdatagui.gif"><P>
+
+データアクセスGUIのウィンドウは選択したテーブルのレコード一覧を表示します。
+フィルタリング条件が指定してある場合は，絞り込んだ結果をレコード一覧に表示します。<P>
+データアクセスGUIが提供する機能を下記に示します。<P>
+
+[File]メニューに関連する機能<BR>
+<div class=spc>
+(1) Save As<BR>
+<div class=spc>
+StkDataが管理するデータ（テーブル情報／レコード情報）をファイルに書き込みます。<br/>
+ファイル名はダイアログで指定できます。
+</div>
+(2) Save<BR>
+<div class=spc>
+StkDataが管理するデータ（テーブル情報／レコード情報）を現在編集中のファイルに書き込みます。
+</div>
+(3) Open<BR>
+<div class=spc>
+ファイルからデータを読込みます。
+</div>
+(4) Exit<BR>
+<div class=spc>
+データアクセスGUIを終了します。
+</div>
+</div><P>
+
+[Table]メニューに関連する機能<BR>
+<div class=spc>
+テーブルを選択します。テーブルが1つも存在しない場合，[テーブル]メニュー以下にテーブル一覧が表示されません。
+</div><P>
+
+[Operation]メニューに関連する機能<BR>
+<div class=spc>
+(1) Filtering<BR>
+<div class=spc>
+指定したフィルタリング条件で表示するレコードを絞り込みます。<BR>
+最大で5つの条件を同時に指定することができます。
+</div>
+(2) Insert<BR>
+<div class=spc>
+レコードを追加します。<BR>バイナリ型カラムを除く全てのカラムに値を入力する必要があります（バイナリ型カラムには
+値を入力することができません）。
+文字列型カラム，ワイド文字列型カラムに空文字を指定することはできません。特に値が決まっていない
+文字列型カラム，ワイド文字列型カラムにはダミー文字列（例：空白文字）を指定してください。<BR>
+同様に整数型カラムに空文字列を指定することはできません。特に値が決まっていない
+整数型カラムにはダミー値（例：0）を指定してください。
+</div>
+(3) Update<BR>
+<div class=spc>
+選択したレコードを更新します。<BR>
+最大で5つのカラムの値を同時に変更することができます。
+</div>
+(4) Delete<BR>
+<div class=spc>
+選択したレコードを削除します。
+</div>
+(5) Create Table<BR>
+<div class=spc>
+テーブルを新規に作成します。
+</div>
+(6) Delete Table<BR>
+<div class=spc>
+現在選択されているテーブルを削除します。
+</div>
+(7) Show Table Information<BR>
+<div class=spc>
+現在選択されているテーブルの情報を表示します。
+</div>
+(8) Refresh<BR>
+<div class=spc>
+レコード一覧をリフレッシュします。
+</div><P>
+</div>
+
+その他の機能<BR>
+<div class=spc>
+(1) レコードのソート<BR>
+<div class=spc>
+ウィンドウ上方のカラム名を押すと，そのカラムの値で昇順となるようにレコードをソートします。
+同じカラム名を再度押すと，降順でソートします。
+</div>
+</div>
+
+
+
+</BODY>
