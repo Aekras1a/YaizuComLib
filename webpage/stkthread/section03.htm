@@ -21,8 +21,8 @@ StkThreadのユーザープログラム用APIの一覧を以下に示します�
 <tr><td>void SetProcAfterLastStkThreadStops(void* Proc)</td><td>コールバックメソッドProcAfterLastStkThreadStopsのポインタを設定します。</td></tr>
 <tr><td>int StartSpecifiedStkThreads(int Ids[MAX_NUM_OF_STKTHREADS], int NumOfIds)</td><td>指定されたIDのスレッドを開始します。</td></tr>
 <tr><td>int StopSpecifiedStkThreads(int Ids[MAX_NUM_OF_STKTHREADS], int NumOfIds)</td><td>指定されたIDのスレッドを停止します。</td></tr>
-<tr><td>int StartAllStkThreads()</td><td>登録されているすべてのスレッドを開始します。</td></tr>
-<tr><td>int StopAllStkThreads()</td><td>登録されているすべてのスレッドを停止します。</td></tr>
+<tr><td>int StartAllOfStkThreads()</td><td>登録されているすべてのスレッドを開始します。</td></tr>
+<tr><td>int StopAllOfStkThreads()</td><td>登録されているすべてのスレッドを停止します。</td></tr>
 <tr><td>void SetStkThreadInterval(int TargetId, int Millisec)</td><td>ElemStkThreadMainコールバックメソッドを定期的に呼び出す間隔をミリ秒単位で指定します。</td></tr>
 <tr><td>int GetStkThreadInterval(int TargetId)</td><td>ElemStkThreadMainコールバックメソッドを定期的に呼び出す間隔を取得します。</td></tr>
 <tr><td>int GetStkThreadIdByIndex(int Index)</td><td>指定した要素番号のIDを取得します。</td></tr>
@@ -70,7 +70,9 @@ AddStkThreadメソッドおよびDeleteStkThreadメソッドを用いて実施�
 <li>すでに最大数のスレッドが登録されている場合
 <li>指定されたNameおよびDescriptionの文字長が最大長を超えている場合
 <li>指定されたIdと同じIDをもつスレッドがすでに登録されている場合
-</ul>
+</ul><br/>
+他のスレッドが実行しているときに本メソッドの呼び出しを行ったときの挙動は保証されていません。<br/>
+すべてのスレッドが停止しているときに本メソッドを呼び出してください。<br/>
 <table class="tblstyle">
 <tr><td>Id[入力]</td><td>StkThread ID (StkThreadが内部的に管理するスレッドのIDであり一般的なスレッドIDではない)</td></tr>
 <tr><td>Name[入力]</td><td>スレッドの名前</td></tr>
@@ -90,6 +92,8 @@ AddStkThreadメソッドおよびDeleteStkThreadメソッドを用いて実施�
 登録されているスレッドを削除します。<br>
 スレッドを削除するにあたり，本メソッドは内部的にStopSpecifiedStkThreadsメソッドを呼び出し，実行中のスレッドの停止処理を行います。<br>
 指定したIDのスレッドが存在しない場合，要求は無視され処理は呼び出し元に戻ります。<br>
+他のスレッドが実行しているときに本メソッドの呼び出しを行ったときの挙動は保証されていません。<br/>
+すべてのスレッドが停止しているときに本メソッドを呼び出してください。<br/>
 <table class="tblstyle">
 <tr><td>Id[入力]</td><td>StkThread ID (StkThreadが内部的に管理するスレッドのIDであり一般的なスレッドIDではない)</td></tr>
 <tr><td>[戻り値]</td><td>なし</td></tr>
@@ -144,7 +148,7 @@ ProcAfterLastStkThreadStops(コールバックメソッド)を設定します。
 </div><p>
 
 
-<H3 ID="3.2.9">3.2.9 int StartAllStkThreads()</H3>
+<H3 ID="3.2.9">3.2.9 int StartAllOfStkThreads()</H3>
 <div class="topic">
 登録されているすべてのスレッドを開始します。<br>
 このメソッドは最初に現在実行中のスレッドが存在するかどうかをチェックし，指定されたスレッドが最初の実行スレッドと判断した場合，ProcBeforeFirstStkThreadStartsをコールバックします。<br>
@@ -156,7 +160,7 @@ ProcAfterLastStkThreadStops(コールバックメソッド)を設定します。
 </div><p>
 
 
-<H3 ID="3.2.10">3.2.10 int StopAllStkThreads()</H3>
+<H3 ID="3.2.10">3.2.10 int StopAllOfStkThreads()</H3>
 <div class="topic">
 登録されているすべてのスレッドを停止します。<br>
 このメソッドはElemStkThreadStopおよびElemStkThreadFinalをコールバックしたあと，全てのスレッドが停止したかどうかをチェックし，全てのスレッドが停止したと判断した場合，ProcAfterLastStkThreadStopsをコールバックします。<br>
