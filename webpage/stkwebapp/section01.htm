@@ -46,7 +46,10 @@ StkWebAppCmdは，下記のフォルダおよびファイル構成を前提と�
 <li>stkwebapp.dat</li>
 </ul>
 また，/appname/confには，nginxのConfigファイル(nginx.conf)が存在する必要があります。<br/>
-
+StkWebAppCmdがnginxのConfigファイルを書き換えることにより，nginxは以下のURLに届いたリクエストを，ユーザープログラム(REST API)に転送します。<br/>
+<p>
+http://＜nginxのホスト名＞:＜nginxのポート番号＞/api/
+</p>
 </div><p>
 
 

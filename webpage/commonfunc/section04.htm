@@ -443,7 +443,7 @@ StkObjectインスタンスからXMLを生成します。<br>
 
 
 
-<H2 ID="4.31">4.31 void ToJson(TCHAR* StrJson, int Size)</H2>
+<H2 ID="4.31">4.31 int ToJson(TCHAR* StrJson, int Size)</H2>
 <div class="topic">
 StkObjectインスタンスからJSONを生成します。<br>
 トップノードとなるStkObjectインスタンスに対して本APIを呼び出すことができます。トップノードでないStkObjectインスタンスに対して本APIを呼び出したときの動作は保証されていません。<br>
@@ -457,11 +457,12 @@ StkObjectインスタンスからJSONを生成します。<br>
 \t → \\t<br>
 <p>
 属性は，名称が"@attributes"の要素に変換されます。<br>
+同じ名称のStkObjectインスタンスが同一階層上に連続して2つ以上出現する場合，本APIはそれらを配列で表現します。<br>
 </p>
 <table class="tblstyle">
 <tr><td>StrJson[出力]</td><td>JSONを格納するバッファのポインタ。呼び出し元で予め空文字で初期化しておく必要がある。</td></tr>
 <tr><td>Size[入力]</td><td>JSONを格納するバッファ(StrJson)のサイズ(単位はTCHAR)。</td></tr>
-<tr><td>[戻り値]</td><td>なし</td></tr>
+<tr><td>[戻り値]</td><td>JSONのサイズ</td></tr>
 </table>
 </div><p>
 

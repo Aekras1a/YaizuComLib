@@ -45,13 +45,6 @@ StkWebAppは以下のファイルから構成されます。
 <tr><td>StkWebApp.h</td><td>StkWebAppの利用プログラムのためのヘッダファイルで，StkWebAppクラスを定義します。<br/>StkWebAppクラスは，REST APIを実現する基本的な機能を提供します。</td></tr>
 <tr><td>StkWebAppExec.h</td><td>StkWebAppの利用プログラムのためのヘッダファイルで，StkWebAppExecクラスを定義します。<br/>StkWebAppExecクラスは，個々のREST APIの処理を実現するクラスの基底クラスです。</td></tr>
 </table>
-<p>
-StkWebAppの動作に必要なメモリサイズは下記のとおりです。
-</p>
-<table class="tblstyle">
-<tr><td>スタック</td><td>同時に動作可能なスレッド数×2Mバイト＋1Mバイト</td></tr>
-<tr><td>ヒープ</td><td>1Mバイト</td></tr>
-</table>
 </div>
 
 
@@ -92,17 +85,17 @@ StkWebAppインスタンスを生成すると同時に，以下を行います�
 </ul><br/>
 <hr/>
 
-<p>int AddReqHandler(int Method, TCHAR UrlPath[128], StkWebAppExec* HandlerObj)</p>
+<p>int AddReqHandler(int Method, TCHAR UrlPath[StkWebAppExec::URL_PATH_LENGTH], StkWebAppExec* HandlerObj)</p>
 ある特定のメソッドおよびURLと関連付くリクエストを処理するハンドラを登録します。<br/>
 <table class="tblstyle">
 <tr><td>
 Method[入力]</td><td>ハンドラの処理対象となるメソッド。以下の論理積を許す。<br/>
-StkWebApp::STKWEBAPP_METHOD_UNDEFINED<br/>
-StkWebApp::STKWEBAPP_METHOD_GET<br/>
-StkWebApp::STKWEBAPP_METHOD_HEAD<br/>
-StkWebApp::STKWEBAPP_METHOD_POST<br/>
-StkWebApp::STKWEBAPP_METHOD_PUT<br/>
-StkWebApp::STKWEBAPP_METHOD_DELETE<br/>
+StkWebAppExec::STKWEBAPP_METHOD_UNDEFINED<br/>
+StkWebAppExec::STKWEBAPP_METHOD_GET<br/>
+StkWebAppExec::STKWEBAPP_METHOD_HEAD<br/>
+StkWebAppExec::STKWEBAPP_METHOD_POST<br/>
+StkWebAppExec::STKWEBAPP_METHOD_PUT<br/>
+StkWebAppExec::STKWEBAPP_METHOD_DELETE<br/>
 </td></tr>
 <tr><td>UrlPath[入力]</td><td>ハンドラの処理対象となるURL。ワイルドカードとして$を指定可能。</td></tr>
 <tr><td>HandlerObj[入力]</td><td>処理ハンドラとなるStkWebAppExecインスタンスのポインタ</td></tr>
@@ -110,7 +103,7 @@ StkWebApp::STKWEBAPP_METHOD_DELETE<br/>
 </table>
 <hr/>
 
-<p>int StkWebApp::DeleteReqHandler(int Method, TCHAR UrlPath[128])</p>
+<p>int DeleteReqHandler(int Method, TCHAR UrlPath[StkWebAppExec::URL_PATH_LENGTH])</p>
 登録済のハンドラを削除します。<br/>
 <table class="tblstyle">
 <tr><td>Method[入力]</td><td>削除するハンドラを登録したときに指定したメソッドおよびその論理積<br/></td></tr>
@@ -119,8 +112,22 @@ StkWebApp::STKWEBAPP_METHOD_DELETE<br/>
 </table>
 <hr/>
 
-<p>void StkWebApp::TheLoop()</p>
-URL"/service/"に"{ "Operation" : "Stop" }"が送信されるまで，本メソッドから処理が戻りません。<br/>
+<p>void TheLoop()</p>
+URL"/service/"に"{ "Operation" : "Stop" }"がPOSTされるまで，本メソッドから処理が戻りません。<br/>
+<hr/>
+
+<p>int GetSendBufSize()</p>
+送信用データ一時格納用領域のサイズを返します。<br/>
+<table class="tblstyle">
+<tr><td>戻り値</td><td>送信用データ一時格納用領域のサイズ</td></tr>
+</table>
+<hr/>
+
+<p>void SetSendBufSize(int Size)</p>
+送信用データ一時格納用領域のサイズを変更します。<br/>デフォルトは1MBです。<br/>
+<table class="tblstyle">
+<tr><td>Size[入力]</td><td>送信用データ一時格納用領域のサイズ<br/></td></tr>
+</table>
 <hr/>
 
 </div><p>
@@ -129,13 +136,14 @@ URL"/service/"に"{ "Operation" : "Stop" }"が送信されるまで，本メソ�
 
 <H2 ID="2.5">2.5 StkWebAppExecクラス</H2>
 <div class="topic">
-<p>virtual StkObject* Execute(StkObject* ReqObj, int Method, TCHAR UrlPath[128], int* ResultCode) = 0</p>
+<p>virtual StkObject* Execute(StkObject* ReqObj, int Method, TCHAR UrlPath[StkWebAppExec::URL_PATH_LENGTH], int* ResultCode, TCHAR Locale[3]) = 0</p>
 StkWebAppExecクラスの派生クラスが実装するメソッドです。純粋仮想関数として定義されています。<br/>
 <table class="tblstyle">
 <tr><td>ReqObj[入力]</td><td>クライアントがリクエストとして与えたJSON形式のデータをStkObjectに変換したもの<br/></td></tr>
 <tr><td>Method[入力]</td><td>クライアントがリクエストとして与えたメソッド</td></tr>
-<tr><td>UrlPath[入力]</td><td>クライアントがリクエストとして与えたURL</td></tr>
+<tr><td>UrlPath[入力]</td><td>クライアントがリクエストとして与えたURL。URLデコード（パーセントデコード）はされていない。</td></tr>
 <tr><td>ResultCode[出力]</td><td>クライアントに返すステータスコード</td></tr>
+<tr><td>Locale[出力]</td><td>ブラウザ（クライアント）のロケール。日本語の場合"ja"が格納される。</td></tr>
 <tr><td>戻り値</td><td>クライアントに返すデータ。最終的にJSON形式のデータに変換し，クライアントに返却する。</td></tr>
 </table>
 <hr/>
@@ -150,13 +158,21 @@ StkWebAppは，リクエストの不正や内部処理の異常を検知した�
 <p>
 <table class="tblstyle"><tr>
 <td><pre><code>
-"Res":{
-  "Code":1234
-  "MsgEng":"abc"
+{
+  "Code":1234,
+  "MsgEng":"abc",
   "MsgJpn":"あいう"
 }
 </code></pre></td>
-</tr></table>
+</tr></table><br/>
+既定のエラーコードおよびエラーメッセージとして以下が定義されています。<br/>
+<table class="tblstyle">
+<tr><td>1001</td><td>クライアントからのリクエストに対応するAPIは定義されていません。</td></tr>
+<tr><td>1002</td><td>リクエストがJSONではないデータを含んでいるかHTTPヘッダのContent-Typeがapplication/jsonではありません。</td></tr>
+<tr><td>1004</td><td>URL"/service/"にPOSTされたリクエストは不正です。</td></tr>
+<tr><td>1005</td><td>不正なリクエストを受信しました。リクエストが壊れているおそれがあります。</td></tr>
+<tr><td>1006</td><td>データサイズが送信できるサイズの上限を超えました。</td></tr>
+</table><br/>
 </div><p>
 
 
