@@ -1,0 +1,316 @@
+﻿<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="style.css" rel="stylesheet" media="screen">
+
+    <script>
+        window.onload = function () {
+            activateTopic('a1');
+        }
+
+        function activateTopic(id) {
+            var Rows = document.getElementsByClassName("row");
+            for (var Loop = 0; Loop < Rows.length; Loop++) {
+                Rows[Loop].style.display = 'none'
+            }
+            var activateTarget = document.getElementById(id);
+            activateTarget.style.display = 'block'
+        }
+   </script>
+</head>
+
+<body>
+
+    <!-- top nav -->
+    <nav class="navbar navbar-default">
+
+        <div class="container">
+            <!-- 無くても良い -->
+
+            <div class="navbar-header">
+
+                <!-- logo img -->
+                <a class="navbar-brand" href="">
+                    <strong>Yaizu ソフトウェア開発メモ</strong>
+                </a>
+
+                <!-- toggle -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#top-nav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- top menu -->
+            <div class="collapse navbar-collapse" id="top-nav">
+
+                <!-- main navbar -->
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-comment"></span> 気づき事項</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="activateTopic('a1')"><span class="glyphicon glyphicon-comment"></span> インストーラがユーザードキュメントフォルダにフォルダ／ファイルを配置する際の注意事項</a></li>
+                            <li><a onclick="activateTopic('a2')"><span class="glyphicon glyphicon-comment"></span> メモリリーク検出用デバッグコード</a></li>
+                            <li><a onclick="activateTopic('a3')"><span class="glyphicon glyphicon-comment"></span> WM_INITDIALOGのプラットフォーム毎の挙動</a></li>
+                            <li><a onclick="activateTopic('a4')"><span class="glyphicon glyphicon-comment"></span> C++ オーバーライド不可の指定</a></li>
+                            <li><a onclick="activateTopic('a5')"><span class="glyphicon glyphicon-comment"></span> Pimplイディオム</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-pencil"></span> OSS開発メモ</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="activateTopic('b1')"><span class="glyphicon glyphicon-pencil"></span> リンクリストＢ１</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-tags"></span> 歴代のPC/Server</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="activateTopic('c1')"><span class="glyphicon glyphicon-tags"></span> リンクリストＣ１</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-globe"></span> 関連リンク</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="activateTopic('d1')"><span class="glyphicon glyphicon-globe"></span> リンクリストＤ１</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- end container -->
+    </nav>
+    <!-- end nav -->
+
+    <div class="container-fluid">
+        <div id="a1" class="row">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-comment"></span> インストーラがユーザードキュメントフォルダにフォルダ／ファイルを配置する際の注意事項</h2>
+                <p>
+                    Visual Studio 2008を使用してsetupプロジェクトを作成する際，インストーラがユーザードキュメントフォルダ（ユーザーの個人用データフォルダ）
+                    にフォルダまたはファイルの配置を試みると，オペレーティングシステムに依存して以下に示す挙動を示す。
+                </p>
+                <p>インストーラはインストール時，またはインストールしたプログラムの初回起動時に以下のフォルダ，ファイルの生成を試みる。</p>
+                <ul>
+                    <li>＜ユーザードキュメントフォルダ＞\StkFw</li>
+                    <li>＜ユーザードキュメントフォルダ＞\StkFw\SampleData</li>
+                    <li>＜ユーザードキュメントフォルダ＞\StkFw\SampleData\*.* （＜インストール先＞\StkFw\sample内のファイルがコピーされる）</li>
+                </ul>
+                <p>しかし，実際に生成されるかどうかはOSにより異る。</p>
+                <table class="table table-striped">
+                    <tr><th>OS</th><th>Administratorsのユーザー（インストールしたユーザー）</th><th>Administratorsの他のユーザー</th><th>Usersのユーザー</th><th>Guestのユーザー</th></tr>
+                    <tr><td>Windows2000</td><td>◎</td><td>×</td><td>○</td><td>○</td></tr>
+                    <tr><td>WindowsXP</td><td>◎</td><td>×</td><td>○</td><td>○</td></tr>
+                    <tr><td>WindowsServer2003</td><td>◎</td><td>×</td><td>－</td><td>－</td></tr>
+                    <tr><td>WindowsVista</td><td>◎</td><td>○</td><td>○</td><td>○</td></tr>
+                    <tr><td>WindowsServer2008</td><td>◎</td><td>○</td><td>○</td><td>○</td></tr>
+                    <tr><td>Windows7</td><td>◎</td><td>○</td><td>○</td><td>○</td></tr>
+                </table>
+                <p>
+                    ◎：インストール時にフォルダ/ファイルが生成される<br />
+                    ○：インストールしたプログラムの初回起動時にフォルダ/ファイルが生成される<br />
+                    ×：インストールしたプログラムは起動できるがフォルダ/ファイルは生成されない<br />
+                    －：インストールしたプログラムの初回起動時にエラー（デジタル署名ポリシー違反）が発生し，フォルダ/ファイルが生成されない<br />
+                </p>
+                <p>
+                    上記の例は，インストールしたユーザーのデスクトップ上にインストール元ファイルであるsetup.exe，XXXX.msiを残したままにしたときの挙動である。
+                    インストール直後にsetup.exe，XXXX.msiを削除した場合の挙動を以下に示す。
+                </p>
+                <table class="table table-striped">
+                    <tr><th>OS</th><th>Administratorsのユーザー（インストールしたユーザー）</th><th>Administratorsの他のユーザー</th><th>Usersのユーザー</th><th>Guestのユーザー</th></tr>
+                    <tr><td>Windows2000</td><td>◎</td><td>×</td><td>△</td><td>△</td></tr>
+                    <tr><td>WindowsXP</td><td>◎</td><td>×</td><td>△</td><td>△</td></tr>
+                    <tr><td>WindowsServer2003</td><td>◎</td><td>×</td><td>△</td><td>△</td></tr>
+                    <tr><td>WindowsVista</td><td>◎</td><td>△</td><td>△</td><td>△</td></tr>
+                    <tr><td>WindowsServer2008</td><td>◎</td><td>△</td><td>△</td><td>△</td></tr>
+                    <tr><td>Windows7</td><td>◎</td><td>△</td><td>△</td><td>△</td></tr>
+                </table>
+                <p>
+                    ◎：インストール時にフォルダ/ファイルが生成される<br />
+                    △：インストールしたプログラムの初回起動時にXXXX.msiの場所の指定を促すメッセージが表示される<br />
+                    ×：インストールしたプログラムは起動できるがフォルダ/ファイルは生成されない<br />
+                </p>
+            </div>
+        </div>
+
+
+        <div id="a2" class="row">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-comment"></span> メモリリーク検出用デバッグコード</h2>
+                <p>
+                    Visual C++を使用したソフトウェア開発において，メモリリークを発生させるコードは気を付けていても作り込まれてしまうもの。<br />
+                    これはC/C++の宿命のようなものであるが，メモリリークの要因は，メモリリーク検出用のデバッグコードを埋め込むことにより，容易に取り除くことができる。
+                </p>
+                <ol>
+                    <li>
+                        メモリリークが疑われるソースコードの先頭行に以下の宣言文を追加する。<br />
+                        <code>
+                            #define _CRTDBG_MAP_ALLOC<br />
+                            #include &#60;stdlib.h&#62;<br />
+                            #include &#60;crtdbg.h&#62;<br />
+                            #define new  ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
+                        </code>
+                    </li>
+                    <li>
+                        メモリリークの候補をDUMPする。<br />
+                        <code>
+                            OutputDebugString(_T("Dump memory leaks"));<br />
+                            _CrtDumpMemoryLeaks();
+                        </code>
+                    </li>
+                </ol>
+                <p>
+                    Visual C++からデバッグモードでプログラムを起動すると，上記#2のDUMP情報がVisual C++のコンソールに出力される。<br />
+                    出力される情報は下記のとおり。<br />
+                </p>
+                <ul>
+                    <li>メモリ割り当て番号 (中括弧に囲まれた数字)</li>
+                    <li>ブロックの型 (Normal、Client または CRT)</li>
+                    <li>16 進数で表されるメモリの位置</li>
+                    <li>バイト単位で表されるブロックのサイズ</li>
+                    <li>先頭の 16 バイトの内容 (16 進数)</li>
+                </ul>
+                <code>
+                    c:\work\github\yaizucomlib\src\commonfunc\stkobject.cpp(716) : {3539} normal block at 0x00AB4CE8, 32 bytes long.<br />
+                    Data: &lt;HM       M      &gt; 48 4D AB 00 16 00 00 00 90 4D AB 00 00 00 00 00
+                </code>
+                <br />
+                <p>
+                    OutputDebugStringおよび_CrtDumpMemoryLeaksのみでもDUMP情報は出力されるが，前述#defineおよび#includeを挿入することにより，
+                    ソースコードのファイル名とメモリ確保を行った行番号が出力される。<br />
+                </p>
+            </div>
+        </div>
+
+
+        <div id="a3" class="row">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-comment"></span> WM_INITDIALOGのプラットフォーム毎の挙動</h2>
+                <p>
+                    ダイアログ表示に関するプラットフォーム挙動差異：
+                    DialogBox()を使用してダイアログを作成する。<br />
+                </p>
+                <ul>
+                    <li>
+                        WM_INITDIALOGをハンドルして(INT_PTR)TRUEを返す<br />
+                        Windows XPではダイアログが表示される<br />
+                        Windows 2000でもダイアログが表示される<br />
+                    </li>
+                    <li>
+                        WM_INITDIALOGをハンドルしない<br />
+                        Windows XPではダイアログが表示される<br />
+                        Windows 2000ではダイアログが表示されない<br />
+                    </li>
+                </ul>
+                <p>
+                    List Control（レポート属性）に関するプラットフォーム挙動差異：
+                    DialogBox()を使用してList Control（レポート属性）付きダイアログを作成する。<br />
+                </p>
+                <ul>
+                    <li>
+                        WM_INITDIALOGでImageList_Create()を呼び出している。<br />
+                        Windows XPではダイアログが表示される<br />
+                        Windows 2000でもダイアログが表示される<br />
+                    </li>
+                    <li>
+                        WM_INITDIALOGでImageList_Create()を呼び出していない。<br />
+                        Windows XPではダイアログが表示される<br />
+                        Windows 2000ではダイアログが表示されない<br />
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div id="a4" class="row">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-comment"></span> C++ オーバーライド不可の指定</h2>
+                <p>
+                    virtual関数を派生先でオーバーライド不可にすることはC++ではできない。<br />
+                    JAVAではfinal，C#ではsealdを使用することにより，オーバーライド不可にすることができる。
+                </p>
+            </div>
+        </div>
+
+
+        <div id="a5" class="row">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-comment"></span> Pimplイディオム</h2>
+                <p>
+                    C++でライブラリの開発をしていると，ヘッダファイルにインターフェース以外の実装が含まれるのを回避したいと考えるときがある。
+                    そのような実装部は，呼び出し側のユーザープログラムにとっては，知る必要の無い事項／知っていてはいけない事項であり，これを如何に
+                    暴露させないかはシンプルなインターフェースを提供する上で重要なことである。<br>
+                    Pimplイディオムの実装は色々なやり方があるが，手っ取り早いのは下記の定義をクラスに記述し，実装部をcpp内のImplクラスに押し込むやり方。
+                </p>
+                <code>
+                    private:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;class Impl;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Impl* pImpl_;
+                </code>
+                <p>もとのクラスのコンストラクタでImplインスタンスを生成し，デストラクタでImplインスタンスを消滅させるコードを記述する。</p>
+            </div>
+        </div>
+
+
+        <div id="b1" class="row">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-pencil"></span> OSS開発メモ</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+            </div>
+        </div>
+        <div id="c1" class="row">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-tags"></span> 歴代のPC/Server</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+            </div>
+        </div>
+        <div id="d1" class="row">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-globe"></span> 関連リンク</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="jquery-3.2.0.min.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+</html>
