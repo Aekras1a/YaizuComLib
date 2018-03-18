@@ -64,7 +64,11 @@
                     <li>
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-pencil"></span> OSS開発メモ</a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a onclick="activateTopic('b1')"><span class="glyphicon glyphicon-pencil"></span> リンクリストＢ１</a></li>
+                            <li><a onclick="activateTopic('b1')"><span class="glyphicon glyphicon-pencil"></span> 開発規模について</a></li>
+                            <li><a onclick="activateTopic('b2')"><span class="glyphicon glyphicon-pencil"></span> バージョン表記に関する規約</a></li>
+                            <li><a onclick="activateTopic('b3')"><span class="glyphicon glyphicon-pencil"></span> ネットワーク環境</a></li>
+                            <li><a onclick="activateTopic('b4')"><span class="glyphicon glyphicon-pencil"></span> 使用ポート番号</a></li>
+                            <li><a onclick="activateTopic('b5')"><span class="glyphicon glyphicon-pencil"></span> バックアップ方法</a></li>
                         </ul>
                     </li>
                     <li>
@@ -94,7 +98,7 @@
                 <p class="text-center">
                     Yaizu ソフトウェア開発メモ
                 </p>
-                <img src="titleimg.jpg" class="img-responsive center-block">
+                <img src="titleimg.jpg" class="img-responsive center-block" alt="Title">
             </div>
         </div>
 
@@ -270,21 +274,186 @@
 
         <div id="b1" class="row" style="display:none">
             <div class="col-xs-12">
-                <h2><span class="glyphicon glyphicon-pencil"></span> OSS開発メモ</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <h2><span class="glyphicon glyphicon-pencil"></span> 開発規模について</h2>
+                <p>開発したソフトウェアの規模の推移を以下にまとめた。</p>
+                <h4>StkFw 1.0.0 (2008.12.19 ﾘﾘｰｽ) 開発規模 : 9,259</h4>
+                <table class="table table-striped">
+                    <tr><td>StkAbout</td><td>228</td></tr>
+                    <tr><td>Stk_IP_DLG</td><td>843</td></tr>
+                    <tr><td>StkData</td><td>2,864</td></tr>
+                    <tr><td>StkLib</td><td>2,994</td></tr>
+                    <tr><td>StkThread</td><td>730</td></tr>
+                    <tr><td>StkFw</td><td>1,600</td></tr>
+                </table>
+                <h4>StkFw 1.1.0 (2009.12.14 ﾘﾘｰｽ) 開発規模 : 15,382</h4>
+                <table class="table table-striped">
+                    <tr><td>StkAbout</td><td>228</td></tr>
+                    <tr><td>Stk_IP_DLG</td><td>954</td></tr>
+                    <tr><td>StkData</td><td>3,195</td></tr>
+                    <tr><td>StkLib</td><td>3,018</td></tr>
+                    <tr><td>StkThread</td><td>743</td></tr>
+                    <tr><td>StkFw</td><td>2,108</td></tr>
+                    <tr><td>LBAadpt</td><td>187</td></tr>
+                    <tr><td>MessageProc</td><td>332</td></tr>
+                    <tr><td>FwAdd/FwDel</td><td>36</td></tr>
+                    <tr><td>VarCon</td><td>1,328</td></tr>
+                    <tr><td>StkProp</td><td>3,253</td></tr>
+                </table>
+                <h4>StkFw 1.2.0 (2010.06.28 ﾘﾘｰｽ) 開発規模 : 17,013</h4>
+                <table class="table table-striped">
+                    <tr><td>Common/StkAbout</td><td>241</td></tr>
+                    <tr><td>Common/StkData</td><td>3,656</td></tr>
+                    <tr><td>Common/MessageProc</td><td>478</td></tr>
+                    <tr><td>Common/StkThread</td><td>794</td></tr>
+                    <tr><td>Stk_IP_DLG</td><td>996</td></tr>
+                    <tr><td>StkLib</td><td>2,998</td></tr>
+                    <tr><td>StkFw</td><td>7,601</td></tr>
+                    <tr><td>LBAadpt</td><td>213</td></tr>
+                    <tr><td>FwAdd/FwDel</td><td>36</td></tr>
+                </table>
+                <h4>StkFw 1.3.0 (2011.04.25 ﾘﾘｰｽ) 開発規模 : 19,893</h4>
+                <table class="table table-striped">
+                    <tr><td>Common/StkAbout</td><td>236</td></tr>
+                    <tr><td>Common/StkData</td><td>2,253</td></tr>
+                    <tr><td>Common/StkDataGui</td><td>1,054</td></tr>
+                    <tr><td>Common/MessageProc</td><td>552</td></tr>
+                    <tr><td>Common/StkThread</td><td>822</td></tr>
+                    <tr><td>Stk_IP_DLG</td><td>857</td></tr>
+                    <tr><td>StkLib</td><td>3,018</td></tr>
+                    <tr><td>StkFw</td><td>8,276</td></tr>
+                    <tr><td>LBAadpt(コマンド含む)</td><td>2,789</td></tr>
+                </table>
+                <h4>StkFw 1.4.0 (2013.02.27 ﾘﾘｰｽ) 開発規模 : 25,638</h4>
+                <table class="table table-striped">
+                    <tr><td>Common/StkAbout</td><td>236</td></tr>
+                    <tr><td>Common/StkData</td><td>2,389</td></tr>
+                    <tr><td>Common/StkDataGui</td><td>1,079</td></tr>
+                    <tr><td>Common/MessageProc</td><td>895</td></tr>
+                    <tr><td>Common/StkThread</td><td>529</td></tr>
+                    <tr><td>Common/StkThreadGui</td><td>614</td></tr>
+                    <tr><td>Common/StkSocket</td><td>706</td></tr>
+                    <tr><td>Stk_IP_DLG</td><td>857</td></tr>
+                    <tr><td>StkLib</td><td>2,916</td></tr>
+                    <tr><td>StkFw</td><td>8,852</td></tr>
+                    <tr><td>LBAadpt(コマンド含む)</td><td>2,789</td></tr>
+                    <tr><td>CmdFreak</td><td>1,367</td></tr>
+                </table>
+                <h4>CmdFreak 1.0.0 (2014.02.04 ﾘﾘｰｽ) 開発規模 : 25,814</h4>
+                <table class="table table-striped">
+                    <tr><td>Common/StkAbout</td><td>236</td></tr>
+                    <tr><td>Common/StkData</td><td>2,389</td></tr>
+                    <tr><td>Common/StkDataGui</td><td>1,198</td></tr>
+                    <tr><td>Common/MessageProc</td><td>847</td></tr>
+                    <tr><td>Common/StkThread</td><td>529</td></tr>
+                    <tr><td>Common/StkThreadGui</td><td>614</td></tr>
+                    <tr><td>Common/StkSocket</td><td>706</td></tr>
+                    <tr><td>Stk_IP_DLG</td><td>857</td></tr>
+                    <tr><td>StkLib</td><td>2,916</td></tr>
+                    <tr><td>StkFw</td><td>8,852</td></tr>
+                    <tr><td>LBAadpt(コマンド含む)</td><td>2,789</td></tr>
+                    <tr><td>cmdfrksrv</td><td>1,749</td></tr>
+                    <tr><td>bbb</td><td>1,438</td></tr>
+                </table>
+                <h4>StkFw 1.5.0 (2015.12.10 ﾘﾘｰｽ) 開発規模 : 26,841</h4>
+                <table class="table table-striped">
+                    <tr><td>CommonLib</td><td>6,855</td></tr>
+                    <tr><td>StkFw</td><td>16,128</td></tr>
+                    <tr><td>CmdFreak</td><td>3,858</td></tr>
+                </table>
+                <h4>CmdFreak 1.1.0 (2018.01.28 ﾘﾘｰｽ) 開発規模 : 29,183</h4>
+                <table class="table table-striped">
+                    <tr><td>CommonLib</td><td>9,520</td></tr>
+                    <tr><td>StkFw</td><td>16,398</td></tr>
+                    <tr><td>CmdFreak</td><td>3,265</td></tr>
+                </table>
             </div>
         </div>
+
+
+        <div id="b2" class="row" style="display:none">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-pencil"></span> バージョン表記に関する規約</h2>
+                <p>
+                    開発ソフトウェアのバージョン表記は以下の様に, メジャーバージョン番号, マイナーバージョン番号, 不良修正番号をピリオド "." で区切った形式とする。<BR>
+                </p>
+                例）1.6.4<BR />
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;メジャーバージョン番号 = 1<BR>
+                    &nbsp;&nbsp;&nbsp;&nbsp;マイナーバージョン番号 = 6<BR>
+                    &nbsp;&nbsp;&nbsp;&nbsp;不良修正番号 = 4<BR>
+                </p>
+                <UL>
+                    <LI>メジャーバージョン番号： 常に1。</LI>
+                    <LI>マイナーバージョン番号： エンハンスの度に値を上げる。</LI>
+                    <LI>不良修正番号： 不良のみを修正した場合値を上げる。</LI>
+                </UL>
+            </div>
+        </div>
+
+
+        <div id="b3" class="row" style="display:none">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-pencil"></span> ネットワーク環境</h2>
+                各物理PC/仮想PCの役割は以下のとおり。<BR />
+                <TABLE class="table table-striped">
+                    <TR>
+                        <TD>SHINY-pc</TD>
+                        <TD>DHCP</TD>
+                        <TD>ソフトウェア開発用。ASUSのラップトップPC。</TD>
+                    </TR>
+                    <tr>
+                        <td>n-win7-c3f9c</td>
+                        <td>DHCP</td>
+                        <td>ソフトウェアテスト用<br />CPU: 1 (x64), Mem: 4,096MB, HDD: 60GB, Network: ブリッジ</td>
+                    </tr>
+                    <tr>
+                        <td>n-win2008-h7tdv</td>
+                        <td>DHCP</td>
+                        <td>ソフトウェアテスト用<br />CPU: 1 (x64), Mem: 4,096MB, HDD: 50GB, Network: ブリッジ</td>
+                    </tr>
+                    <tr>
+                        <td>n-win2016-q3rnc</td>
+                        <td>DHCP</td>
+                        <td>ソフトウェアテスト用<br />CPU: 1 (x64), Mem: 4,096MB, HDD: 80GB, Network: ブリッジ</td>
+                    </tr>
+                </TABLE>
+            </div>
+        </div>
+
+
+        <div id="b4" class="row" style="display:none">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-pencil"></span> 使用ポート番号</h2>
+                リリースしたソフトウェアやテストコードがデフォルトで使用するポート番号を以下に整理する。<BR />
+                <TABLE class="table table-striped">
+                    <tr><th>ソフトウェア名称</th><th>IPアドレス</th><th>ポート番号</th></tr>
+                    <tr><td>CmdFreak 1.0.0 (HTTPサーバ)</td><td>-</td><td>8008</td></tr>
+                    <tr><td>CmdFreak 1.0.0 (CmdFreakサービス)</td><td>localhost</td><td>2002</td></tr>
+                    <tr><td>YaizuSample (HTTPサーバ)</td><td>localhost</td><td>80</td></tr>
+                    <tr><td>YaizuSample (REST APIサービス)</td><td>localhost</td><td>8081</td></tr>
+                    <tr><td>StkWebAppTest</td><td>127.0.0.1</td><td>8080, 8081, 8082, 8083</td></tr>
+                    <tr><td>StkSocketTest (IPv4-TCP)</td><td>127.0.0.1</td><td>2001, 2000～2039, 2100, 2201～2203, 2221～2225, 3000～3039</td></tr>
+                    <tr><td>StkSocketTest (IPv4-UDP)</td><td>127.0.0.1</td><td>2001, 2002, 2003</td></tr>
+                    <tr><td>StkSocketTest (IPv6-TCP)</td><td>::1</td><td>2202</td></tr>
+                    <tr><td>StkSocketTest (IPv6-UDP)</td><td>::1</td><td>2202</td></tr>
+                </TABLE>
+            </div>
+        </div>
+
+
+        <div id="b5" class="row" style="display:none">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-pencil"></span> バックアップ方法</h2>
+                ローカルファイルのバックアップは，下図のように複数のメディアを組み合わせる形で多重にバックアップを行う。<BR />
+                <img src="backup.gif" class="img-responsive" alt="Backup"><br />
+                ローカルディスク: Dドライブ<br />
+                USBメモリ: Fドライブ<br />
+                SDカード: Gドライブ<br />
+                OneDrive: C:\Users\Shinya\OneDrive<br />
+            </div>
+        </div>
+
+
         <div id="c1" class="row" style="display:none">
             <div class="col-xs-12">
                 <h2><span class="glyphicon glyphicon-tags"></span> 歴代のPC/Server</h2>
