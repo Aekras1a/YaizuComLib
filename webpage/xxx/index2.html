@@ -74,7 +74,10 @@
                     <li>
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-tags"></span> 歴代のPC/Server</a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a onclick="activateTopic('c1')"><span class="glyphicon glyphicon-tags"></span> リンクリストＣ１</a></li>
+                            <li><a onclick="activateTopic('c1')"><span class="glyphicon glyphicon-tags"></span> VPS [takeuchi-xxx.com]</a></li>
+                            <li><a onclick="activateTopic('c2')"><span class="glyphicon glyphicon-tags"></span> 玄人志向 KURO-SHEEVA: ホスト名=Debian</a></li>
+                            <li><a onclick="activateTopic('c3')"><span class="glyphicon glyphicon-tags"></span> サブPC: ホスト名=Sublina</a></li>
+                            <li><a onclick="activateTopic('c4')"><span class="glyphicon glyphicon-tags"></span> NECのPC: ホスト名=Neco</a></li>
                         </ul>
                     </li>
                     <li>
@@ -456,21 +459,371 @@
 
         <div id="c1" class="row" style="display:none">
             <div class="col-xs-12">
-                <h2><span class="glyphicon glyphicon-tags"></span> 歴代のPC/Server</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
-                <p>あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ</p>
+                <h2><span class="glyphicon glyphicon-tags"></span> VPS [takeuchi-xxx.com]</h2>
+                開発サーバとしてDebianの後を継ぎ運用開始。株式会社日本システム開発のWinServerと一年契約。<br />
+                <table class="table table-striped">
+                    <tr><td>初期費用</td><td>￥3,000</td></tr>
+                    <tr><td>ドメイン取得または移転料</td><td>￥3,500</td></tr>
+                    <tr><td>Lightプラン 12ヶ月分</td><td>￥21,600</td></tr>
+                    <tr><td>消費税</td><td>￥1,405</td></tr>
+                    <tr><td>合計</td><td>￥29,505</td></tr>
+                </table>
+                VPSの設定<br />
+                <ol>
+                    <li>Administratorのパスワードを変更
+                    <li>運用ユーザーtakeuchiの追加
+                    <li>コントロールパネル - デザイン - フォルダオプションで登録済拡張子を表示するように変更
+                    <li>サーバーマネージャでIE ESCの構成を変更
+                    <li>C:\publicに共有フォルダを作成する
+                </ol>
+                Trac Lightningインストールおよび準備<br />
+                <ol>
+                    <li>Trac Lightning 3.0.8をインストール, subversion, tracのみインストール
+                    <li>trac->サービスのインストール
+                    <li>Trac Lightningのサービスを手動で起動
+                    <li>"セキュリティが強化されたWindowsファイアウォール"で受信の規則としてポート#80を許可にする
+                    <li>OS再起動
+                    <li>OS再起動後Trac Lightningのサービスが自動で起動されていることを確認
+                    <li>SampleProjectのデフォルトで登録されているadmin, guest, leaderのパスワードを変更
+                </ol>
+                以前のプロジェクトの移管<br />
+                Debianで運用していたsvnおよびtracのプロジェクトをtakeuchi-xxx.comに移管する手順を示す。<br />
+                移管後のプロジェクト名をBambooProjectとする。<br />
+                <ol>
+                    <li>svnおよびtracにプロジェクトを作成する  "create-project.bat BambooProject"
+                    <li>svnに移管前のプロジェクトのデータをインポートする  "svnadmin load C:\TracLight\projects\svn\BambooProject &lt; c:\public\svnbkup.dump"
+                    <li>Trac Lightningのサービスを停止する
+                    <li>tracに移管前のプロジェクトのデータを配置する(まるごとコピーする)
+                    <li>trac.ini(C:\TracLight\projects\trac\BambooProject\conf\trac.ini)のrepository_dirを"C:\TracLight\projects\svn\BambooProject"に変更する
+                    <li>Trac Lightningのサービスを開始する
+                    <li>移行前ver=0.11，移行後ver=0.12のためデータのUpgradeを実行する  "trac-admin C:\TracLight\projects\trac\BambooProject upgrade"
+                    <li>tracとsvnの同期を行う  "trac-admin C:\TracLight\projects\trac\BambooProject repository resync "*""
+                    <li>tracにログインし[管理]-[一般設定]-[基本設定]-[名称]="BambooProject", [URL]="http://www.takeuchi-xxx.com/trac/BambooProject/"に変更
+                    <li>
+                        tracにログインし[管理]-[一般設定]-[プラグイン]で以下を有効にする<br />
+                        iniadmin 0.2 [全てのコンポーネント]<br />
+                        tracaccountmanager 0.2.1dev [全てのコンポーネント]<br />
+                        tracusermanagerplugin 0.4r5520 [全てのコンポーネント]<br />
+                    <li>
+                        trac.iniのaccount_managerを変更<br />
+                        [htdigest_realm=trac]<br />
+                        [password_format=htdigest]<br />
+                        [password_file=C:\TracLight\projects/trac.htdigest]<br />
+                        [password_store=HtDigestStore]<br />
+                    <li>[管理]-[アカウント]-[ユーザ]でユーザーを編集する
+                    <li>[管理]-[一般設定]-[権限]でアクセス権限を編集する
+                    <li>サービス停止後，"trac\BambooProject\db"フォルダ以外のフォルダ／ファイルをすべて削除し，"\tarc\SampleProject"からコピーする
+                    <li>
+                        "trac\BambooProject\conf\trac.ini"を編集する<br />
+                        ※重要：trac.iniを編集するときはワードパッドを使用する。<br />
+                        ※メモ帳で編集した場合，不正なエラーが発生しTracにログインできなくなる。<br />
+                        - 全ての"SampleProject"の記述を"BambooProject"に変更する<br />
+                        - "tickets.href = /wiki/MyTickets"を"tickets.href = /report"に変更する。<br />
+                        - "complete.label","due_assign.label","due_close.label","parents.label"を変更(英語化)<br />
+                        - Ticket workflowについても変更(英語化)<br />
+                    <li>サービスを開始する。必要に応じてResyncを実行する。
+                </ol>
+                テスト管理用プラグインの導入<br />
+                Tracのテスト管理用プラグインであるTestManagerForTracの導入手順を以下に示す。<br />
+                testman4trac.1.7.1-Py_2.6-Trac_0.12-1.0.zip を解凍し，下記の順でeggファイルをtracにインストールする。
+                インストールはtracのGUIから可能。<br />
+                <ul>
+                    <li>TracGenericClass-1.1.5-py2.6.egg<br />
+                    <li>TracGenericWorkflow-1.0.4-py2.6.egg<br />
+                    <li>TestManager-1.7.1-py2.6.egg<br />
+                </ul>
+                TracGenericWorkflow-1.0.4-py2.6.eggおよびTestManager-1.7.1-py2.6.eggのインストール後にはtracのupdateが必要。<br />
+                2012年5月から利用していたVPSの契約を2015年5月で解除。<br />
+                チケット管理システムをGitHubに移行。<br />
             </div>
         </div>
+
+
+        <div id="c2" class="row" style="display:none">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-tags"></span> 玄人志向 KURO-SHEEVA: ホスト名=Debian</h2>
+                製品名称： KORO-SHEEVA<br />
+                購入日： 2010/10/26<br />
+                経緯： 上野科学博物館で開催されていた「空と宇宙展」に行った帰りに衝動買いしたもの。
+                subversionやtracのような開発支援用サーバとして機能させたいと考えていた。<br />
+                価格： ￥16,800 (T-ZONE PC DIY SHOPにて)<br />
+                <img src="kurosheeva.jpg" class="img-responsive" alt="KURO Sheeva">
+                <ul>
+                    <li>型番 KURO-SHEEVA</li>
+                    <li>JANコード 4988755233545</li>
+                    <li>ハードウェア仕様</li>
+                    <li>
+                        MPU：<br />
+                        Marvell Sheeva CPUコア搭載<br />
+                        Kirkwood SoCプロセッサ 88F6281 (1.2GHz)<br />
+                        メインメモリ：512MB/DDR2<br />
+                        NANDフラッシュメモリ：512MB<br />
+                    </li>
+                    <li>
+                        インターフェース<br />
+                        LAN(RJ45/1000BASE-T)x1<br />
+                        USB2.0/1.1(TYPE A)x1<br />
+                        USB1.1(TYPE miniB)x1※<br />
+                        SDスロットx1, eSATAx1<br />
+                        ※コンソール用<br />
+                    </li>
+                    <li>搭載OS Ubuntu 9.04</li>
+                    <li>(内蔵NANDフラッシュメモリ内にインストール済み)</li>
+                    <li>消費電力 最大約11W</li>
+                    <li>外形寸法 96.5x110x48.5mm(突起部除く)</li>
+                    <li>
+                        付属品<br />
+                        USB-miniUSBケーブル<br />
+                        LANケーブル<br />
+                        ACケーブル<br />
+                    </li>
+                </ul>
+                新規導入手順<br />
+                <ol>
+                    <li>接続元PCへのUSBドライバのインストール。（USBケーブルを接続→ドライバの場所を指定）</li>
+                    <li>Tera Termから接続の確認 (ポートレート = 115200)</li>
+                    <li>passwdコマンドでパスワードの設定</li>
+                    <li>dpkg-reconfigure tzdataコマンドでタイムゾーンの設定</li>
+                    <li>dateコマンドで日時の設定</li>
+                    <li>/etc/network/interfaces の編集によるIPアドレスの設定</li>
+                    <li>/etc/resolv.conf の編集によるDNSの設定</li>
+                    <li>apt-get install ftpd でFTPのインストール</li>
+                    <li>mke2fs /dev/mmcblk0p1 でext2フォーマット</li>
+                    <li>/etc/fstab の編集によるSDカードの自動マウント (/dev/mmcblk0p1 /media/sdcard ext2 defaults 0 0)</li>
+                    <li>
+                        /etc/smb.confの[Media]または[global]を編集する。<br />
+                        comment = Media<br />
+                        path = /media/sdcard/public<br />
+                        public = no<br />
+                        guest ok = no<br />
+                        valid users = @takeuchi<br />
+                        security = user<br />
+                    </li>
+                    <li>useraddおよびpdbedit -aを用いてユーザーを追加する。</li>
+                    <li>sambaの有効化 (/etc/rc.local に /etc/init.d/samba start を追記)</li>
+                </ol>
+                Subversion導入手順<br />
+                <ol>
+                    <li> apt-get install apache2</li>
+                    <li> apt-get install subversion</li>
+                    <li> apt-get install libapache2-svn</li>
+                    <li> chmod 777 /tmp, chmod 777 /var/tmp でsubversionのプロセスが/tmp, /var/tmpに書き込めるようにする</li>
+                    <li> /etc/apache2/mods-available/dav_svn.conf の編集</li>
+                    <li> svnadmin create --fs-type fsfs MyNewRepository</li>
+                    <li> chown -R www-data:www-data MyNewRepository で所有権変更</li>
+                    <li> apache2ctl restart</li>
+                </ol>
+                Trac導入手順<br />
+                <ol>
+                    <li> apt-get install trac</li>
+                    <li> mkdir /media/sdcard/trac</li>
+                    <li> trac-admin trac initenv</li>
+                    <li> chown -R www-data:www-data trac で所有権変更</li>
+                    <li> apt-get install libapache2-mod-python</li>
+                    <li> htpasswd -c /media/sdcard/trac/htdocs/trac.htpasswd takeuchi によるユーザーの作成</li>
+                    <li> /etc/apache2/conf.d/trac.conf の新規作成と編集</li>
+                    <li> trac-adminによるpermissionの設定 "TRAC_ADMIN"</li>
+                    <li> apache2ctl restart</li>
+                </ol>
+                Subversion-Trac連携手順<br />
+                <ol>
+                    <li>
+                        trac-post-commit-hookを/media/sdcard/takeuchi/hooksにコピーする<br />
+                        (http://trac.edgewall.org/browser/branches/0.11-stable/contrib/)
+                    </li>
+                    <li>/media/sdcard/takeuchi/hook/post-commit.tmpl を post-commit にコピーし編集する</li>
+                    <li>chown でスクリプトの所有権をwww-data に変更</li>
+                    <li>chmod 755 post-commit で実行権限を付与</li>
+                </ol>
+                Subversion, Tracバックアップ手順<br />
+                <ul>
+                    <li>svnadmin dump /media/sdcard/takeuchi > /media/sdcard/svnbkup.dump</li>
+                    <li>trac-admin /media/sdcard/trac hotcopy /media/sdcard/tracbkup</li>
+                    <li>tar -cvf /media/sdcard/tracbkup.tar /media/sdcard/tracbkup</li>
+                </ul>
+                Debian(KURO-SHEEVA)不具合のため運用終了 (2012/05/13)<br />
+                Debian(KURO-SHEEVA)運用終了。5/13より処分開始。<br />
+                経緯： 開発用で使用していたが，頻繁に不具合(熱暴走)が発生したため，機能をVPSに移管しKURO-SHEEVAは運用を終了する。<br />
+                <img src="kurosheeva2.jpg" class="img-responsive" alt="KURO Sheeva"><br />
+                2017年2月頃，不燃ゴミとして滅却処分済。<br />
+                <img src="kurosheeva3.jpg" class="img-responsive" alt="KURO Sheeva"><br />
+            </div>
+        </div>
+
+
+        <div id="c3" class="row" style="display:none">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-globe"></span> サブPC: ホスト名=Sublina</h2>
+                サブPCとしてケース, CPU, HDD, メモリ，マザーボードを購入。詳細は下記の構成。<br />
+                ホスト名はSublinaとした。<br />
+                購入日=2010/10/26。<br />
+                <ul>
+                    <li>CPU: AMD Phenom II X6 1055T<br />2.8GHz, 3.3GHz(TurboCore)<br />9.0MB Total Cache</li>
+                    <li>マザーボード: MINIX 6150SE-UC3<br />NVIDIA GeForce 6150SE<br />nForce 430MCP</li>
+                    <li>
+                        メモリ: 2GB×2
+                        AMD Socket AM3 95W Max<br>Dual Channel DDR3 1333/1066/800 MHz
+                    </li>
+                    <li>HDD: HDP725032GLA360 320GB</li>
+                    <li>OS: Windows Server 2008</li>
+                </ul>
+                <img src="sublina2.jpg" class="img-responsive" alt="Sublina">
+                <p>
+                    SublinaのOS入れ替えを実施 (2011/6/1)<BR />
+                    OSの入れ替えを実施。NecoのバックアップPCとする。<br />
+                </p>
+                <ul>
+                    <li>OS: Windows 7 Ultimate</li>
+                </ul>
+                <p>
+                    Sublinaの運用停止 (2013年頃?)<br />
+                </p>
+                <ul>
+                    <li>稼働率が低いため，運用を停止し，物置に移動した。</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div id="c4" class="row" style="display:none">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-globe"></span> NECのPC: ホスト名=Neco</h2>
+                <h2>Necoの購入 (2005/8/??)</h2>
+                秋葉原のLAOXにてPCおよび液晶ディスプレイを購入。<br />ホスト名はNecoとした。<br />
+                <ul>
+                    <li>型名: NEC ValueOne MT (MT600/2A)</li>
+                    <li>本体サイズ: 175（幅）×420（奥行き）×381（高さ）ミリ</li>
+                    <li>出荷日: 2005年8月25日</li>
+                    <li>OS: Microsoft(R) Windows(R) XP Home Edition 日本語版 Service Pack 2</li>
+                    <li>
+                        CPU: HTテクノロジ　インテル(R) Pentium(R) 4プロセッサ 2.80GHz 521<br />
+                        (FSB=800MHz Prescott L2-cache=1MB EMT64)
+                    </li>
+                    <li>メモリ: DDR2-533MHz/ 256Mバイト(DDR2 SDRAM PC2-4200 DIMM)×2</li>
+                    <li>サウンド: ADI社製 AD1981B搭載（不明）</li>
+                    <li>HDD: <br>Serial ATA 7200回転／分 160GB</li>
+                    <li>
+                        チップセット: <br />
+                        945G (82945G)<br />
+                        - 最大メモリ容量 4GB (最大大域幅 10.7GB/s)<br />
+                        - デュアル・チャネル DDR2 メモリー<br />
+                        - 1066/800 MHz システムバス<br />
+                        - PCI Express* x16 グラフィックス・ポート<br />
+                        - PCI Express x1 I/O ポート<br />
+                        - 次世代のシリアル ATA (SATA) 3Gb/s<br />
+                        - Hi-Speed USB 2.0 接続<br />
+                        - GMA 950 グラフィックス・コアを内蔵<br />
+                        82801GR (South Bridge)<br />
+                        - I/O コントローラー・ハブ (ICH7R)<br />
+                    </li>
+                    <li>
+                        DVD/CD: <br />
+                        - DVDスーパーマルチドライブ (DVD-RAM/R/RW with DVD+R/RW)<br />
+                        - バッファアンダーランエラー防止機能付<br />
+                        - DVD-R/+R 2層書き込み<br />
+                        - HL-DT-ST DVDRAM_GSA-4165B<br />
+                        - サポートOS:<br />
+                        Windows 98, Windows ME, Windows 2000 Professional,
+                        Windows XP Home Edition, Professional, Media Center Edition<br />
+                        - 対応フォーマット:<br />
+                        記録：DVD-RAM, DVD-R/RW, DVD+R (SL, DL)/RW, CD-R/RW<br />
+                        再生：DVD-ROM, DVD-RAM, DVD-R, DVD-RW, DVD+R (SL, DL),
+                        DVD+RW; CD-R, CD-RW, CD-ROM, CD-ROM XA, <br />
+                        CD-DA, CD-I, CD-Extra, CD-Text, Photo CD, Video CD<br />
+                        ---以下補足---<br />
+                        標準CD-ROM関連     [読込倍速] DVD-RAM最大5倍速、DVD最大16倍速、CD最大40倍速<br />
+                        標準CD-ROM関連     [書込倍速] DVD-RAM最大5倍速、DVD-R(1層)/+R(1層)最大16倍速、DVD-R(2層)/+R(2層)最大4倍速、DVD-RW最大6倍速、DVD+RW最大8倍速、CD-R最大40倍速、CD-RW最大10倍速<br />
+                    </li>
+                    <li>BIOS: <br>American Megatrends, Inc. v.02.58</li>
+                    <li>マザーボード: <br>microATX MSI製 MS-7186</li>
+                </ul>
+                <img src="neco.jpg" class="img-responsive" alt="NECO"><br />
+                <h2>Necoのメモリを拡張(メモリの入れ替え)を実施 (2008/1/1)</h2>
+                <ul>
+                    <li>
+                        メモリ: <br />
+                        PC533 CL4 DDR2 1GB (Windows XP Pro SP2 DSP版)<br/>
+                        PC533 CL4 DDR2 1GB (Windows XP Pro SP2 DSP版)<br/>
+                        PC667 DDR2 512MB (Windows Vista Business DSP版)<br/>
+                        PC667 DDR2 512MB (Windows Vista Business DSP版)<br/>
+                    </li>
+                </ul>
+                <h2>NecoのHDDを拡張(HDDの入れ替え)を実施 (2009/1/1)</h2>
+                <ul>
+                    <li>
+                        HDD: HDP725032GLA360 (容量:320GB,回転数:7200rpm,キャッシュ:16MB,I/F:Serial-ATA300)<br />
+                        (2008/5/5購入, \6300)
+                    </li>
+                </ul>
+                <h2>Necoのマザーボード/CPU/メモリを拡張 (2011/6/1)</h2>
+                下記の構成に変更<br />
+                <ul>
+                    <li>CPU: Intel Core2Quad Q6600<br/>クロック：2.4GHz<br/>Ｌ２キャッシュ：8MB<br/>ＦＳＢクロック：1066MHz</li>
+                    <li>
+                        マザーボード: Intel Desktop Board  Classic Series DG31PR<br/>
+                        LGA775 soket for Intel Core2Quad, Core2Duo, Pentium Dual-Code, Celeron400<br/>
+                        Intel G31 Express Chipset<br/>
+                        Realtek ALC888 audio codec<br/>
+                        Graphics Media Accelerator X3100<br/>
+                        DDR2 800 / 667 SDRAM (Max 4GB)<br/>
+                    </li>
+                    <li>メモリ: Dual DDR2-800 KINGBOX 2GB×2</li>
+                    <li>HDD: Hitachi HDS721050CLA362 500GB</li>
+                    <li>サウンドカード: Sound Blaster 5.1 VX (PCI)</li>
+                    <li>OS: Windows 7 Ultimate</li>
+                </ul>
+                <img src="sublina.jpg" class="img-responsive" alt="Sublina"><br/>
+                Necoに搭載のMBのマニュアル：<BR/>
+                Intel製マザーボード DG31PRのマニュアル・その他を処分した。念のためマザーボードのマニュアル(一部)の写真を撮って残しておくことに。<br />
+                <img src="dg31pr.jpg" class="img-responsive" alt="Mother board"><br/>
+                Neco購入時のMBは，2017年2月頃，不燃ゴミとして滅却処分済。<br />
+                <img src="neco1.jpg" class="img-responsive" alt="NECO"><br />
+                <h2>購入したときのHDDの増設の実施 (2013/6/8)</h2>
+                <ul>
+                    <li>
+                        (Serial ATA 7200回転／分 160GB)<br/>
+                        重要ファイルのバックアップ／スナップショット格納先として使用予定。
+                    </li>
+                </ul>
+                <h2>NECOの運用停止 (2015/6/13)</h2>
+                <ul>
+                    <li>
+                        2015年6月，ASUSのノートPCを購入したことにともない，NECOの運用を停止。<br/>
+                        物置にて廃棄待ちの状態とした。<br/>
+                    </li>
+                    <li>PCケース/電源については，2005年から概ね10年間の運用。マザーボードについては2011年にリプレースを実施して以降4年間の運用。</li>
+                </ul>
+                <img src="oldpcs_s.jpg" class="img-responsive" alt="NECO"><br/>
+                <h2>運用再開 (2016/12/26)</h2>
+                後述するASUSのノートPCの障害のため，2016年12月26日からNECOの運用を再開。<br />
+                物理マシンにインストールするソフトウェアの見直しを実施。以下インストール済ソフトウェア一覧。<br />
+                <ul>
+                    <li>Canon MG6130 プリンタドライバ</li>
+                    <li>Creative Sound Blasterドライバ</li>
+                    <li>Microsoft Office 2010</li>
+                    <li>Adobe Reader 最新版</li>
+                    <li>Adobe Flash Player 最新版</li>
+                    <li>Visual Studio 2008 Professional Edition (with patch "VS90-KB948127.exe")</li>
+                    <li>wkhtmltopdf 0.12.0.3</li>
+                    <li>PDFtk Server 2.02</li>
+                    <li>7-Zip 9.20</li>
+                    <li>Line Counter 1.4</li>
+                    <li>SourceTree 最新版</li>
+                    <li>GIMP 2.8</li>
+                    <li>Microsoft Security Essentials</li>
+                    <li>FFFTP 1.98g</li>
+                    <li>e frontier Shade 13</li>
+                    <li>VMware Player 最新版</li>
+                    <li>PIXELA VideoBrowser + 最新パッチ</li>
+                    <li>Abyssmedia Wave Editor 3.3.5.1</li>
+                    <li>Firefox 最新版</li>
+                </ul>
+                <h2>2回目の運用停止 (2017/3/25)</h2>
+                SHINYA-PCの復旧に伴い，NECOの運用を再度停止した。
+            </div>
+        </div>
+
+
         <div id="d1" class="row" style="display:none">
             <div class="col-xs-12">
                 <h2><span class="glyphicon glyphicon-globe"></span> 関連リンク</h2>
