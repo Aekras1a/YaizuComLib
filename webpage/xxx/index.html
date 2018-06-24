@@ -409,14 +409,24 @@
                 <h2><span class="glyphicon glyphicon-pencil"></span> ネットワーク環境</h2>
                 各物理PC/仮想PCの役割は以下のとおり。<BR />
                 <TABLE class="table table-striped">
+                    <tr>
+                        <td>DIRECTSTAR</td>
+                        <td>192.168.0.1</td>
+                        <td>DTI Router</td>
+                    </tr>
+                    <tr>
+                        <td>BUFFALO Air Station</td>
+                        <td>192.168.0.2</td>
+                        <td>無線ルータ</td>
+                    </tr>
                     <TR>
                         <TD>SHINY-pc</TD>
-                        <TD>DHCP</TD>
+                        <TD>192.168.0.5</TD>
                         <TD>ソフトウェア開発用。ASUSのラップトップPC。</TD>
                     </TR>
                     <tr>
                         <td>n-win7-c3f9c</td>
-                        <td>DHCP</td>
+                        <td>192.168.0.15</td>
                         <td>ソフトウェアテスト用<br />CPU: 1 (x64), Mem: 4,096MB, HDD: 60GB, Network: ブリッジ</td>
                     </tr>
                     <tr>
@@ -428,6 +438,11 @@
                         <td>n-win2016-q3rnc</td>
                         <td>DHCP</td>
                         <td>ソフトウェアテスト用<br />CPU: 1 (x64), Mem: 4,096MB, HDD: 80GB, Network: ブリッジ</td>
+                    </tr>
+                    <tr>
+                        <td>DHCPエントリ</td>
+                        <td>192.168.0.32～192.168.0.63</td>
+                        <td>Akemi-PC, プリンタ, スマホ</td>
                     </tr>
                 </TABLE>
             </div>
@@ -952,7 +967,6 @@
                     <li>VMware Player 最新版</li>
                     <li>Firefox 最新版</li>
                     <li>Chrome 最新版</li>
-                    <li>Abyssmedia Wave Editor 3.3.5.1</li>
                     <li>e frontier Shade 13</li>
                     <li>PIXELA VideoBrowser + 最新版アップデート</li>
                 </ul>
