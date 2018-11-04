@@ -65,7 +65,6 @@ int StkSocket_DeleteInfo(int TargetId)
 <table class="tblstyle">
 <tr><th>引数</th><th>入出力</th><th>説明</th></tr>
 <tr><td>TargetId</td><td>入力</td><td>削除するソケット情報を特定するためのID</td></tr>
-</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -82,7 +81,12 @@ int StkSocket_DeleteInfo(int TargetId)
 ソケット情報を取得します。<p>
 <u>シグネチャ</u>
 <div class="topic">
+<p>
 int StkSocket_GetInfo(int Index, int* TargetId, int* SockType, int* ActionType, TCHAR TargetAddr[256], int* TargetPort, BOOL* CopiedFlag)
+</p>
+<p>
+int StkSocket_GetInfo(int TargetId, int* SockType, int* ActionType, TCHAR TargetAddr[256], int* TargetPort, BOOL* CopiedFlag)
+</p>
 </div><p>
 <u>引数の説明</u>
 <div class="topic">
@@ -95,7 +99,16 @@ int StkSocket_GetInfo(int Index, int* TargetId, int* SockType, int* ActionType, 
 <tr><td>TargetAddr</td><td>出力</td><td>IPアドレスまたはホスト名を格納するアドレス</td></tr>
 <tr><td>TargetPort</td><td>出力</td><td>ポート番号を格納するアドレス</td></tr>
 <tr><td>CopiedFlag</td><td>出力</td><td>StkSocket_CopyInfoでコピーされたかどうかを示すフラグを格納するアドレス</td></tr>
-</td></tr>
+</table>
+<p>
+<table class="tblstyle">
+<tr><th>引数</th><th>入出力</th><th>説明</th></tr>
+<tr><td>TargetId</td><td>入力</td><td>取得するソケット情報のID</td></tr>
+<tr><td>SockType</td><td>出力</td><td>ソケットの種別を格納するアドレス</td></tr>
+<tr><td>ActionType</td><td>出力</td><td>動作種別を格納するアドレス</td></tr>
+<tr><td>TargetAddr</td><td>出力</td><td>IPアドレスまたはホスト名を格納するアドレス</td></tr>
+<tr><td>TargetPort</td><td>出力</td><td>ポート番号を格納するアドレス</td></tr>
+<tr><td>CopiedFlag</td><td>出力</td><td>StkSocket_CopyInfoでコピーされたかどうかを示すフラグを格納するアドレス</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -133,7 +146,6 @@ int StkSocket_CopyInfo(int NewId, int ExistingId)
 <tr><th>引数</th><th>入出力</th><th>説明</th></tr>
 <tr><td>NewId</td><td>入力</td><td>コピー後の新しいソケット情報のID</td></tr>
 <tr><td>ExistingId</td><td>入力</td><td>コピー元のソケット情報のID</td></tr>
-</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -183,7 +195,6 @@ int StkSocket_GetNumOfStkInfos()
 <td><center>-</center></td>
 <td><center>状態遷移なし</center></td>
 </tr>
-</td></tr>
 </table>
 </div>
 <p>
@@ -203,7 +214,6 @@ int StkSocket_Open(int TargetId)
 <table class="tblstyle">
 <tr><th>引数</th><th>入出力</th><th>説明</th></tr>
 <tr><td>TargetId</td><td>入力</td><td>オープンするソケット情報を特定するためのID</td></tr>
-</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -239,7 +249,6 @@ int StkSocket_Open(int TargetId)
 <td><center>-</center></td>
 <td><center>状態遷移なし</center></td>
 </tr>
-</td></tr>
 </table>
 </div>
 <p>
@@ -254,7 +263,6 @@ int StkSocket_Close(int TargetId, BOOL WaitForPeerClose)
 <tr><td>TargetId</td><td>入力</td><td>クローズするソケット情報を特定するためのID</td></tr>
 <tr><td>WaitForPeerClose</td><td>入力</td><td>TRUE: 接続先(送信側)のクローズを待ち，グレースフルなクローズを行う。<br>
 FALSE: ただちにソケットをクローズする。</td></tr>
-</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -287,7 +295,6 @@ int StkSocket_Accept(int Id)
 <table class="tblstyle">
 <tr><th>引数</th><th>入出力</th><th>説明</th></tr>
 <tr><td>Id</td><td>入力</td><td>ACCEPTするソケット情報を特定するためのID</td></tr>
-</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -314,7 +321,6 @@ int StkSocket_CloseAccept(int Id, int LogId, BOOL WaitForPeerClose)
 <tr><td>LogId</td><td>入力</td><td>ログ出力用。ソケット情報を特定するためのIDを指定する。</td></tr>
 <tr><td>WaitForPeerClose</td><td>入力</td><td>TRUE: 接続先(送信側)のクローズを待ち，グレースフルなクローズを行う。<br>
 FALSE: ただちにソケットをクローズする。</td></tr>
-</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -344,7 +350,6 @@ int StkSocket_Connect(int Id)
 <table class="tblstyle">
 <tr><th>引数</th><th>入出力</th><th>説明</th></tr>
 <tr><td>Id</td><td>入力</td><td>データ送信用のソケット情報を特定するためのID</td></tr>
-</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -371,7 +376,6 @@ int StkSocket_Disconnect(int Id, int LogId, BOOL WaitForPeerClose)
 <tr><td>LogId</td><td>入力</td><td>ログ出力用。ソケット情報を特定するためのIDを指定する。</td></tr>
 <tr><td>WaitForPeerClose</td><td>入力</td><td>TRUE: 接続先(受信側)のクローズを待ち，グレースフルなクローズを行う。<br>
 FALSE: ただちにソケットをクローズする。</td></tr>
-</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -388,7 +392,7 @@ FALSE: ただちにソケットをクローズする。</td></tr>
 指定したソケットでデータを受信します。<p>
 <u>シグネチャ</u>
 <div class="topic">
-int StkSocket_Receive(int Id, int LogId, BYTE* Buffer, int BufferSize, int FinishCondition, BYTE* VarDat, int VarDatSize, BOOL ForceStop)
+int StkSocket_Receive(int Id, int LogId, BYTE* Buffer, int BufferSize, int FinishCondition, int FinishCondTimeout, BYTE* VarDat, int VarDatSize)
 </div><p>
 <u>引数の説明</u>
 <div class="topic">
@@ -402,24 +406,22 @@ int StkSocket_Receive(int Id, int LogId, BYTE* Buffer, int BufferSize, int Finis
 <tr><td>BufferSize</td><td>入力</td><td>受信したデータを格納するバッファ領域のサイズ。</td></tr>
 <tr><td>FinishCondition</td><td>入力</td><td>メソッドアウトする条件。以下の何れかを指定する。<br>
 <ul>
-<li>0 : データ受信後無条件にメソッドアウト<br>
-<li>1～180000 : データ受信後一定時間(ミリ秒）更なるデータ受信が無い場合メソッドアウト。<br>
-<li>200001～380000 : HTTPのContent-Lengthで指定したバイト数以上のデータを受信した場合メソッドアウト。
-HTTPヘッダにContent-Lengthが指定されていない場合，または受信したデータがContent-Lengthで指定したサイズに満たない場合，
-FinishCondition - 200000で求まる時間(ミリ秒)分待機し，さらにデータを受信しない場合メソッドアウトする。
-<li>9999999 : 送信側ソケットがクローズされたときだけメソッドアウト。<br>
-<li>10000001～19999999 : FinishCondition - 10,000,000で求まるバイト数以上のデータを受信した場合メソッドアウト。<br>
-<li>マイナス値 : 指定した文字列で終わるデータを受信した場合メソッドアウト。
+<li>1以上 : 指定したサイズのデータ受信後にメソッドアウト。</li>
+<li>0 : データ受信後無条件にメソッドアウト。</li>
+<li>-1 : 指定した文字列を受信した場合メソッドアウト。</li>
+<li>-2 : 送信側ソケットがクローズされたときメソッドアウト。</li>
+<li>-3 : HTTPのContent-Lengthで指定したバイト数のデータを受信した場合メソッドアウト。HTTPヘッダにContent-Lengthが含まれていない場合，HTTPヘッダ読み込み後(連続する2つの改行コード受信後)にメソッドアウト。</li>
+<li>-4 : タイムアウトを検知した場合メソッドアウト。</li>
 </ul></td></tr>
+<tr><td>FinishCondTimeout</td><td>入力</td><td>タイムアウト時間(ミリ秒)。データ受信後一定時間(ミリ秒）更なるデータ受信が無い場合タイムアウト。0は無効。</td></tr>
 <tr><td>VarDat</td><td>入力</td><td>メソッドアウトの条件となるバイト列。FinishConditionがマイナス値の場合，この引数が評価される。</td></tr>
 <tr><td>VarDatSize</td><td>入力</td><td>メソッドアウトの条件となるバイト列のサイズ。FinishConditionがマイナス値の場合，この引数が評価される。</td></tr>
-<tr><td>ForceStop</td><td>入力</td><td>TRUE: 強制的に処理を終了する<br>FALSE: 通常ケース</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
 <div class="topic">
--1: データの受信に失敗<br/>
--2: データの受信に失敗(タイムアウトを検知したとき)<br/>
+-1: データの受信に失敗 <br/>
+-2: データの受信に失敗(タイムアウトを検知したとき) <br/>
 -1および-2以外: 受信したデータのサイズ(バイト数)
 </div><p>
 </div><p>
@@ -617,7 +619,7 @@ int StkSocket_GetStatus(int TargetId)
 <div class="topic">
 <table class="tblstyle">
 <tr><th>引数</th><th>入出力</th><th>説明</th></tr>
-<tr><td>TargetId</td><td>入力</td><td>ステータス取得対象のスレッド</td></tr>
+<tr><td>TargetId</td><td>入力</td><td>ステータス取得対象のソケット情報</td></tr>
 </table>
 </div><p>
 <u>戻り値</u>
@@ -630,5 +632,27 @@ STKSOCKET_STATUS_OPEN, STKSOCKET_STATUS_ACCEPT, STKSOCKET_STATUS_CLOSE, -1<br>
 
 
 
-</div>
+<H2 ID="1.22">1.22 StkSocket_ForceStop</H2>
+<div class="topic">
+StkSocket_Receiveの処理を強制的に中止します。<p>
+<u>シグネチャ</u>
+<div class="topic">
+void StkSocket_ForceStop(int TargetId)
+</div><p>
+<u>引数の説明</u>
+<div class="topic">
+<table class="tblstyle">
+<tr><th>引数</th><th>入出力</th><th>説明</th></tr>
+<tr><td>TargetId</td><td>入力</td><td>中止するソケット情報のID</td></tr>
+</table>
+</div><p>
+<u>戻り値</u>
+<div class="topic">
+指定したIDと関連付くソケット情報が存在する場合，0が返される。<br/>
+指定したIDと関連付くソケット情報が存在しない場合，-1が返される。<br/>
+</div><p>
+</div><p>
+
+
+
 </BODY>

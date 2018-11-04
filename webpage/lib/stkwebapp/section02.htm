@@ -124,11 +124,43 @@ URL"/service/"に"{ "Operation" : "Stop" }"がPOSTされるまで，本メソッ
 <hr/>
 
 <p>void SetSendBufSize(int Size)</p>
-送信用データ一時格納用領域のサイズを変更します。<br/>デフォルトは1MBです。<br/>
+送信用データ一時格納用領域のサイズを変更します。<br/>デフォルトは1,000,000バイトです。<br/>
 <table class="tblstyle">
 <tr><td>Size[入力]</td><td>送信用データ一時格納用領域のサイズ<br/></td></tr>
 </table>
 <hr/>
+
+<p>int GetRecvBufSize()</p>
+受信用データ一時格納用領域のサイズを返します。<br/>
+<table class="tblstyle">
+<tr><td>戻り値</td><td>受信用データ一時格納用領域のサイズ</td></tr>
+</table>
+<hr/>
+
+<p>void SetRecvBufSize(int Size)</p>
+受信用データ一時格納用領域のサイズを変更します。<br/>デフォルトは1,000,000バイトです。<br/>
+<table class="tblstyle">
+<tr><td>Size[入力]</td><td>受信用データ一時格納用領域のサイズ<br/></td></tr>
+</table>
+<hr/>
+
+<p>int GetTimeoutInterval()</p>
+受信処理は何らかのデータを受信した後，そのデータが完結していない場合(データサイズがHTTPヘッダのContent-Lengthに達していない場合)，次のデータの受信を待ちます。
+受信待ち処理のタイムアウト時間をミリ秒で返します。<br/>
+<table class="tblstyle">
+<tr><td>戻り値</td><td>タイムアウト時間(ミリ秒)</td></tr>
+</table>
+<hr/>
+
+<p>void SetTimeoutInterval(int Interval)</p>
+受信処理は何らかのデータを受信した後，そのデータが完結していない場合(データサイズがHTTPヘッダのContent-Lengthに達していない場合)，次のデータの受信を待ちます。
+受信待ち処理のタイムアウト時間をミリ秒で設定します。<br/>デフォルト値は3,000ミリ秒です。</br>
+<table class="tblstyle">
+<tr><td>Interval[入力]</td><td>タイムアウト時間(ミリ秒)<br/></td></tr>
+</table>
+<hr/>
+
+
 
 </div><p>
 

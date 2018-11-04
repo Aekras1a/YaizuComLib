@@ -34,33 +34,34 @@
 <div class=spc>
 (11) CreateTable<BR>
 (12) DeleteTable<BR>
+(13) RenameTable<BR>
 </div><P>
 ■テーブルロック用<BR>
 <div class=spc>
-(13) LockTable<BR>
-(14) LockAllTable<BR>
-(15) UnlockTable<BR>
-(16) UnlockAllTable<BR>
+(14) LockTable<BR>
+(15) LockAllTable<BR>
+(16) UnlockTable<BR>
+(17) UnlockAllTable<BR>
 </div><P>
 ■データアクセス用<BR>
 <div class=spc>
-(17) InsertRecord<BR>
-(18) UpdateRecord<BR>
-(19) DeleteRecord（全レコード削除）<BR>
-(20) DeleteRecord（検索条件付削除）<BR>
-(21) GetRecord（全レコード取得）<BR>
-(22) GetRecord（検索条件付取得）<BR>
+(18) InsertRecord<BR>
+(19) UpdateRecord<BR>
+(20) DeleteRecord（全レコード削除）<BR>
+(21) DeleteRecord（検索条件付削除）<BR>
+(22) GetRecord（全レコード取得）<BR>
+(23) GetRecord（検索条件付取得）<BR>
 </div><P>
 ■レコードソート用<BR>
 <div class=spc>
-(23) AzSortRecord<BR>
-(24) ZaSortRecord<BR>
+(24) AzSortRecord<BR>
+(25) ZaSortRecord<BR>
 </div><P>
 ■ファイルアクセス用<BR>
 <div class=spc>
-(25) SaveData<BR>
-(26) LoadData<BR>
-(27) AutoSave<BR>
+(26) SaveData<BR>
+(27) LoadData<BR>
+(28) AutoSave<BR>
 </div><P>
 
 
@@ -193,7 +194,17 @@ COLUMN_TYPE_BIN:バイナリ型<br>
 </TABLE>
 </div><P>
 
-(13) int LockTable(TCHAR* TableName, int LockType)<BR>
+(13) int RenameTable(TCHAR* OldName, TCHAR* NewName)<BR>
+<div class=spc>
+この関数は既存のテーブルの名称を変更します。
+<TABLE BORDER="1">
+<TR><TD>OldName</TD><TD>既存のテーブルの名称</TD></TR>
+<TR><TD>NewName</TD><TD>新しい名称</TD></TR>
+<TR><TD>戻り値</TD><TD>0  : 成功<BR>-1 : 失敗</TD></TR>
+</TABLE>
+</div><P>
+
+(14) int LockTable(TCHAR* TableName, int LockType)<BR>
 <div class=spc>
 データアクセス用関数(InsertRecord, DeleteRecord, UpdateRecord, AzSortRecord, ZaSortRecord または GetRecord)は
 マルチスレッド呼び出しをサポートしています。
@@ -234,7 +245,7 @@ Thread (B) : [Table-2 排他ロック] ---> [Table-1 排他ロック]<BR>
 </TABLE>
 </div><P>
 
-(14) int LockAllTable(int LockType)<BR>
+(15) int LockAllTable(int LockType)<BR>
 <div class=spc>
 この関数は全てのテーブルにロックを掛けます。
 <TABLE BORDER="1">
@@ -243,7 +254,7 @@ Thread (B) : [Table-2 排他ロック] ---> [Table-1 排他ロック]<BR>
 </TABLE>
 </div><P>
 
-(15) int UnlockTable(TCHAR* TableName)<BR>
+(16) int UnlockTable(TCHAR* TableName)<BR>
 <div class=spc>
 この関数は指定されたテーブルをアンロックします。
 <TABLE BORDER="1">
@@ -252,7 +263,7 @@ Thread (B) : [Table-2 排他ロック] ---> [Table-1 排他ロック]<BR>
 </TABLE>
 </div><P>
 
-(16) int UnlockAllTable()<BR>
+(17) int UnlockAllTable()<BR>
 <div class=spc>
 この関数は全てのテーブルをアンロックします。
 <TABLE BORDER="1">
@@ -260,7 +271,7 @@ Thread (B) : [Table-2 排他ロック] ---> [Table-1 排他ロック]<BR>
 </TABLE>
 </div><P>
 
-(17) int InsertRecord(RecordData* RecDat)<BR>
+(18) int InsertRecord(RecordData* RecDat)<BR>
 <div class=spc>
 この関数は指定したテーブルにレコードを追加します。複数のレコードを追加するには
 連結されたRecordDataインスタンスを引数に指定します。
@@ -319,7 +330,7 @@ Thread (B) : [Table-2 排他ロック] ---> [Table-1 排他ロック]<BR>
 </TABLE>
 </div><P>
 
-(18) int UpdateRecord(RecordData* SchRec, RecordData* UpdRec)<BR>
+(19) int UpdateRecord(RecordData* SchRec, RecordData* UpdRec)<BR>
 <div class=spc>
 この関数は1つ目のRecordDataで検索された既存のレコードを2つ目のRecordDataに
 置き換えます。<BR>
@@ -382,7 +393,7 @@ ColumnDataBinインスタンスとしてNULLを指定することはできない
 </TABLE>
 </div><P>
 
-(19) int DeleteRecord(TCHAR* TableName)<BR>
+(20) int DeleteRecord(TCHAR* TableName)<BR>
 <div class=spc>
 この関数は，指定されたテーブルに登録されている全てのレコードを削除します。
 <TABLE BORDER="1">
@@ -392,7 +403,7 @@ ColumnDataBinインスタンスとしてNULLを指定することはできない
 </TABLE>
 </div><P>
 
-(20) int DeleteRecord(RecordData* SchRec)<BR>
+(21) int DeleteRecord(RecordData* SchRec)<BR>
 <div class=spc>
 この関数は指定したRecordDataインスタンスで検索されたレコードを削除します。<br>
 レコードを削除した場所には，対象テーブルの最後のレコードが移動します。
@@ -410,7 +421,7 @@ DeleteRecord関数は，SchRecに連結された複数のRecordDataインスタ�
 </TABLE>
 </div><P>
 
-(21) RecordData* GetRecord(TCHAR* TableName)<BR>
+(22) RecordData* GetRecord(TCHAR* TableName)<BR>
 <div class=spc>
 この関数は，指定されたテーブルに登録されている全てのレコードを返却します。
 <TABLE BORDER="1">
@@ -423,7 +434,7 @@ DeleteRecord関数は，SchRecに連結された複数のRecordDataインスタ�
 </TABLE>
 </div><P>
 
-(22) RecordData* GetRecord(RecordData* SchRec)<BR>
+(23) RecordData* GetRecord(RecordData* SchRec)<BR>
 <div class=spc>
 この関数はSchRecで検索されたレコードを返却します。
 <TABLE BORDER="1">
@@ -442,7 +453,7 @@ SchRecが連結した複数のRecordDataの場合，GetRecord関数は，各々�
 </TABLE>
 </div><P>
 
-(23) int AzSortRecord(TCHAR* TableName, TCHAR* ColumnName)
+(24) int AzSortRecord(TCHAR* TableName, TCHAR* ColumnName)
 <div class=spc>
 指定したテーブル内の全レコードを，指定したカラムで昇順となるように並び替えます。<br>
 カラム種別がCOLUMN_TYPE_INT : 数値の小さい順に並び替えます。<br>
@@ -458,7 +469,7 @@ AzSortRecord関数を呼び出す前に対象のテーブルに排他ロック�
 </table>
 </div><P>
 
-(24) int ZaSortRecord(TCHAR* TableName, TCHAR* ColumnName)
+(25) int ZaSortRecord(TCHAR* TableName, TCHAR* ColumnName)
 <div class=spc>
 指定したテーブル内の全レコードを，指定したカラムで降順となるように並び替えます。<br>
 カラム種別がCOLUMN_TYPE_INT : 数値の大きい順に並び替えます。<br>
@@ -474,7 +485,7 @@ ZaSortRecord関数を呼び出す前に対象のテーブルに排他ロック�
 </table>
 </div><P>
 
-(25) int SaveData(TCHAR* FileName)<BR>
+(26) int SaveData(TCHAR* FileName)<BR>
 <div class=spc>
 StkDataにより操作された情報は全て仮想メモリ中に格納されます。したがって，
 仮想メモリ中のデータをファイルにセーブすることなくStkData利用プログラムを
@@ -488,7 +499,7 @@ SaveData関数を呼び出す前に全てのテーブルに共有ロックを掛
 </TABLE>
 </div><P>
 
-(26) int LoadData(TCHAR* FileName)<BR>
+(27) int LoadData(TCHAR* FileName)<BR>
 <div class=spc>
 LoadData関数は指定したファイルからテーブルおよびレコードをロードし，仮想メモリに格納します。
 LoadData関数は既存の全テーブルを削除後，読込んだファイル内に定義されている
@@ -503,7 +514,7 @@ LoadData関数は既存の全テーブルを削除後，読込んだファイル
 </TABLE>
 </div><P>
 
-(27) int AutoSave(TCHAR* FileName, int Sec, BOOL Flag)<br>
+(28) int AutoSave(TCHAR* FileName, int Sec, BOOL Flag)<br>
 <div class=spc>
 この関数は仮想メモリ中に存在する全てのテーブル，レコードを指定したファイルに自動的に書き出すかどうか
 を制御します。AutoSaveは指定された間隔で無条件にファイルに書き出すのではなく，内部的にGetTableVersionを呼び
