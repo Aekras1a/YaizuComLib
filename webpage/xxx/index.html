@@ -59,10 +59,11 @@
                             <li><a onclick="activateTopic('a3')"><span class="glyphicon glyphicon-comment"></span> WM_INITDIALOGのプラットフォーム毎の挙動</a></li>
                             <li><a onclick="activateTopic('a4')"><span class="glyphicon glyphicon-comment"></span> C++ オーバーライド不可の指定</a></li>
                             <li><a onclick="activateTopic('a5')"><span class="glyphicon glyphicon-comment"></span> Pimplイディオム</a></li>
+                            <li><a onclick="activateTopic('a6')"><span class="glyphicon glyphicon-comment"></span> Grafana設定</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-pencil"></span> OSS開発メモ</a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-pencil"></span> OSS開発規約</a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a onclick="activateTopic('b1')"><span class="glyphicon glyphicon-pencil"></span> 開発規模について</a></li>
                             <li><a onclick="activateTopic('b2')"><span class="glyphicon glyphicon-pencil"></span> バージョン表記に関する規約</a></li>
@@ -287,6 +288,97 @@
         </div>
 
 
+        <div id="a6" class="row" style="display:none">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-comment"></span> Grafana設定</h2>
+
+                <h3>対象ディストリビューション</h3>
+                <p>
+                    CentOS Linux release 7.5.1804 (Core)<br />
+                </p>
+
+                <h3>ダウンロード</h3>
+                <h4>grafanaのダウンロード</h4>
+                <code>
+                    wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.1.4-1.x86_64.rpm
+                </code>
+                <h4>grafanaの依存パッケージをダウンロード</h4>
+                <code>
+                    yum install grafana-5.1.4-1.x86_64.rpm --downloadonly --downloaddir=/root/grafana-dep
+                </code>
+                <h4>grafana 5.1.4の依存パッケージ:</h4>
+                * fontconfig : fontconfig-2.10.95-11.el7.x86_64.rpm<br />
+                * fontpackages-filesystem : fontpackages-filesystem-1.44-8.el7.noarch.rpm<br />
+                * libfontenc : libfontenc-1.1.3-3.el7.x86_64.rpm<br />
+                * lixXfont : libXfibt-1.5.2-1.el7.x86_64.rpm<br />
+                * stix-fonts : stix-fonts-1.1.0-5.el7.noarch.rpm<br />
+                * urw-fonts : urw-fonts-2.4-16.el7.noarch.rpm<br />
+                * xorg-x11-font-utils : xorg-x11-font-utils-7.5-20.el7.x86_64.rpm<br />
+                <h4>influxdbのダウンロード</h4>
+                <code>
+                    wget https://dl.influxdata.com/influxdb/releases/influxdb-1.5.4.x86_64.rpm
+                </code>
+
+                <h3>インストール</h3>
+                <h4>grafanaのインストール</h4>
+                rpmコマンドでgrafanaおよび依存パッケージインストールする。<br />
+                <code>
+                    rpm -ivh libXfont-1.5.2-1.el7.x86_64.rpm libfontenc-1.1.3-3.el7.x86_64.rpm<br />
+                    rpm -ivh xorg-x11-font-utils-7.5-20.el7.x86_64.rpm<br />
+                    rpm -ivh fontconfig-2.10.95-11.el7.x86_64.rpm urw-fonts-2.4-16.el7.noarch.rpm fontpackages-filesystem-1.44-8.el7.noarch.rpm stix-fonts-1.1.0-5.el7.noarch.rpm<br />
+                    rpm -ivh grafana-5.1.4-1.x86_64.rpm
+                </code>
+                <h4>influxdbのインストール</h4>
+                <code>
+                    rpm -ivh influxdb-1.5.4.x86_64.rpm
+                </code>
+                依存性を解決するインストール(署名チェックしない)<br />
+                <code>
+                    yum -y localinstall --nogpgcheck ./*.rpm
+                </code>
+
+                <h3>アンインストール</h3>
+                <code>
+                    rpm -e influxdb-1.5.4.x86_64<br />
+                    rpm -e grafana-5.1.4-1.x86_64<br />
+                    rpm -e fontconfig-2.10.95-11.el7.x86_64 urw-fonts-2.4-16.el7.noarch fontpackages-filesystem-1.44-8.el7.noarch stix-fonts-1.1.0-5.el7.noarch<br />
+                    rpm -e xorg-x11-font-utils-7.5-20.el7.x86_64.rpm<br />
+                    rpm -e libXfont-1.5.2-1.el7.x86_64 libfontenc-1.1.3-3.el7.x86_64
+                </code>
+
+                <h3>ファイアウォールの設定</h3>
+                <h4>grafanaのファイアウォールの設定</h4>
+                <code>
+                    firewall-cmd --add-port=3000/tcp --permanent<br />
+                    firewall-cmd --reload
+                </code>
+                <h4>influxDBのファイアウォールの設定</h4>
+                <code>
+                    firewall-cmd --add-port=8086/tcp --permanent<br />
+                    firewall-cmd --reload
+                </code>
+
+                <h3>サービスの起動</h3>
+                <h4>grafanaの起動</h4>
+                <code>
+                    systemctl daemon-reload<br />
+                    systemctl start grafana-server.service<br />
+                    systemctl status grafana-server.service
+                </code>
+                <h4>grafanaの自動起動</h4>
+                <code>
+                    systemctl enable grafana-server.service
+                </code>
+                <h4>influxDBの起動</h4>
+                <code>
+                    systemctl start influxdb.service<br />
+                    systemctl status influxdb.service
+                </code>
+            </div>
+        </div>
+
+
+
         <div id="b1" class="row" style="display:none">
             <div class="col-xs-12">
                 <h2><span class="glyphicon glyphicon-pencil"></span> 開発規模について</h2>
@@ -484,7 +576,6 @@
                 <img src="backup.gif" class="img-responsive" alt="Backup"><br />
                 ローカルディスク: Dドライブ<br />
                 USBメモリ: Fドライブ<br />
-                SDカード: Gドライブ<br />
                 OneDrive: C:\Users\Shinya\OneDrive<br />
             </div>
         </div>
