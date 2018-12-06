@@ -60,6 +60,7 @@
                             <li><a onclick="activateTopic('a4')"><span class="glyphicon glyphicon-comment"></span> C++ オーバーライド不可の指定</a></li>
                             <li><a onclick="activateTopic('a5')"><span class="glyphicon glyphicon-comment"></span> Pimplイディオム</a></li>
                             <li><a onclick="activateTopic('a6')"><span class="glyphicon glyphicon-comment"></span> Grafana設定</a></li>
+                            <li><a onclick="activateTopic('a7')"><span class="glyphicon glyphicon-comment"></span> G++ 8の導入とC++17オプション付きコンパイル</a></li>
                         </ul>
                     </li>
                     <li>
@@ -378,6 +379,20 @@
         </div>
 
 
+        <div id="a7" class="row" style="display:none">
+            <div class="col-xs-12">
+                <h2><span class="glyphicon glyphicon-comment"></span> G++ 8の導入とC++17オプション付きコンパイル</h2>
+                filesystemを用いる例。<br/>
+                <code>
+                    wget -r -np https://cbs.centos.org/repos/sclo7-devtoolset-8-rh-candidate/x86_64/os/Packages/ <br />
+                    yum install *.rpm<br />
+                    scl enable devtoolset-8 bash<br />
+                    g++ --version<br />
+                    g++ aaa.cpp bbb.cpp -std=c++1z -lstdc++fs<br />
+                </code>
+            </div>
+        </div>
+
 
         <div id="b1" class="row" style="display:none">
             <div class="col-xs-12">
@@ -557,6 +572,8 @@
                     <tr><th>ソフトウェア名称</th><th>IPアドレス</th><th>ポート番号</th></tr>
                     <tr><td>CmdFreak 1.0.0 (HTTPサーバ)</td><td>-</td><td>8008</td></tr>
                     <tr><td>CmdFreak 1.0.0 (CmdFreakサービス)</td><td>localhost</td><td>2002</td></tr>
+                    <tr><td>CmdFreak 1.1.0 (HTTPサーバ)</td><td>-</td><td>80</td></tr>
+                    <tr><td>CmdFreak 1.1.0 (CmdFreakサービス)</td><td>localhost</td><td>2002</td></tr>
                     <tr><td>YaizuSample (HTTPサーバ)</td><td>localhost</td><td>80</td></tr>
                     <tr><td>YaizuSample (REST APIサービス)</td><td>localhost</td><td>8081</td></tr>
                     <tr><td>StkWebAppTest</td><td>127.0.0.1</td><td>8080, 8081, 8082, 8083</td></tr>
