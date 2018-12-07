@@ -55,12 +55,12 @@
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-comment"></span> 気づき事項</a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a onclick="activateTopic('a1')"><span class="glyphicon glyphicon-comment"></span> インストーラがユーザードキュメントフォルダにフォルダ／ファイルを配置する際の注意事項</a></li>
-                            <li><a onclick="activateTopic('a2')"><span class="glyphicon glyphicon-comment"></span> メモリリーク検出用デバッグコード</a></li>
+                            <li><a onclick="activateTopic('a2')"><span class="glyphicon glyphicon-comment"></span> Visual Studioに関するメモ</a></li>
                             <li><a onclick="activateTopic('a3')"><span class="glyphicon glyphicon-comment"></span> WM_INITDIALOGのプラットフォーム毎の挙動</a></li>
                             <li><a onclick="activateTopic('a4')"><span class="glyphicon glyphicon-comment"></span> C++ オーバーライド不可の指定</a></li>
                             <li><a onclick="activateTopic('a5')"><span class="glyphicon glyphicon-comment"></span> Pimplイディオム</a></li>
                             <li><a onclick="activateTopic('a6')"><span class="glyphicon glyphicon-comment"></span> Grafana設定</a></li>
-                            <li><a onclick="activateTopic('a7')"><span class="glyphicon glyphicon-comment"></span> G++ 8の導入とC++17オプション付きコンパイル</a></li>
+                            <li><a onclick="activateTopic('a7')"><span class="glyphicon glyphicon-comment"></span> C++関連のメモ</a></li>
                         </ul>
                     </li>
                     <li>
@@ -173,7 +173,8 @@
 
         <div id="a2" class="row" style="display:none">
             <div class="col-xs-12">
-                <h2><span class="glyphicon glyphicon-comment"></span> メモリリーク検出用デバッグコード</h2>
+                <h2><span class="glyphicon glyphicon-comment"></span> Visual Studioに関するメモ</h2>
+                <h3><span class="glyphicon glyphicon-comment"></span> メモリリーク検出用デバッグコード</h3>
                 <p>
                     Visual C++を使用したソフトウェア開発において，メモリリークを発生させるコードは気を付けていても作り込まれてしまうもの。<br />
                     これはC/C++の宿命のようなものであるが，メモリリークの要因は，メモリリーク検出用のデバッグコードを埋め込むことにより，容易に取り除くことができる。
@@ -216,6 +217,12 @@
                     OutputDebugStringおよび_CrtDumpMemoryLeaksのみでもDUMP情報は出力されるが，前述#defineおよび#includeを挿入することにより，
                     ソースコードのファイル名とメモリ確保を行った行番号が出力される。<br />
                 </p>
+                <h3><span class="glyphicon glyphicon-comment"></span> Visual Studioの検索・置換における正規表現</h3>
+                _T("xxx")をL"xxx"に置換する例。<br />
+                <code>
+                    検索: _T\("(.*)"\)<br />
+                    置換: L"$1"<br />
+                </code>
             </div>
         </div>
 
@@ -381,8 +388,9 @@
 
         <div id="a7" class="row" style="display:none">
             <div class="col-xs-12">
-                <h2><span class="glyphicon glyphicon-comment"></span> G++ 8の導入とC++17オプション付きコンパイル</h2>
-                filesystemを用いる例。<br/>
+                <h2><span class="glyphicon glyphicon-comment"></span> C++関連のメモ</h2>
+                <h3><span class="glyphicon glyphicon-comment"></span> G++ 8の導入とC++17オプション付きコンパイル</h3>
+                filesystemを用いる例。<br />
                 <code>
                     wget -r -np https://cbs.centos.org/repos/sclo7-devtoolset-8-rh-candidate/x86_64/os/Packages/ <br />
                     yum install *.rpm<br />
@@ -511,7 +519,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;不良修正番号 = 4<BR>
                 </p>
                 <UL>
-                    <LI>メジャーバージョン番号： 常に1。</LI>
+                    <LI>メジャーバージョン番号： マイナーバージョン番号が9まで上がっていた場合，次のバージョンではメジャーバージョンを1上げる。</LI>
                     <LI>マイナーバージョン番号： エンハンスの度に値を上げる。</LI>
                     <LI>不良修正番号： 不良のみを修正した場合値を上げる。</LI>
                 </UL>
